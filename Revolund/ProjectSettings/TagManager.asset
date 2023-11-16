@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Fichas
+    uniqueID: 2473706261
+    locked: 0
