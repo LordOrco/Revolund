@@ -488,11 +488,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194318683}
   m_CullTransparentMesh: 1
+--- !u!1 &376695530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8143346775820693240, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+  m_PrefabInstance: {fileID: 8070467965511373943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &434719984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4581223009607104423, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
   m_PrefabInstance: {fileID: 8070467965511373943}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &434719988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376695530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf3e0810cc5147418c747610c2c5c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSteps: 500
 --- !u!1 &583686351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,15 +1515,19 @@ PrefabInstance:
       objectReference: {fileID: 116282966}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: width
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: _width
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+      propertyPath: a_Star
+      value: 
+      objectReference: {fileID: 434719988}
+    - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: height
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: _height
@@ -1534,7 +1556,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8143346775820693240, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 434719988}
   m_SourcePrefab: {fileID: 100100000, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

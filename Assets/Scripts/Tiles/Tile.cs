@@ -16,7 +16,7 @@ public abstract class Tile : MonoBehaviour
     public BaseUnit OccupiedUnit;
 
     //Nodo para el A*
-    private Node node;
+    public Node node;
 
     //Indica si se puede colocar una casilla
     public bool Walkable => isWalkable && OccupiedUnit == null;
@@ -27,11 +27,14 @@ public abstract class Tile : MonoBehaviour
     public virtual void Init( Vector2 position)
     {
         this.position = position;
+        this.node = new Node(this);
+
 
     }
     //Al estar el raton encima brilla e indica la informacion de la tile
     private void OnMouseEnter()
     {
+        //Debug.Log(position);
         highlight.SetActive(true);
         MenuManager.Instance.ShowTileInfo(this);
         GetPosition();
@@ -48,9 +51,9 @@ public abstract class Tile : MonoBehaviour
     {
         //Si no es el turno del jugador no hace nada
         if (GameManager.Instance.State != GameManager.GameState.PlayerTurn) return;
-
+        if(GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50);)
         //Si la casilla está ocupada...
-        if(OccupiedUnit != null)
+        if (OccupiedUnit != null)
         {
             //...y es un heroe lo selecciona
             if (OccupiedUnit.Faction == Faction.Hero) UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
@@ -71,6 +74,9 @@ public abstract class Tile : MonoBehaviour
             //..y hay un heroe seleccionado y se puede andar, mueve el personaje
             if(UnitManager.instance.SelectedHero != null && Walkable)
             {
+                //Debug.Log("Nodo meta antes: " + node);
+                //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
+                GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50);
                 SetUnit(UnitManager.instance.SelectedHero);
                 UnitManager.instance.SetSelectedHero(null);
             }
@@ -79,7 +85,7 @@ public abstract class Tile : MonoBehaviour
     //Obtiene la posicion
     public Vector2 GetPosition()
     {
-        Debug.Log(position.x + " " + position.y);
+        //Debug.Log(position.x + " " + position.y);
         return position;
     }
 

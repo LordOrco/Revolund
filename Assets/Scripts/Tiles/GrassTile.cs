@@ -11,5 +11,6 @@ public class GrassTile : Tile
         var isOffset = (position.x + position.y) % 2 == 1;
         renderer.color = isOffset ? offsetColor : basecolor;
         this.position = position;
+        node = new Node(this);
     }
 }

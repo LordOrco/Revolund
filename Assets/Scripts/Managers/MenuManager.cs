@@ -37,7 +37,7 @@ public class MenuManager : MonoBehaviour
             tileUnitObject.GetComponentInChildren<TextMeshProUGUI>().text = tile.OccupiedUnit.unitName;
             tileUnitObject.SetActive(true);
         }
-        Debug.Log(tile.TileName);
+        //Debug.Log(tile.TileName);
     }
     //Muestra informacion del Heroe seleccionado.
     public void ShowSelectedHero(BaseHero hero)

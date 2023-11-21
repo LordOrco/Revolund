@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
     public int f_star;
     public int g;
@@ -13,25 +13,23 @@ public class Node : MonoBehaviour
     public bool meta;
 
     public Vector2 currentPos;
-    public Vector2 metaPos;
 
     public Node parent;
-    public List<Node> adyacent_Nodes = new List<Node>();
+    public List<Node> adyacent_Nodes;
 
 
-    public Node(Node pParent, Vector2 TilePos, Vector2 pMetaPos)
+    public Node(Tile tile)
     {
-        this.currentPos = TilePos;
-        metaPos = pMetaPos;
+        currentPos = tile.GetPosition();
+        meta = false;
+        
+    }
 
-        //Debug.Log(currentPos.RowId);
-
-        //Calculo de la distancia de Manhattan.
-        h_star = math.abs((int)(currentPos.x - metaPos.x));
-        h_star += math.abs((int)(currentPos.y - metaPos.y));
-        if (h_star == 0)
-        {
-            meta = true;
+    public void Path(Node pParent, Vector2 pMetaPos)
+    {
+        if(meta != false){
+            h_star = math.abs((int)(currentPos.x - pMetaPos.x));
+            h_star += math.abs((int)(currentPos.y - pMetaPos.y));
         }
 
         if (pParent != null)
@@ -46,21 +44,12 @@ public class Node : MonoBehaviour
 
         f_star = h_star + g;
     }
-    /*
-    public void findAdyacentNodes()
+   
+    public void SetNodes(List<Node> nodes)
     {
-        CellInfo[] neighbours = cell.WalkableNeighbours(board);
-        for (int i = 0; i < neighbours.Length; i++)
-        {
-            if (neighbours[i] != null)
-            {
-                Node neighbour = new Node(this, neighbours[i], metaPos, board);
-                adyacent_Nodes.Add(neighbour);
-            }
-        }
+        this.adyacent_Nodes = nodes;
+        //Debug.Log(adyacent_Nodes.Count);
     }
-    
 }
-*/
 
-}
+
