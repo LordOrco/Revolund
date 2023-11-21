@@ -20,9 +20,9 @@ public class GridManager : MonoBehaviour
     //Diccionario de tiles: Llave posicion, devuelve la Tile
     private Dictionary<Vector2 , Tile> tiles;
 
+    public List<Tile> highlightedTiles;
+
     public A_star a_Star;
-
-
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class GridManager : MonoBehaviour
             {
                 key = new Vector2(x, y);
                 if (tiles[key].Walkable)
-                    tiles[key].node.SetNodes(GetNeighboursNodes(tiles[key]));
+                    tiles[key].node.SetAdyacentNodes(GetNeighboursNodes(tiles[key]));
             }
         }
         //Posiciona la camara en el centro del tablero

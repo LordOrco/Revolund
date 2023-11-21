@@ -8,32 +8,41 @@ using UnityEditor;
 
 public class A_star: MonoBehaviour
 {
+    //Lsitas para implementar A*
     private List<Node> opened_list;
     private List<Node> closed_list;
     private Stack<Node> movement_list;
 
-
+    //Bool que indica si se ha alcanzado al meta
     private bool meta = false;
+
+    //Pasos
     private int steps = 0;
     public int maxSteps = 500;
 
     public bool Repath(Tile metaTile, Tile actualTile,int maxG)
     {
-        bool canWalk;
+        //Booleano para devolver true si se puede llegar y false si no.
+        //False de primeras por comodidad
+        bool canWalk = false;
+
+        //Establecer el meta del nodo a true
         metaTile.node.meta = true;
 
-
+        //Creacion de listas dinámicamente
         opened_list = new List<Node>();
         closed_list = new List<Node>();
         movement_list = new Stack<Node>();
 
+        //Añadir el nodo de la ficha ocupada
         opened_list.Add(actualTile.node);
         opened_list[0].Path(null, metaTile.GetPosition());
 
         while (!meta && steps < maxSteps)
         {
             //Debug.Log("Steps: " + steps);
-            //Si el nodo es meta
+
+            //Si el nodo es meta, acaba la iteración
             if (opened_list[0].meta == true)
             {
                 meta = true;
@@ -52,7 +61,7 @@ public class A_star: MonoBehaviour
             //Ordenar la lista abierta
             opened_list.Sort((x, y) => x.f_star.CompareTo(y.f_star));
 
-
+            //Añadir a lista cerrada el nodo usado y quitarlo de la abierta
             closed_list.Add(opened_list[0]);
             opened_list.Remove(opened_list[0]);
             
@@ -65,31 +74,99 @@ public class A_star: MonoBehaviour
         {
             Debug.Log(closed_list.Last().g);
             //Cogemos última posición
-            movement_list.Push(closed_list.Last());
+            //movement_list.Push(closed_list.Last());
             //Añadimos todos los movimientos hasta encontrar la posición inicial mediante el padre de cada nodo
-            while (movement_list.Peek().parent != null)
+           /* while (movement_list.Peek().parent != null)
             {
                 //Debug.Log("Parte del camino encontrado");
                 movement_list.Push(movement_list.Peek().parent);
-            }
-            canWalk = true;
-            meta = false;
+            }*/
+
+            //Si está en rango, bool a true
+            if(closed_list.Last().g <= maxG) canWalk = true;
         }
         else
         {
             Debug.Log("No se puede llegar a la meta");
-            canWalk = false;
             //EditorApplication.isPlaying = false;
         }
-        for(int i = 0;i < closed_list.Count;i++) closed_list[i].parent = null;
-        metaTile.node.meta = false;
-        steps = 0;
+
+        CleanAStarRepath(metaTile);
         Debug.Log(canWalk);
         return canWalk;
 
 
     }
 
+    private void CleanAStarRepath(Tile metaTile)
+    {
+        for (int i = 0; i < closed_list.Count; i++)
+        {
+            closed_list[i].parent = null;
+            closed_list[i].g = 0;
+        }
+        metaTile.node.meta = false;
+        meta = false;
+        steps = 0;
+    }
+
+
+    public void AccesibleTiles(Tile unitTile, int maxG)
+    {
+        opened_list = new List<Node>();
+        closed_list = new List<Node>();
+
+        bool IsEnemyInside;
+        
+
+        opened_list.Add(unitTile.node);
+        opened_list[0].GNode(null);
+
+        while (opened_list.Count()!= 0 && steps < maxSteps)
+        {
+            for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
+            {
+                if (!closed_list.Contains(opened_list[0].adyacent_Nodes[i]) && opened_list[0].adyacent_Nodes[i].GNode(opened_list[0]) <= maxG)
+                {
+                    opened_list.Add(opened_list[0].adyacent_Nodes[i]);
+                }
+            }
+
+            closed_list.Add(opened_list[0]);
+            opened_list.Remove(opened_list[0]);
+            steps++;
+        }
+
+        for (int i = 0;i< closed_list.Count;i++)
+        {
+            if (closed_list[i].myTile.OccupiedUnit != null && closed_list[i].myTile.OccupiedUnit.Faction == Faction.Enemy) IsEnemyInside = true;
+            else IsEnemyInside = false;
+
+
+            closed_list[i].myTile.ActivateAccesibleHighlight(IsEnemyInside).SetActive(true);          
+            GridManager.instance.highlightedTiles.Add(closed_list[i].myTile);
+        }
+
+
+        for (int i = 0; i < closed_list.Count; i++)
+        {
+            closed_list[i].parent = null;
+            closed_list[i].g = 0;
+        }
+
+        steps = 0;
+
+    }
+
+    public void CleanAccesibleTiles()
+    {
+        for (int i = GridManager.instance.highlightedTiles.Count()-1; i >= 0; i--)
+        {
+            GridManager.instance.highlightedTiles[i].GetAccesibleHighlight().SetActive(false);
+            GridManager.instance.highlightedTiles.RemoveAt(i);
+        }
+        Debug.Log(GridManager.instance.highlightedTiles.Count());
+    }
     /*
     public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
     {

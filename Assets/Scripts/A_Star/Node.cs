@@ -12,21 +12,21 @@ public class Node
     public int h_star;
     public bool meta;
 
-    public Vector2 currentPos;
+    public Tile myTile;
 
     public Node parent;
     public List<Node> adyacent_Nodes;
 
-
     public Node(Tile tile)
     {
-        currentPos = tile.GetPosition();
         meta = false;
+        myTile = tile;
         
     }
 
     public void Path(Node pParent, Vector2 pMetaPos)
     {
+        Vector2 currentPos = myTile.GetPosition();
         if(meta != false){
             h_star = math.abs((int)(currentPos.x - pMetaPos.x));
             h_star += math.abs((int)(currentPos.y - pMetaPos.y));
@@ -45,7 +45,20 @@ public class Node
         f_star = h_star + g;
     }
    
-    public void SetNodes(List<Node> nodes)
+    public int GNode(Node pParent)
+    {
+        if (pParent != null)
+        {
+            parent = pParent;
+            g = parent.g + 1;
+        }
+        else
+        {
+            g = 0;
+        }
+        return g;
+    }
+    public void SetAdyacentNodes(List<Node> nodes)
     {
         this.adyacent_Nodes = nodes;
         //Debug.Log(adyacent_Nodes.Count);

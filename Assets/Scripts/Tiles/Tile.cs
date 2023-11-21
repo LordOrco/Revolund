@@ -10,7 +10,12 @@ public abstract class Tile : MonoBehaviour
     [SerializeField] protected SpriteRenderer renderer;
     //Highligth para activar el color al estar encima
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject accesibleTileshighlight;
     [SerializeField] private bool isWalkable;
+
+    [SerializeField] protected Color basecolor;
+    [SerializeField] protected Color enemyInsideColor;
+    [SerializeField] protected Color noEnemyInsideColor;
 
     //Unidad que esta en la tile
     public BaseUnit OccupiedUnit;
@@ -51,37 +56,56 @@ public abstract class Tile : MonoBehaviour
     {
         //Si no es el turno del jugador no hace nada
         if (GameManager.Instance.State != GameManager.GameState.PlayerTurn) return;
-        if(GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50))
-        {
-
-        }
-        //Si la casilla está ocupada...
-        if (OccupiedUnit != null)
-        {
-            //...y es un heroe lo selecciona
-            if (OccupiedUnit.Faction == Faction.Hero) UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
-            //...y es no es un heroe, es un enemigo
-            else
-            {
-                //si hay un heroe selccionado, destruye el enemigo
-                if(UnitManager.instance.SelectedHero != null)
-                {
-                    var enemy = (BaseEnemy)OccupiedUnit;
-                    Destroy(enemy.gameObject);
-                    UnitManager.instance.SetSelectedHero(null);
-                }
-            }
-        }//Si la casilla no está ocupada...
+        if (!isWalkable) Debug.Log("No se puede andar");
         else
         {
-            //..y hay un heroe seleccionado y se puede andar, mueve el personaje
-            if(UnitManager.instance.SelectedHero != null && Walkable)
+            bool isAtDistance;
             {
-                //Debug.Log("Nodo meta antes: " + node);
-                //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
-                GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50);
-                SetUnit(UnitManager.instance.SelectedHero);
-                UnitManager.instance.SetSelectedHero(null);
+                //Si la casilla está ocupada...
+                if (OccupiedUnit != null)
+                {
+                    //...y es un heroe lo selecciona
+                    if (OccupiedUnit.Faction == Faction.Hero)
+                    {
+                        UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
+                        GridManager.instance.a_Star.AccesibleTiles(this,3);
+                    }
+                    //...y no es un heroe, es un enemigo
+                    else if (UnitManager.instance.SelectedHero != null)
+                    {
+                        isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 3);
+                        //si hay un heroe selccionado, destruye el enemigo
+                        if (UnitManager.instance.SelectedHero != null && isAtDistance)
+                        {
+                            var enemy = (BaseEnemy)OccupiedUnit;
+                            Destroy(enemy.gameObject);
+                            UnitManager.instance.SetSelectedHero(null);
+                            GridManager.instance.a_Star.CleanAccesibleTiles();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log(OccupiedUnit);
+                    }
+                }//Si la casilla no está ocupada y tienes un heroe seleccionado...
+                else if(UnitManager.instance.SelectedHero != null)
+                {
+                    isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 3);
+                    //..y hay un heroe seleccionado y se puede andar, mueve el personaje
+                    if (UnitManager.instance.SelectedHero != null && Walkable && isAtDistance)
+                    {
+                        //Debug.Log("Nodo meta antes: " + node);
+                        //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
+                        SetUnit(UnitManager.instance.SelectedHero);
+                        UnitManager.instance.SetSelectedHero(null);
+                        GridManager.instance.a_Star.CleanAccesibleTiles();
+                    }
+                }
+                //Si la casilla no está ocupada y no tienes un heroe seleccionado...
+                else
+                {
+                    Debug.Log("Selecciona un heroe");
+                }
             }
         }
     }
@@ -101,5 +125,23 @@ public abstract class Tile : MonoBehaviour
         unit.transform.position = transform.position;
         OccupiedUnit = unit;
         unit.OccupiedTile = this;
+    }
+
+    public GameObject ActivateAccesibleHighlight(bool IsEnemyInside)
+    {
+        if(IsEnemyInside)
+        {
+            accesibleTileshighlight.GetComponent<SpriteRenderer>().color = enemyInsideColor;
+        }
+        else
+        {
+            accesibleTileshighlight.GetComponent<SpriteRenderer>().color = noEnemyInsideColor;
+        }
+        return this.accesibleTileshighlight;
+    }
+
+    public GameObject GetAccesibleHighlight()
+    {
+        return accesibleTileshighlight;
     }
 }
