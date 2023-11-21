@@ -51,7 +51,10 @@ public abstract class Tile : MonoBehaviour
     {
         //Si no es el turno del jugador no hace nada
         if (GameManager.Instance.State != GameManager.GameState.PlayerTurn) return;
-        if(GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50);)
+        if(GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 50))
+        {
+
+        }
         //Si la casilla está ocupada...
         if (OccupiedUnit != null)
         {
