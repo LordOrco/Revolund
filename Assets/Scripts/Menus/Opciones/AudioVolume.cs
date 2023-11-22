@@ -14,7 +14,7 @@ public class AudioVolumen : MonoBehaviour
     {
         //Me pondra todos los objetos que compartan el tag de audio;
         audios = GameObject.FindGameObjectsWithTag("audio");
-        controlVolumen.value = PlayerPrefs.GetFloat("volumenSave",1f);//carga la informacion guardada de los ajustes
+        controlVolumen.value = PlayerPrefs.GetFloat("volumenSave",1f); //carga la informacion guardada de los ajustes
 
     }
 
