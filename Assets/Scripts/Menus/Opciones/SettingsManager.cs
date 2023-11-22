@@ -10,18 +10,21 @@ using UnityEngine.UIElements;
 public class SettingsManager : MonoBehaviour
 {
     private RawImage darkOverlay;
-    static private Color brightness = new Color(0,0,0,0);
+    static private Color brightness;
 
     private AudioSource[] audios;
     static private float volume;
 
     static private Text[] texts;
     static public int[] fontSizes = new int[3] {14,20,25};
-    static private int fontSize = 0;
+    static private int fontSize;
 
 
     private void Start()
     {
+        brightness = new Color(0, 0, 0, PlayerPrefs.GetFloat("brightness", 0.0f));
+        volume = PlayerPrefs.GetFloat("volume", 1f);
+        fontSize = PlayerPrefs.GetInt("fontSize", 0);
         ApplyOptions();
     }
 
@@ -49,6 +52,7 @@ public class SettingsManager : MonoBehaviour
     {
         //Debug.Log(value);
         brightness.a = value;
+        PlayerPrefs.SetFloat("brightness", value);
         darkOverlay.color = brightness;
     }
 
@@ -60,6 +64,8 @@ public class SettingsManager : MonoBehaviour
     public void SetVolume(float value)
     {
         volume = value;
+        PlayerPrefs.SetFloat("volume", value);
+
         audios = GameObject.FindObjectsOfType<AudioSource>();
         foreach (AudioSource au in audios)
         {
@@ -74,6 +80,7 @@ public class SettingsManager : MonoBehaviour
     public void SetFontSize(int value)
     {
         fontSize = value;
+        PlayerPrefs.SetFloat("fontSize", value);
         texts = GameObject.FindObjectsOfType<Text>();
         foreach (Text txt in texts)
         {
