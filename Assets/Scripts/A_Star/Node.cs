@@ -5,33 +5,31 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
     public int f_star;
     public int g;
     public int h_star;
     public bool meta;
 
-    public Vector2 currentPos;
-    public Vector2 metaPos;
+    public Tile myTile;
 
     public Node parent;
-    public List<Node> adyacent_Nodes = new List<Node>();
+    public List<Node> adyacent_Nodes;
 
-
-    public Node(Node pParent, Vector2 TilePos, Vector2 pMetaPos)
+    public Node(Tile tile)
     {
-        this.currentPos = TilePos;
-        metaPos = pMetaPos;
+        meta = false;
+        myTile = tile;
+        
+    }
 
-        //Debug.Log(currentPos.RowId);
-
-        //Calculo de la distancia de Manhattan.
-        h_star = math.abs((int)(currentPos.x - metaPos.x));
-        h_star += math.abs((int)(currentPos.y - metaPos.y));
-        if (h_star == 0)
-        {
-            meta = true;
+    public void Path(Node pParent, Vector2 pMetaPos)
+    {
+        Vector2 currentPos = myTile.GetPosition();
+        if(meta != false){
+            h_star = math.abs((int)(currentPos.x - pMetaPos.x));
+            h_star += math.abs((int)(currentPos.y - pMetaPos.y));
         }
 
         if (pParent != null)
@@ -46,21 +44,25 @@ public class Node : MonoBehaviour
 
         f_star = h_star + g;
     }
-    /*
-    public void findAdyacentNodes()
+   
+    public int GNode(Node pParent)
     {
-        CellInfo[] neighbours = cell.WalkableNeighbours(board);
-        for (int i = 0; i < neighbours.Length; i++)
+        if (pParent != null)
         {
-            if (neighbours[i] != null)
-            {
-                Node neighbour = new Node(this, neighbours[i], metaPos, board);
-                adyacent_Nodes.Add(neighbour);
-            }
+            parent = pParent;
+            g = parent.g + 1;
         }
+        else
+        {
+            g = 0;
+        }
+        return g;
     }
-    
+    public void SetAdyacentNodes(List<Node> nodes)
+    {
+        this.adyacent_Nodes = nodes;
+        //Debug.Log(adyacent_Nodes.Count);
+    }
 }
-*/
 
-}
+

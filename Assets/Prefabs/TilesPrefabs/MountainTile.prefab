@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.3773585
       objectReference: {fileID: 0}
+    - target: {fileID: 5502584704518509886, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5502584704518509886, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5502584704518509886, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_Name
       value: MountainTile
@@ -75,6 +87,11 @@ PrefabInstance:
 --- !u!212 &2081645327571561224 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 3636482178377769156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3504361283431416650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 204525943433274254, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
   m_PrefabInstance: {fileID: 3636482178377769156}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6734766886393018174 stripped
@@ -97,7 +114,9 @@ MonoBehaviour:
   TileName: Mountain
   renderer: {fileID: 2081645327571561224}
   highlight: {fileID: 8596630843596896068}
+  accesibleTileshighlight: {fileID: 3504361283431416650}
   isWalkable: 0
+  basecolor: {r: 0.37647063, g: 0.29411766, b: 0.29411766, a: 1}
   OccupiedUnit: {fileID: 0}
 --- !u!1 &8596630843596896068 stripped
 GameObject:

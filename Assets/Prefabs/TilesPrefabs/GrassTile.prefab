@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7266805177904075400, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266805177904075400, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266805177904075400, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_Name
       value: GrassTile
@@ -63,6 +75,11 @@ PrefabInstance:
 --- !u!212 &2258526253441174252 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 3585984099623272736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3680961283945898670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 204525943433274254, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
   m_PrefabInstance: {fileID: 3585984099623272736}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6828066169677977306 stripped
@@ -85,9 +102,12 @@ MonoBehaviour:
   TileName: Grass
   renderer: {fileID: 2258526253441174252}
   highlight: {fileID: 8428986948869297824}
+  accesibleTileshighlight: {fileID: 3680961283945898670}
   isWalkable: 1
-  OccupiedUnit: {fileID: 0}
   basecolor: {r: 0.50033736, g: 0.9528302, b: 0.43596476, a: 1}
+  enemyInsideColor: {r: 1, g: 0.3915094, b: 0.3915094, a: 0.5882353}
+  noEnemyInsideColor: {r: 0.33459416, g: 0.9716981, b: 0.9716979, a: 0.5882353}
+  OccupiedUnit: {fileID: 0}
   offsetColor: {r: 0.2775454, g: 0.7264151, b: 0.43292332, a: 1}
 --- !u!1 &8428986948869297824 stripped
 GameObject:

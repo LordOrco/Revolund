@@ -20,6 +20,10 @@ public class GridManager : MonoBehaviour
     //Diccionario de tiles: Llave posicion, devuelve la Tile
     private Dictionary<Vector2 , Tile> tiles;
 
+    public List<Tile> highlightedTiles;
+
+    public A_star a_Star;
+
     private void Awake()
     {
         instance = this;
@@ -41,6 +45,18 @@ public class GridManager : MonoBehaviour
                 tiles[new Vector2(x, y)] = spawnedTile;
 
                 spawnedTile.Init(new Vector2(x,y));
+            }
+        }
+
+        Vector2 key;
+        //for posterior para asociar nodos
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                key = new Vector2(x, y);
+                if (tiles[key].Walkable)
+                    tiles[key].node.SetAdyacentNodes(GetNeighboursNodes(tiles[key]));
             }
         }
         //Posiciona la camara en el centro del tablero
@@ -72,5 +88,43 @@ public class GridManager : MonoBehaviour
 
         return null;
     }  
+
+    public List<Node> GetNeighboursNodes(Tile tile)
+    {
+        List<Node> nodes = new List<Node>();
+        float x = tile.GetPosition().x;
+        float y = tile.GetPosition().y;
+
+        //Debug.Log("Vecinos de : " + tiles[new Vector2(x, y)].node.currentPos);
+
+        //x+1
+        Vector2 key = new Vector2(x + 1, y);
+        if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+        {
+            nodes.Add(tiles[key].node);
+        }
+
+        //x-1
+        key = new Vector2(x - 1, y);
+        if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+        {
+            nodes.Add(tiles[key].node);
+        }
+
+        //y+1
+        key = new Vector2(x, y + 1 );
+        if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+        {
+            nodes.Add(tiles[key].node);
+        }
+
+        //y-1
+        key = new Vector2(x, y -1 );
+        if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+        {
+            nodes.Add(tiles[key].node);
+        }
+        return nodes;
+    }
 }
     
