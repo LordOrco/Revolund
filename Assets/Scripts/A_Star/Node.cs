@@ -24,6 +24,7 @@ public class Node
         
     }
 
+    //Metodo para encontrar camino A*
     public void Path(Node pParent, Vector2 pMetaPos)
     {
         Vector2 currentPos = myTile.GetPosition();
@@ -32,19 +33,12 @@ public class Node
             h_star += math.abs((int)(currentPos.y - pMetaPos.y));
         }
 
-        if (pParent != null)
-        {
-            parent = pParent;
-            g = parent.g + 1;
-        }
-        else
-        {
-            g = 0;
-        }
+        GNode(pParent);
 
         f_star = h_star + g;
     }
    
+    //Metodo que devuelve la g del nodo
     public int GNode(Node pParent)
     {
         if (pParent != null)
@@ -58,6 +52,8 @@ public class Node
         }
         return g;
     }
+
+    //Setter de adyacentNodes
     public void SetAdyacentNodes(List<Node> nodes)
     {
         this.adyacent_Nodes = nodes;

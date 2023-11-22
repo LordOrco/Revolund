@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class BaseEnemy : BaseUnit
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool areAccesibleTilesShown = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Tiles asociados cuyos highlights estan asociados
+    public List<Tile> highlightedTiles;
 }

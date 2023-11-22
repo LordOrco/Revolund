@@ -20,6 +20,7 @@ public class GridManager : MonoBehaviour
     //Diccionario de tiles: Llave posicion, devuelve la Tile
     private Dictionary<Vector2 , Tile> tiles;
 
+    //Higlights de tiles del heroe seleccionado
     public List<Tile> highlightedTiles;
 
     public A_star a_Star;
