@@ -7,17 +7,12 @@ using UnityEngine.Rendering;
 
 public class BrilloControlador : MonoBehaviour
 {
-    public Volume postProcessVolume;
-
+    [SerializeField] private RawImage darkOverlay;
     public void ChangeBrightness(float value)
     {
-        ColorAdjustments colorAdjustments;
-        if (postProcessVolume.profile.TryGet(out colorAdjustments))
-        {
-            colorAdjustments.postExposure.Override(value);
-
-            // Puedes imprimir el valor actual para verificar en la consola
-            //Debug.Log("Nuevo Brillo: " + value);
-        }
+        Debug.Log(value);
+        var tempColor = darkOverlay.color;
+        tempColor.a = value;
+        darkOverlay.color = tempColor;
     }
 }
