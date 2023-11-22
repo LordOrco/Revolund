@@ -7,15 +7,18 @@ public abstract class Tile : MonoBehaviour
 {
     //[SerializeField] private Color basecolor, offsetColor;
     public string TileName;
-    [SerializeField] protected SpriteRenderer renderer;
-    //Highligth para activar el color al estar encima
-    [SerializeField] private GameObject highlight;
+    [SerializeField] protected SpriteRenderer renderer;    
     [SerializeField] private GameObject accesibleTileshighlight;
     [SerializeField] private bool isWalkable;
 
+    //Highligth para activar el color al estar encima
+    [SerializeField] private GameObject highlight;
     [SerializeField] protected Color basecolor;
     [SerializeField] protected Color enemyInsideColor;
     [SerializeField] protected Color noEnemyInsideColor;
+
+    public int enemiesPathing;
+
 
     //Unidad que esta en la tile
     public BaseUnit OccupiedUnit;
@@ -32,7 +35,8 @@ public abstract class Tile : MonoBehaviour
     public virtual void Init( Vector2 position)
     {
         this.position = position;
-        this.node = new Node(this);
+        node = new Node(this);
+        enemiesPathing = 0;
 
 
     }
@@ -69,10 +73,12 @@ public abstract class Tile : MonoBehaviour
                     {
                         UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
                         GridManager.instance.a_Star.HeroAccesibleTiles(this,3);
+                        Debug.Log("Heroe seleccionado");
                     }
                     //...y es un enemigo y tengo seleccionado un heroe
                     else if (UnitManager.instance.SelectedHero != null)
                     {
+                        Debug.Log("Enemigo");
                         isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 3);
                         //si hay un heroe selccionado, destruye el enemigo
                         if (UnitManager.instance.SelectedHero != null && isAtDistance)
@@ -86,6 +92,7 @@ public abstract class Tile : MonoBehaviour
                     //...y es un enemigo y no tengo seleccionado un heroe
                     else
                     {
+                        Debug.Log("Enemigo area");
                         BaseEnemy baseEnemy = (BaseEnemy)OccupiedUnit;
                         if(baseEnemy.areAccesibleTilesShown == false)
                         {

@@ -128,12 +128,17 @@ public class A_star: MonoBehaviour
         //Mientras la lista abierta tenga nodos y no se hayan alcanzado los maxSteps
         while (opened_list.Count()!= 0 && steps < maxSteps)
         {
-            //Añade a la lista abierta los nodos existentes cuyo g no se mayor a maxG
-            for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
+            if((opened_list[0].myTile.OccupiedUnit != null && opened_list[0].myTile.OccupiedUnit.Faction != Faction.Enemy)
+                || opened_list[0].myTile.OccupiedUnit == null)
             {
-                if (!closed_list.Contains(opened_list[0].adyacent_Nodes[i]) && opened_list[0].adyacent_Nodes[i].GNode(opened_list[0]) <= maxG)
+                //Añade a la lista abierta los nodos existentes cuyo g no se mayor a maxG
+                for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
                 {
-                    opened_list.Add(opened_list[0].adyacent_Nodes[i]);
+                    if (!closed_list.Contains(opened_list[0].adyacent_Nodes[i])
+                        && opened_list[0].adyacent_Nodes[i].GNode(opened_list[0]) <= maxG)
+                    {
+                        opened_list.Add(opened_list[0].adyacent_Nodes[i]);
+                    }
                 }
             }
 
@@ -198,6 +203,7 @@ public class A_star: MonoBehaviour
         for (int i = 0; i < closed_list.Count; i++)
         {
             closed_list[i].myTile.ActivateAccesibleHighlight(true).SetActive(true);
+            closed_list[i].myTile.enemiesPathing++;
             baseEnemy.highlightedTiles.Add(closed_list[i].myTile);
         }
 
@@ -229,7 +235,8 @@ public class A_star: MonoBehaviour
         BaseEnemy baseEnemy = (BaseEnemy)unitTile.OccupiedUnit;
         for (int i = baseEnemy.highlightedTiles.Count() - 1; i >= 0; i--)
         {
-            baseEnemy.highlightedTiles[i].GetAccesibleHighlight().SetActive(false);
+            baseEnemy.highlightedTiles[i].enemiesPathing--;
+            if (baseEnemy.highlightedTiles[i].enemiesPathing == 0) baseEnemy.highlightedTiles[i].GetAccesibleHighlight().SetActive(false);
             baseEnemy.highlightedTiles.RemoveAt(i);
         }
         Debug.Log(GridManager.instance.highlightedTiles.Count());
