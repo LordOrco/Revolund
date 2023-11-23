@@ -4,6 +4,4 @@ using UnityEngine;
 
 public class MountainTile : Tile
 {
-    //[SerializeField] private Color basecolor, offsetColor;
-    //
 }

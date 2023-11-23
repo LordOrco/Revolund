@@ -118,7 +118,7 @@ public class A_star: MonoBehaviour
         closed_list = new List<Node>();
 
         //Booleano que indica si ahy un enemigo dentro de la casilla que toque
-        bool IsEnemyInside;
+        int typeHighlight;
         
         //Añade la tile del heroe seleccionado a la lista abierta y
         //establece la g a 0
@@ -150,11 +150,16 @@ public class A_star: MonoBehaviour
         //Activa los highlights de las casillas
         for (int i = 0;i< closed_list.Count;i++)
         {
+            closed_list[i].myTile.heroesPathing++;
             //Si hay una unidad enemiga en la tile la colorea en rojo, si no, en azul
-            if (closed_list[i].myTile.OccupiedUnit != null && closed_list[i].myTile.OccupiedUnit.Faction == Faction.Enemy) IsEnemyInside = true;
-            else IsEnemyInside = false;
+            if (closed_list[i].myTile.OccupiedUnit != null && closed_list[i].myTile.OccupiedUnit.Faction == Faction.Enemy) typeHighlight = 1;
+            else if (closed_list[i].myTile.enemiesPathing > 0 && closed_list[i].myTile.heroesPathing > 0) typeHighlight = 2;
+            else typeHighlight = 0;
 
-            closed_list[i].myTile.ActivateAccesibleHighlight(IsEnemyInside).SetActive(true);
+            
+
+            if(closed_list[i].myTile is GrassTile accesibleTile)
+            accesibleTile.ActivateAccesibleHighlight(typeHighlight).SetActive(true);
 
             //Añade al GridManager las tiles accesibles al heroe(seguramente haya futuro cambio)
             GridManager.instance.highlightedTiles.Add(closed_list[i].myTile);
@@ -177,7 +182,7 @@ public class A_star: MonoBehaviour
     {
         opened_list = new List<Node>();
         closed_list = new List<Node>();
-
+        int typeHighlight;
         //Obtiene al enemigo de la tile
         BaseEnemy baseEnemy = (BaseEnemy)unitTile.OccupiedUnit;
 
@@ -198,12 +203,17 @@ public class A_star: MonoBehaviour
             opened_list.Remove(opened_list[0]);
             steps++;
         }
-
         //Activa los hightlights en rojo y añade al enemigo las tiles que el puede acceder
         for (int i = 0; i < closed_list.Count; i++)
         {
-            closed_list[i].myTile.ActivateAccesibleHighlight(true).SetActive(true);
-            closed_list[i].myTile.enemiesPathing++;
+            if (closed_list[i].myTile is GrassTile accesibleTile)
+            {
+                closed_list[i].myTile.enemiesPathing++;
+                if ((closed_list[i].myTile.enemiesPathing > 0 && closed_list[i].myTile.heroesPathing > 0)) typeHighlight = 2;
+                else typeHighlight = 1;
+
+                accesibleTile.ActivateAccesibleHighlight(typeHighlight).SetActive(true);
+            }
             baseEnemy.highlightedTiles.Add(closed_list[i].myTile);
         }
 
@@ -218,11 +228,13 @@ public class A_star: MonoBehaviour
 
     }
 
+    public void DeployTowerTiles(Tile unitTile, int maxG) { }
     //Metodo que desactiva los highlights del heroe seleccionado
     public void CleanHeroAccesibleTiles()
     {
         for (int i = GridManager.instance.highlightedTiles.Count()-1; i >= 0; i--)
         {
+            GridManager.instance.highlightedTiles[i].heroesPathing--;
             GridManager.instance.highlightedTiles[i].GetAccesibleHighlight().SetActive(false);
             GridManager.instance.highlightedTiles.RemoveAt(i);
         }

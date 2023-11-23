@@ -125,6 +125,38 @@ public class GridManager : MonoBehaviour
         {
             nodes.Add(tiles[key].node);
         }
+
+        //Si es una Deploy Tower, obtiene las esquinas
+        if(tile.name =="Deploy Tower")
+        {
+            //x+1, y+1
+            key = new Vector2(x + 1, y + 1);
+            if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+            {
+                nodes.Add(tiles[key].node);
+            }
+
+            //x-1,y-1
+            key = new Vector2(x - 1, y - 1);
+            if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+            {
+                nodes.Add(tiles[key].node);
+            }
+
+            //x-1, y+1
+            key = new Vector2(x - 1, y + 1);
+            if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+            {
+                nodes.Add(tiles[key].node);
+            }
+
+            //x+1, y-1
+            key = new Vector2(x+ 1, y - 1);
+            if (tiles.ContainsKey(key) && tiles[key].Walkable != false)
+            {
+                nodes.Add(tiles[key].node);
+            }
+        }
         return nodes;
     }
 }

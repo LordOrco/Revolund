@@ -8,16 +8,17 @@ public abstract class Tile : MonoBehaviour
     //[SerializeField] private Color basecolor, offsetColor;
     public string TileName;
     [SerializeField] protected SpriteRenderer renderer;    
-    [SerializeField] private GameObject accesibleTileshighlight;
-    [SerializeField] private bool isWalkable;
+    [SerializeField] protected GameObject accesibleTileshighlight;
+    [SerializeField] protected bool isWalkable;
 
     //Highligth para activar el color al estar encima
     [SerializeField] private GameObject highlight;
     [SerializeField] protected Color basecolor;
-    [SerializeField] protected Color enemyInsideColor;
-    [SerializeField] protected Color noEnemyInsideColor;
+    //[SerializeField] protected Color enemyInsideColor;
+   // [SerializeField] protected Color noEnemyInsideColor;
 
     public int enemiesPathing;
+    public int heroesPathing;
 
 
     //Unidad que esta en la tile
@@ -36,7 +37,6 @@ public abstract class Tile : MonoBehaviour
     {
         this.position = position;
         node = new Node(this);
-        enemiesPathing = 0;
 
 
     }
@@ -56,7 +56,7 @@ public abstract class Tile : MonoBehaviour
     }
 
     //Al clickar gestiona si hay seleccion de personaje, ataque o movimiento
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         //Si no es el turno del jugador no hace nada
         if (GameManager.Instance.State != GameManager.GameState.PlayerTurn) return;
@@ -71,9 +71,17 @@ public abstract class Tile : MonoBehaviour
                     //...y es un heroe lo selecciona
                     if (OccupiedUnit.Faction == Faction.Hero)
                     {
-                        UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
-                        GridManager.instance.a_Star.HeroAccesibleTiles(this,3);
-                        Debug.Log("Heroe seleccionado");
+                        if(UnitManager.instance.SelectedHero!= null && OccupiedUnit== UnitManager.instance.SelectedHero)
+                        {
+                            UnitManager.instance.SetSelectedHero(null);
+                            GridManager.instance.a_Star.CleanHeroAccesibleTiles();
+                        }
+                        else
+                        {
+                            UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
+                            GridManager.instance.a_Star.HeroAccesibleTiles(this, 3);
+                            Debug.Log("Heroe seleccionado");
+                        }
                     }
                     //...y es un enemigo y tengo seleccionado un heroe
                     else if (UnitManager.instance.SelectedHero != null)
@@ -81,31 +89,22 @@ public abstract class Tile : MonoBehaviour
                         Debug.Log("Enemigo");
                         isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.OccupiedTile, 3);
                         //si hay un heroe selccionado, destruye el enemigo
-                        if (UnitManager.instance.SelectedHero != null && isAtDistance)
+                        if ( isAtDistance)
                         {
                             var enemy = (BaseEnemy)OccupiedUnit;
                             Destroy(enemy.gameObject);
                             UnitManager.instance.SetSelectedHero(null);
                             GridManager.instance.a_Star.CleanHeroAccesibleTiles();
                         }
+                        else
+                        {
+                            ShowEnemyTiles();
+                        }
                     }
                     //...y es un enemigo y no tengo seleccionado un heroe
                     else
                     {
-                        Debug.Log("Enemigo area");
-                        BaseEnemy baseEnemy = (BaseEnemy)OccupiedUnit;
-                        if(baseEnemy.areAccesibleTilesShown == false)
-                        {
-                            GridManager.instance.a_Star.EnemyAccesibleTiles(this, 3);
-                            baseEnemy.areAccesibleTilesShown = true;
-                        }
-                        else
-                        {
-                            GridManager.instance.a_Star.CleanEnemyAccesibleTiles(this);
-                            baseEnemy.areAccesibleTilesShown = false;
-                        }
-
-                        Debug.Log(OccupiedUnit);
+                        ShowEnemyTiles();
                     }
                 }//Si la casilla no está ocupada y tienes un heroe seleccionado...
                 else if(UnitManager.instance.SelectedHero != null)
@@ -129,6 +128,24 @@ public abstract class Tile : MonoBehaviour
             }
         }
     }
+
+    private void ShowEnemyTiles()
+    {
+        Debug.Log("Enemigo area");
+        BaseEnemy baseEnemy = (BaseEnemy)OccupiedUnit;
+        if (baseEnemy.areAccesibleTilesShown == false)
+        {
+            GridManager.instance.a_Star.EnemyAccesibleTiles(this, 3);
+            baseEnemy.areAccesibleTilesShown = true;
+        }
+        else
+        {
+            GridManager.instance.a_Star.CleanEnemyAccesibleTiles(this);
+            baseEnemy.areAccesibleTilesShown = false;
+        }
+
+        Debug.Log(OccupiedUnit);
+    }
     //Obtiene la posicion
     public Vector2 GetPosition()
     {
@@ -148,7 +165,7 @@ public abstract class Tile : MonoBehaviour
     }
 
     //Metodo que establece colores de los highlights y devuelve dicha tile
-    public GameObject ActivateAccesibleHighlight(bool IsEnemyInside)
+    /*public GameObject ActivateAccesibleHighlight(bool IsEnemyInside)
     {
         if(IsEnemyInside)
         {
@@ -159,7 +176,7 @@ public abstract class Tile : MonoBehaviour
             accesibleTileshighlight.GetComponent<SpriteRenderer>().color = noEnemyInsideColor;
         }
         return this.accesibleTileshighlight;
-    }
+    }*/
 
     public GameObject GetAccesibleHighlight()
     {
