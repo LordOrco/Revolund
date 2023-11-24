@@ -25,7 +25,7 @@ public class UnitManager : MonoBehaviour
     //Genera heroes aleatoriamente
     public void SpawnHeroes()
     {
-        var heroCount = 1;
+        var heroCount = 2;
         //for(int i = 0; i < unitList.Count; i++) { }
         for (int i = 0; i < heroCount; i++) {
             var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
@@ -74,16 +74,27 @@ public class UnitManager : MonoBehaviour
     public void SetSelectedHero(BaseHero hero)
     {
         Debug.Log(hero);
+        if(SelectedHero != null)
+        {
+            SelectedHero.HidePathingTiles();
+        }
+
         if (hero != null)
         {
             hero.ShowPathingTiles();
         }
-        if(hero == null) 
+        if (hero == null)
         {
             SelectedHero.HidePathingTiles();
         }
+
         SelectedHero = hero;
         //Enseña al heroe seleccionado
         MenuManager.Instance.ShowSelectedHero(hero);
+    }
+
+    public List<ScriptableUnit> GetUnitList()
+    {
+        return unitList;
     }
 }

@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322a49e28fe8d4a4282b26b4c57707b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controls: 7700000061000000730000006400000020000000
 --- !u!1 &63210140
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,7 +1664,7 @@ PrefabInstance:
       objectReference: {fileID: 116282966}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: width
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: _width
@@ -1675,7 +1676,7 @@ PrefabInstance:
       objectReference: {fileID: 434719988}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: height
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: _height

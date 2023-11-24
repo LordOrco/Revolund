@@ -9,21 +9,25 @@ public class ControlsManager : MonoBehaviour
     public KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space};
     private Camera camara;
     private GridManager grid;   
+    private UnitManager unitManager;
 
     private float panSpeed = 10f;
     private float panBorderThickness = 10f;
     private Vector2 panLimit;
     private Vector2 gridCenter;
+
     private float zoomSpeed = 5f;
     private float maxZoom = 5f;
     private float minZoom = 1f;
 
+    private int heroIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         camara = GameObject.FindObjectOfType<Camera>();
         grid = GameObject.FindObjectOfType<GridManager>();
+        unitManager = GameObject.FindObjectOfType<UnitManager>();
 
         gridCenter = grid.GetGridCenter();
         panLimit = new Vector2(gridCenter.x + (float) grid.GetWidth()/2, gridCenter.y + (float) grid.GetHeight()/2);
@@ -95,7 +99,10 @@ public class ControlsManager : MonoBehaviour
 
     public void cameraControls()
     {
+        /////////////////////////////////////////////////////////////////////////////
         //MOVIMIENTO DE LA CÁMARA
+        /////////////////////////////////////////////////////////////////////////////
+
         Vector3 pos = camara.transform.position;
 
         if(grid.GetWidth() > 2 * camara.orthographicSize * 16 / 9)
@@ -130,12 +137,49 @@ public class ControlsManager : MonoBehaviour
         }
         camara.transform.position = pos;
 
+        /////////////////////////////////////////////////////////////////////////////
         //ZOOM DE  LA CÁMARA
+        /////////////////////////////////////////////////////////////////////////////
+
         float currentZoom = camara.orthographicSize;
 
         currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
 
         camara.orthographicSize = currentZoom;
+
+        /////////////////////////////////////////////////////////////////////////////
+        //SELECCIÓN DE TROPAS
+        /////////////////////////////////////////////////////////////////////////////
+
+        if (Input.GetKeyDown(controls[4]))
+        {
+            //Busca los heroes
+            BaseHero[] unidades = GameObject.FindObjectsOfType<BaseHero>();
+            int maxIndex = unidades.Length - 1;
+
+            //Si el heroe no está seleccionado ya, lo selecciona
+            unitManager.SetSelectedHero(unidades[heroIndex]);
+
+            //Mueve la cámara al héroe con cuidado de no salirse
+            if (grid.GetWidth() > 2 * camara.orthographicSize * 16 / 9)
+            {
+                pos.x = Mathf.Clamp(unidades[heroIndex].transform.position.x, -0.5f + camara.orthographicSize * 16 / 9, panLimit.x - camara.orthographicSize * 16 / 9);
+            }
+            if (grid.GetHeight() > 2 * camara.orthographicSize)
+            {
+                pos.y = Mathf.Clamp(unidades[heroIndex].transform.position.y, -0.5f + camara.orthographicSize, panLimit.y - camara.orthographicSize);
+            }
+
+            //Para cambiar al siguiente heroe si le da otra vez
+            if(heroIndex < maxIndex)
+            {
+                heroIndex++;
+            }
+            else { heroIndex = 0;}
+            
+            //Se mueve la cámara
+            camara.transform.position = pos;
+        }
     }
 }
