@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BaseHero : BaseUnit
 {
+    //Activa los highlights de las casillas
     public override void ShowPathingTiles()
     {
         SetHighlightedTiles(GridManager.instance.a_Star.ObtainAccesibleTiles(this));
         Debug.Log("HeroesPathing2 : " + GetHighlightedTiles().Count);
-        //Activa los highlights de las casillas
         for (int i = 0; i < GetHighlightedTiles().Count; i++)
         {
             GetHighlightedTiles()[i].heroesPathing++;
@@ -20,9 +20,9 @@ public class BaseHero : BaseUnit
 
     }
 
+    //Desactiva los highlights de las casillas
     public override void HidePathingTiles()
     {
-
         for (int i = 0; i < GetHighlightedTiles().Count; i++)
         {
             GetHighlightedTiles()[i].heroesPathing--;

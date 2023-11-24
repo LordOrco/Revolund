@@ -21,6 +21,7 @@ public class A_star: MonoBehaviour
     private int steps = 0;
     public int maxSteps = 500;
 
+    //Metodo qeud devuelve si el heroe puede acceder por distancia
     public bool Repath(Tile metaTile, Tile actualTile,int maxG)
     {
         //Booleano para devolver true si se puede llegar y false si no.
@@ -111,7 +112,7 @@ public class A_star: MonoBehaviour
         steps = 0;
     }
 
-    //Metodo que crea un highlight sobre las tiles a las que el heroe seleccionado puede acceder
+    //Metodo que devuelve las tiles a las que el heroe seleccionado puede acceder
     public List<Tile> ObtainAccesibleTiles(BaseUnit unit)
     {
         //Creacion de listas dinámicamente

@@ -1698,6 +1698,10 @@ PrefabInstance:
       propertyPath: mountainTile
       value: 
       objectReference: {fileID: -7782569165327204839, guid: 975582036fc23394eb7cf91df7c1cdb1, type: 3}
+    - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+      propertyPath: deployTowerTile
+      value: 
+      objectReference: {fileID: 7168764517856093291, guid: 2c7e625cb2c465f45a97b90e27c539ad, type: 3}
     - target: {fileID: 8143346775820693240, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: m_Name
       value: Grid Manager

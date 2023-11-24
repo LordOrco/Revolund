@@ -32,15 +32,23 @@ public class UnitManager : MonoBehaviour
             var spawnedHero = Instantiate(randomPrefab);
 
             //Obtiene un Tile donde spawnear el heroe
-            var randomSpawanTile = GridManager.instance.GetHeroSpawnedTile();
+            var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
 
             //Asocia el heroe a la casilla
-            randomSpawanTile.SetUnit(spawnedHero);
+            randomSpawnTile.SetUnit(spawnedHero);
 
         }
 
         //Cambia al estado de generar enemigos
         GameManager.Instance.ChangeState(GameManager.GameState.GenerateEnemyUnits);
+    }
+
+    //Spawnea heroe aleatorio en al tile pasada
+    public void SpawnHeroOnDemand(Tile tile)
+    {
+        var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
+        var spawnedHero = Instantiate(randomPrefab);
+        tile.SetUnit(spawnedHero);
     }
 
     //Genera heroes aleatoriamente

@@ -10,6 +10,7 @@ public abstract class Tile : MonoBehaviour
     [SerializeField] protected SpriteRenderer renderer;    
     [SerializeField] protected GameObject accesibleTilehighlight;
     [SerializeField] protected bool isWalkable;
+    [SerializeField] protected bool needAdyacentNodes;
 
     //Highligth para activar el color al estar encima
     [SerializeField] protected GameObject highlight;
@@ -33,6 +34,22 @@ public abstract class Tile : MonoBehaviour
 
 
     protected Vector2 position;
+
+    public GameObject GetAccesibleHighlight()
+    {
+        return accesibleTilehighlight;
+    }
+
+    public bool GetNeedsAdyacentNodes()
+    {
+        return needAdyacentNodes;
+    }
+
+    public Vector2 GetPosition()
+    {
+        //Debug.Log(position.x + " " + position.y);
+        return position;
+    }
 
     public virtual void Init( Vector2 position)
     {
@@ -71,12 +88,6 @@ public abstract class Tile : MonoBehaviour
         if(isMouseIn) highlight.SetActive(true);
         else highlight.SetActive(false);
     }
-    //Obtiene la posicion
-    public Vector2 GetPosition()
-    {
-        //Debug.Log(position.x + " " + position.y);
-        return position;
-    }
 
     //Movimiento del personaje
     public void SetUnit(BaseUnit unit)
@@ -104,8 +115,5 @@ public abstract class Tile : MonoBehaviour
         return this.accesibleTileshighlight;
     }*/
 
-    public GameObject GetAccesibleHighlight()
-    {
-        return accesibleTilehighlight;
-    }
+    
 }

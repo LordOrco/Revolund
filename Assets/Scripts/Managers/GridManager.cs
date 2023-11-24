@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 //Manager del Grid, crea un grid y maneja los tiles del mapa
 public class GridManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class GridManager : MonoBehaviour
     private Vector2 gridCenter;
 
     //Tipos de tiles
-    [SerializeField] private Tile grassTile, mountainTile;
+    [SerializeField] private Tile grassTile, mountainTile, deployTowerTile;
     //Camara
     [SerializeField] private Transform cam;
 
@@ -38,12 +39,20 @@ public class GridManager : MonoBehaviour
     public void GenerateGrid()
     {
         tiles = new Dictionary<Vector2 , Tile>();
-        for(int x = 0; x < width; x++)
+        int random;
+        Tile randomTile = null;
+        bool hasTowerSpawned = false;
+        for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 //si el random da 3 spawnea una Mountain, si no un Grass
-                var randomTile = Random.Range(0,6) == 3 ? mountainTile : grassTile;
+                random = Random.Range(0, 10);
+                if (random == 0) randomTile = mountainTile;
+                else if (random == 8 && !hasTowerSpawned) { randomTile = deployTowerTile; hasTowerSpawned = true; }
+                else { randomTile = grassTile; }
+
+                //var randomTile = Random.Range(0,6) == 3 ? mountainTile : grassTile;
                 var spawnedTile = Instantiate(randomTile, new Vector3(x, y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
 
@@ -60,7 +69,7 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 key = new Vector2(x, y);
-                if (tiles[key].Walkable)
+                if (tiles[key].GetNeedsAdyacentNodes())
                     tiles[key].node.SetAdyacentNodes(GetNeighboursNodes(tiles[key]));
             }
         }
@@ -131,7 +140,7 @@ public class GridManager : MonoBehaviour
         }
 
         //Si es una Deploy Tower, obtiene las esquinas
-        /*if(tile.name =="Deploy Tower")
+        if(tile is DeployTowerTile)
         {
             //x+1, y+1
             key = new Vector2(x + 1, y + 1);
@@ -160,7 +169,7 @@ public class GridManager : MonoBehaviour
             {
                 nodes.Add(tiles[key].node);
             }
-        }*/
+        }
         return nodes;
     }
 

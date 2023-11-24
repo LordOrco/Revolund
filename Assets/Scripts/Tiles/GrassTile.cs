@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class GrassTile : Tile
 {
-    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor;
+    //Colores de AccesibleHighlight
+    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor, deployUnitColor;
+
+    //Bool si esta resaltado por Deploy Tower
+    public bool isAccesedByDeployTower;
     public override void Init(Vector2 position)
     {
         //Cambia de color si es par o impar
@@ -16,6 +20,7 @@ public class GrassTile : Tile
         node = new Node(this);
         enemiesPathing = 0;
         heroesPathing = 0;
+        isAccesedByDeployTower = false;
     }
 
 
@@ -56,8 +61,7 @@ public class GrassTile : Tile
                         //si hay un heroe seleccionado y a rango, destruye el enemigo
                         if (isAtDistance)
                         {
-                            var enemy = (BaseEnemy)OccupiedUnit;
-                            Destroy(enemy.gameObject);
+                            OccupiedUnit.Kill();
                             UnitManager.instance.SetSelectedHero(null);
                         }
                         else
@@ -68,7 +72,8 @@ public class GrassTile : Tile
                     //...y es un enemigo y no tengo seleccionado un heroe
                     else
                     {
-                        OccupiedUnit.ShowPathingTiles();
+                        if(OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
+                        else OccupiedUnit.ShowPathingTiles();
                     }
                 }//Si la casilla no está ocupada y tienes un heroe seleccionado...
                 else if (UnitManager.instance.SelectedHero != null)
@@ -93,21 +98,45 @@ public class GrassTile : Tile
         }
     
     }
+
+    //Funcion que instancia unidades si es un tile accesible poor una Deploy Tower
+    private void OnMouseOver()
+    {
+        if (isAccesedByDeployTower && Input.GetMouseButtonDown(1) )
+        {
+            UnitManager.instance.SpawnHeroOnDemand(this);
+        }
+    }
     //Metodo que establece colores de los highlights y devuelve dicha tile
     public override void UpdateTileHighlight()
     {
+        //Si el raton esta encima, highlight amarailloo, si no lo desactiva
         if (isMouseIn) highlight.SetActive(true);
         else highlight.SetActive(false);
 
+        //Si es accesib
+        if (isAccesedByDeployTower)
+        {
+            accesibleTilehighlight.SetActive(true);
+            accesibleTilehighlight.GetComponent<SpriteRenderer>().color = deployUnitColor;
+        }
+        else
+        {
+            //Si hay Enemigos o Heroes que necesitan el highlight, lo activa, si no lo desactiva
+            if (enemiesPathing > 0 || heroesPathing > 0) accesibleTilehighlight.SetActive(true);
+            else accesibleTilehighlight.SetActive(false);
 
-        if (enemiesPathing > 0 || heroesPathing > 0) accesibleTilehighlight.SetActive(true);
-        else accesibleTilehighlight.SetActive(false);
+            //Si ambos bandos buscan, activa el morado
+            if (enemiesPathing > 0 && heroesPathing > 0)
+                accesibleTilehighlight.GetComponent<SpriteRenderer>().color = heroAndEnemyPathingColor;
 
-        if (enemiesPathing > 0 && heroesPathing > 0)
-            accesibleTilehighlight.GetComponent<SpriteRenderer>().color = heroAndEnemyPathingColor;
-        else if(enemiesPathing > 0 && heroesPathing <= 0)
-            accesibleTilehighlight.GetComponent<SpriteRenderer>().color = enemyPathingColor;
-        else accesibleTilehighlight.GetComponent<SpriteRenderer>().color = heroPathingColor;
+            //Si solo hay enemigo buscando, activa el rojo
+            else if (enemiesPathing > 0 && heroesPathing <= 0)
+                accesibleTilehighlight.GetComponent<SpriteRenderer>().color = enemyPathingColor;
+
+            //Si solo hay heroe buscando, activa el rojo
+            else accesibleTilehighlight.GetComponent<SpriteRenderer>().color = heroPathingColor;
+        }
         //Debug.Log("Enemigos = " + enemiesPathing + " Heroes = " + heroesPathing);
     }
 }

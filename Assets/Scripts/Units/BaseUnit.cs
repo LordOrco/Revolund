@@ -32,4 +32,12 @@ public class BaseUnit : MonoBehaviour
     public virtual void ShowPathingTiles() {; }
     
     public virtual void HidePathingTiles() {; }
+
+    public virtual void Kill()
+    {
+        HidePathingTiles();
+        Destroy(gameObject);
+    }
 }
+
+

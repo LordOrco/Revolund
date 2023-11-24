@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseEnemy : BaseUnit
 {
+    //Activa los highlights de las casillas
     public override void ShowPathingTiles()
     {
         if (!GetAreAccesibleTilesShown())
@@ -18,24 +19,22 @@ public class BaseEnemy : BaseUnit
             }
             SetAreAccesibleTilesShown(true);
         }
-        else
-        {
-            HidePathingTiles();
-        }
     }
-
+    //Desactiva los highlights de las casillas
     public override void HidePathingTiles()
     {
-
-        for (int i = 0; i < GetHighlightedTiles().Count; i++)
+        if (GetAreAccesibleTilesShown())
         {
-            GetHighlightedTiles()[i].enemiesPathing--;
-            Debug.Log(GetHighlightedTiles()[i].enemiesPathing);
+            for (int i = 0; i < GetHighlightedTiles().Count; i++)
+            {
+                GetHighlightedTiles()[i].enemiesPathing--;
+                Debug.Log(GetHighlightedTiles()[i].enemiesPathing);
 
-            GetHighlightedTiles()[i].UpdateTileHighlight();
+                GetHighlightedTiles()[i].UpdateTileHighlight();
+            }
+            SetHighlightedTiles(null);
+
+            SetAreAccesibleTilesShown(false);
         }
-        SetHighlightedTiles(null);
-
-        SetAreAccesibleTilesShown(false);
     }
 }
