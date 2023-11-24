@@ -6,10 +6,11 @@ using static UnityEditor.PlayerSettings;
 
 public class ControlsManager : MonoBehaviour
 {
-    public KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space};
+    private KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space, KeyCode.Escape};
     private Camera camara;
     private GridManager grid;   
     private UnitManager unitManager;
+    [SerializeField] private MenuPausa pauseMenu;
 
     private float panSpeed = 10f;
     private float panBorderThickness = 10f;
@@ -49,6 +50,7 @@ public class ControlsManager : MonoBehaviour
     void Update()
     {
         cameraControls();
+        PauseMenu();
     }
 
 
@@ -180,6 +182,14 @@ public class ControlsManager : MonoBehaviour
             
             //Se mueve la cámara
             camara.transform.position = pos;
+        }
+    }
+
+    public void PauseMenu()
+    {
+        if (Input.GetKeyDown(controls[5]))
+        {
+            pauseMenu.TogglePause();
         }
     }
 }

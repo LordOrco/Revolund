@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class SettingsManager : MonoBehaviour
         volume = PlayerPrefs.GetFloat("volume", 1f);
         fontSize = PlayerPrefs.GetInt("fontSize", 0);
         ApplyOptions();
+
     }
 
     public void ApplyOptions()

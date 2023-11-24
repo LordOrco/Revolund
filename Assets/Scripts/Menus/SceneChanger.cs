@@ -9,13 +9,17 @@ public class SceneChanger : MonoBehaviour
 
     public void ChangeScene()
     {
-        if(targetScene != -1)
+        if(targetScene == -1)
         {
-            SceneManager.LoadScene(targetScene);
+            Application.Quit();
+        }
+        else if(targetScene == -2)
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("scene"));
         }
         else
         {
-            Application.Quit();
+            SceneManager.LoadScene(targetScene);
         }
     }
 }
