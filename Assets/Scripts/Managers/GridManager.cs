@@ -9,6 +9,9 @@ public class GridManager : MonoBehaviour
 {
     //Ancho y alto del tablero
     [SerializeField] private int width,height;
+    //Centro del tablero
+    private Vector2 gridCenter;
+
     //Tipos de tiles
     [SerializeField] private Tile grassTile, mountainTile;
     //Camara
@@ -28,6 +31,7 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        gridCenter = new Vector2((float)width / 2 - 0.5f, (float)height / 2 - 0.5f);
     }
 
     //Genera un grid con las dimensiones especificadas
@@ -61,7 +65,7 @@ public class GridManager : MonoBehaviour
             }
         }
         //Posiciona la camara en el centro del tablero
-        cam.transform.position = new Vector3((float) width/2 -0.5f, (float)height / 2 - 0.5f,-10);
+        cam.transform.position = new Vector3(gridCenter.x, gridCenter.y, -10);
 
         //Cambia al estado de generar las unidades aliadas
         GameManager.Instance.ChangeState(GameManager.GameState.GeneratePlayerUnits);
@@ -158,6 +162,19 @@ public class GridManager : MonoBehaviour
             }
         }*/
         return nodes;
+    }
+
+    public int GetWidth()
+    {
+        return width;
+    }
+    public int GetHeight()
+    {
+        return height;
+    }
+    public Vector2 GetGridCenter()
+    {
+        return gridCenter;
     }
 }
     
