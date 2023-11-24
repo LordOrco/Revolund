@@ -98,7 +98,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Enemy
-  OccupiedTile: {fileID: 0}
   Faction: 1
-  areAccesibleTilesShown: 0
-  highlightedTiles: []
+  maxG: 3

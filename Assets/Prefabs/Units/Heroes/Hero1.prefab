@@ -98,5 +98,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Hero
-  OccupiedTile: {fileID: 0}
   Faction: 0
+  maxG: 3

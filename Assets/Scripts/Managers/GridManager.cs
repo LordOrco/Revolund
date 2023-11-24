@@ -127,7 +127,7 @@ public class GridManager : MonoBehaviour
         }
 
         //Si es una Deploy Tower, obtiene las esquinas
-        if(tile.name =="Deploy Tower")
+        /*if(tile.name =="Deploy Tower")
         {
             //x+1, y+1
             key = new Vector2(x + 1, y + 1);
@@ -156,7 +156,7 @@ public class GridManager : MonoBehaviour
             {
                 nodes.Add(tiles[key].node);
             }
-        }
+        }*/
         return nodes;
     }
 }

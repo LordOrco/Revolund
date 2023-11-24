@@ -73,6 +73,15 @@ public class UnitManager : MonoBehaviour
     //Selecciona al heroe pasado como parámetro
     public void SetSelectedHero(BaseHero hero)
     {
+        Debug.Log(hero);
+        if (hero != null)
+        {
+            hero.ShowPathingTiles();
+        }
+        if(hero == null) 
+        {
+            SelectedHero.HidePathingTiles();
+        }
         SelectedHero = hero;
         //Enseña al heroe seleccionado
         MenuManager.Instance.ShowSelectedHero(hero);
