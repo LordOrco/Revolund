@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseEnemy : BaseUnit
 {
+
+    public Slider barraVida;
+
+    public void Awake()
+    {
+        Debug.Log("Awake");
+        barraVida.maxValue = HP;
+        barraVida.minValue= 0;
+
+    }
     //Activa los highlights de las casillas
     public override void ShowPathingTiles()
     {
@@ -35,6 +46,16 @@ public class BaseEnemy : BaseUnit
             SetHighlightedTiles(null);
 
             SetAreAccesibleTilesShown(false);
+        }
+    }
+    public virtual void ReceiveDmg(int dmg)
+    {
+        barraVida.value = HP;
+        HP -= dmg;
+        Debug.Log("HP :" + HP);
+        if (HP <= 0)
+        {
+            Kill();
         }
     }
 }
