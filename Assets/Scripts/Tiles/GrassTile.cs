@@ -6,7 +6,7 @@ using UnityEngine;
 public class GrassTile : Tile
 {
     //Colores de AccesibleHighlight
-    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor, deployUnitColor;
+    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor, deployUnitColor, attackableEenemyColor;
 
     //Bool si esta resaltado por Deploy Tower
     public bool isAccesedByDeployTower;
@@ -61,7 +61,8 @@ public class GrassTile : Tile
                         //si hay un heroe seleccionado y a rango, destruye el enemigo
                         if (isAtDistance)
                         {
-                            OccupiedUnit.Kill();
+                            //OccupiedUnit.Kill();
+                            UnitManager.instance.SelectedHero.Attack(OccupiedUnit);
                             UnitManager.instance.SetSelectedHero(null);
                         }
                         else
@@ -119,6 +120,11 @@ public class GrassTile : Tile
         {
             accesibleTilehighlight.SetActive(true);
             accesibleTilehighlight.GetComponent<SpriteRenderer>().color = deployUnitColor;
+        }
+        else if (heroesPathing > 0 && (OccupiedUnit != null && OccupiedUnit.Faction == Faction.Enemy))
+        {
+            accesibleTilehighlight.SetActive(true);
+            accesibleTilehighlight.GetComponent<SpriteRenderer>().color = attackableEenemyColor;
         }
         else
         {
