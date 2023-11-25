@@ -9,32 +9,24 @@ using static UnityEngine.UI.CanvasScaler;
 
 public class A_star: MonoBehaviour
 {
-    //Lsitas para implementar A*
-    private List<Node> opened_list;
-    private List<Node> closed_list;
-    private Stack<Node> movement_list;
-
-    //Bool que indica si se ha alcanzado al meta
-    private bool meta = false;
-
     //Pasos
     private int steps = 0;
-    public int maxSteps = 500;
+    public int maxSteps = 3000;
 
-    //Metodo qeud devuelve si el heroe puede acceder por distancia
-    public bool Repath(Tile metaTile, Tile actualTile,int maxG)
+    //Metodo que devuelve el camino a la tile, solo la parte dentro del g de la unidad
+    public Stack<Tile> Repath(Tile metaTile, BaseUnit unit)
     {
-        //Booleano para devolver true si se puede llegar y false si no.
-        //False de primeras por comodidad
-        bool canWalk = false;
-
+        bool meta = false;
+        int maxG = unit.maxG;
+        Tile actualTile = unit.GetOccupiedTile();
         //Establecer el meta del nodo a true
         metaTile.node.meta = true;
 
         //Creacion de listas dinámicamente
-        opened_list = new List<Node>();
-        closed_list = new List<Node>();
-        movement_list = new Stack<Node>();
+        List<Node> opened_list = new List<Node>();
+        List<Node> closed_list = new List<Node>();
+        Stack<Node> movement_list = new Stack<Node>();
+        Stack<Tile> path = new Stack<Tile>();
 
         //Añadir el nodo de la ficha ocupada
         opened_list.Add(actualTile.node);
@@ -71,36 +63,39 @@ public class A_star: MonoBehaviour
 
         }
         //Debug.Log(steps);
-
+        Debug.Log(steps);
         if (meta)
         {
             Debug.Log(closed_list.Last().g);
+            //Si es accesible calculamos el camino.
             //Cogemos última posición
-            //movement_list.Push(closed_list.Last());
+            movement_list.Push(closed_list.Last());
             //Añadimos todos los movimientos hasta encontrar la posición inicial mediante el padre de cada nodo
-           /* while (movement_list.Peek().parent != null)
+            while (movement_list.Peek().parent != null)
             {
-                //Debug.Log("Parte del camino encontrado");
-                movement_list.Push(movement_list.Peek().parent);
-            }*/
-
-            //Si está en rango, bool a true
-            if(closed_list.Last().g <= maxG) canWalk = true;
+                    //Debug.Log("Parte del camino encontrado");
+                    movement_list.Push(movement_list.Peek().parent);
+            }
+            for (int i = 0; i < movement_list.Count; i++)
+            {
+                if (movement_list.ElementAt(i).g <= maxG)
+                    path.Push(movement_list.ElementAt(i).myTile);
+            }
         }
         else
         {
             Debug.Log("No se puede llegar a la meta");
             //EditorApplication.isPlaying = false;
+            path = null;
         }
 
-        CleanAStarRepath(metaTile);
-        Debug.Log(canWalk);
-        return canWalk;
-
+        CleanAStarRepath(metaTile, closed_list);
+        Debug.Log("Movement List: " + path.Count);
+        return path;
 
     }
     //Limpia listas, establece valores a predeterminados.
-    private void CleanAStarRepath(Tile metaTile)
+    private void CleanAStarRepath(Tile metaTile, List<Node> closed_list)
     {
         for (int i = 0; i < closed_list.Count; i++)
         {
@@ -108,7 +103,6 @@ public class A_star: MonoBehaviour
             closed_list[i].g = 0;
         }
         metaTile.node.meta = false;
-        meta = false;
         steps = 0;
     }
 
@@ -116,8 +110,8 @@ public class A_star: MonoBehaviour
     public List<Tile> ObtainAccesibleTiles(BaseUnit unit)
     {
         //Creacion de listas dinámicamente
-        opened_list = new List<Node>();
-        closed_list = new List<Node>();
+        List<Node> opened_list = new List<Node>();
+        List<Node> closed_list = new List<Node>();
         List<Tile> result = new List<Tile>();
 
         Faction faction = unit.Faction;
@@ -151,7 +145,7 @@ public class A_star: MonoBehaviour
             opened_list.Remove(opened_list[0]);
             steps++;
         }
-        Debug.Log("ClosedList " + closed_list.Count());
+        //Debug.Log("ClosedList " + closed_list.Count());
         //Limpieza de los nodos y steps, convertir la lista tiles
         for (int i = 0; i < closed_list.Count; i++)
         {

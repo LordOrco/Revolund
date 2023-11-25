@@ -28,9 +28,13 @@ public class GrassTile : Tile
     {
         //Si no es el turno del jugador no hace nada
         if (GameManager.Instance.State != GameManager.GameState.PlayerTurn) return;
+
+        //Si no se puede andar a ella, no activa el movimiento
         if (!isWalkable) Debug.Log("No se puede andar");
+
         else
         {
+            //Booleano para indicar si esta casilla esta dentro de la distancia de la unidad
             bool isAtDistance;
             {
                 //Si la casilla está ocupada...
@@ -52,12 +56,13 @@ public class GrassTile : Tile
                             
                         }
                     }
+
                     //...y es un enemigo y tengo seleccionado un heroe
                     else if (UnitManager.instance.SelectedHero != null)
                     {
-                        Debug.Log("Enemigo");
-                        isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.GetOccupiedTile(),
-                            UnitManager.instance.SelectedHero.maxG);
+                        if (GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero) != null)
+                            isAtDistance = true;
+                        else isAtDistance = false;
                         //si hay un heroe seleccionado y a rango, destruye el enemigo
                         if (isAtDistance)
                         {
@@ -70,17 +75,25 @@ public class GrassTile : Tile
                             Debug.Log("Enemigo fuera de rango");
                         }
                     }
+
                     //...y es un enemigo y no tengo seleccionado un heroe
                     else
                     {
                         if(OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
                         else OccupiedUnit.ShowPathingTiles();
+
+                        OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
                     }
-                }//Si la casilla no está ocupada y tienes un heroe seleccionado...
+
+                }
+                
+                //Si la casilla no está ocupada y tienes un heroe seleccionado...
                 else if (UnitManager.instance.SelectedHero != null)
                 {
-                    isAtDistance = GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero.GetOccupiedTile(), 
-                        UnitManager.instance.SelectedHero.maxG);
+                    if (GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero) != null)
+                        isAtDistance = true;
+                    else isAtDistance = false;
+                  
                     //..y hay un heroe seleccionado, se puede andar y está a distancia, mueve el personaje
                     if (UnitManager.instance.SelectedHero != null && Walkable && isAtDistance)
                     {
@@ -90,6 +103,7 @@ public class GrassTile : Tile
                         UnitManager.instance.SetSelectedHero(null);
                     }
                 }
+
                 //Si la casilla no está ocupada y no tienes un heroe seleccionado...
                 else
                 {
@@ -100,7 +114,7 @@ public class GrassTile : Tile
     
     }
 
-    //Funcion que instancia unidades si es un tile accesible poor una Deploy Tower
+    //Funcion que instancia unidades si es un tile accesible por una Deploy Tower
     private void OnMouseOver()
     {
         if (isAccesedByDeployTower && Input.GetMouseButtonDown(1) )
@@ -108,6 +122,7 @@ public class GrassTile : Tile
             UnitManager.instance.SpawnHeroOnDemand(this);
         }
     }
+
     //Metodo que establece colores de los highlights y devuelve dicha tile
     public override void UpdateTileHighlight()
     {
