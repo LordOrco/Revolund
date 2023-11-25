@@ -100,3 +100,6 @@ MonoBehaviour:
   unitName: Hero
   Faction: 0
   maxG: 3
+  HP: 10
+  minAttack: 3
+  maxAttack: 5

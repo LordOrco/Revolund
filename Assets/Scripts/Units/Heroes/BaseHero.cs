@@ -8,7 +8,7 @@ public class BaseHero : BaseUnit
     public override void ShowPathingTiles()
     {
         SetHighlightedTiles(GridManager.instance.a_Star.ObtainAccesibleTiles(this));
-        Debug.Log("HeroesPathing2 : " + GetHighlightedTiles().Count);
+        //Debug.Log("HeroesPathing2 : " + GetHighlightedTiles().Count);
         for (int i = 0; i < GetHighlightedTiles().Count; i++)
         {
             GetHighlightedTiles()[i].heroesPathing++;
@@ -26,7 +26,7 @@ public class BaseHero : BaseUnit
         for (int i = 0; i < GetHighlightedTiles().Count; i++)
         {
             GetHighlightedTiles()[i].heroesPathing--;
-            Debug.Log(GetHighlightedTiles()[i].heroesPathing);
+            //Debug.Log(GetHighlightedTiles()[i].heroesPathing);
 
             GetHighlightedTiles()[i].UpdateTileHighlight();
         }

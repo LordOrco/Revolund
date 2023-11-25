@@ -185,5 +185,15 @@ public class GridManager : MonoBehaviour
     {
         return gridCenter;
     }
+
+    public bool AreTilesAdjacent(Tile tile1, Tile tile2)
+    {
+        // Obtiene las posiciones de las dos casillas
+        Vector2 position1 = tile1.GetPosition();
+        Vector2 position2 = tile2.GetPosition();
+
+        // Verifica si las casillas son adyacentes
+        return Mathf.Abs(position1.x - position2.x) + Mathf.Abs(position1.y - position2.y) == 1;
+    }
+
 }
-    
