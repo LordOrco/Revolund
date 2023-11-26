@@ -11,8 +11,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] public List<BaseHero> tropas = new List<BaseHero>();
     [SerializeField] private TextMeshProUGUI dineroGUI;
     private InventoryManager inventoryManager;
-    private int dinero = 0;
-    private int dineroInicial = 1000;
+    public int dinero = 0;
+    public int dineroInicial = 1000;
     [SerializeField] public List<Button> poderComprarGUI = new List<Button>();
     public List<int> precios = new List<int>();
     void Start()

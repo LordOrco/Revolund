@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour
         //switch de estados
         switch (newState) { 
             case GameState.GenerateGrid:
-                GridManager.instance.GenerateGrid();
+                //GridManager.instance.GenerateGrid();
+                GridManager.instance.GenerateTutorialGrid();
                 break;
             case GameState.GeneratePlayerUnits:
                 UnitManager.instance.SpawnHeroes();

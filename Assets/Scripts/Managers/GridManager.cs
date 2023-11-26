@@ -79,7 +79,65 @@ public class GridManager : MonoBehaviour
         //Cambia al estado de generar las unidades aliadas
         GameManager.Instance.ChangeState(GameManager.GameState.GeneratePlayerUnits);
     }
-    
+
+    public void GenerateTutorialGrid()
+    {
+        tiles = new Dictionary<Vector2, Tile>();
+        int random;
+        Tile actualTile = null;
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                switch (x,y)
+                {
+                    default:
+                        actualTile = grassTile;       
+                        break;
+
+                    case (4, 0): case (5, 0): case (6, 0): case (7, 0): case (8, 0): case (9, 2): case (9, 3): case (10, 2): case (12, 3): case (12, 4):
+                    case (13, 3): case (13, 2): case (17, 1): case (17, 2): case (17, 3): case (17, 4): case (14, 5): case (14, 6): case (14, 7): case (1, 6):
+                    case (1, 7): case (1, 8): case (1, 9): case (1, 10): case (2, 10): case (4, 6): case (5, 6): case (6, 8): case (6, 9): case (6, 10):
+                    case (14, 10): case (15, 10): case (16, 10): case (17, 10): case (5, 11): case (5, 12): case (5, 13): case (5, 14): case (19, 19): case (19, 18):
+                    case (6, 12): case (6, 13): case (6, 14): case (6, 15): case (6, 16): case (6, 17): case (6,19): case (5, 19): case (4, 19): case (3, 19):
+                    case (2, 19): case (7, 16): case (8, 17): case (0, 15): case (0, 16): case (0, 17): case (1,17): case (16, 14): case (17, 14): case (17, 15):
+                    case (9, 12): case (10, 12): case (10, 13): case (11, 13): case (12, 13): case (13, 13): case (13,14): case (13, 15): case (13, 16):
+                        actualTile = mountainTile;
+                        break;
+
+                    case (3, 2): case (10, 9): case (15, 17):
+                        actualTile = deployTowerTile;
+                        break;
+                }
+
+                //var randomTile = Random.Range(0,6) == 3 ? mountainTile : grassTile;
+                var spawnedTile = Instantiate(actualTile, new Vector3(x, y), Quaternion.identity);
+                spawnedTile.name = $"Tile {x} {y}";
+
+                tiles[new Vector2(x, y)] = spawnedTile;
+
+                spawnedTile.Init(new Vector2(x, y), Faction.Hero);
+            }
+        }
+
+        Vector2 key;
+        //for posterior para asociar nodos
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                key = new Vector2(x, y);
+                if (tiles[key].GetNeedsAdyacentNodes())
+                    tiles[key].node.SetAdyacentNodes(GetNeighboursNodes(tiles[key]));
+            }
+        }
+        //Posiciona la camara en el centro del tablero
+        cam.transform.position = new Vector3(gridCenter.x, gridCenter.y, -10);
+
+        //Cambia al estado de generar las unidades aliadas
+        GameManager.Instance.ChangeState(GameManager.GameState.GeneratePlayerUnits);
+    }
+
     //Devuelve una posicion a la izquierda del tablero para spawnear heroes
     public Tile GetHeroSpawnedTile()
     {
