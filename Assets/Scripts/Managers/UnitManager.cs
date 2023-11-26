@@ -22,6 +22,8 @@ public class UnitManager : MonoBehaviour
     public bool canInstance;
     private void Awake()
     {
+        List<BaseHero> heroList = new List<BaseHero>();
+        List<BaseEnemy> enemyList = new List<BaseEnemy>();
         instance = this;
 
         //Obtiene todas las unidades en la carpeta Units que sean ScpritableUnits
@@ -35,15 +37,13 @@ public class UnitManager : MonoBehaviour
         //for(int i = 0; i < unitList.Count; i++) { }
         for (int i = 0; i < heroCount; i++) {
             //var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
-            var spawnedHero = Instantiate(hero);
-            heroList.Add(spawnedHero);
+            BaseHero spawnedHero = Instantiate(hero);
 
             //Obtiene un Tile donde spawnear el heroe
             var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
 
             //Asocia el heroe a la casilla
             randomSpawnTile.SetUnit(spawnedHero);
-
         }
 
         //Cambia al estado de generar enemigos
@@ -66,7 +66,6 @@ public class UnitManager : MonoBehaviour
         {
             //var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
             var spawnedEnemy = Instantiate(enemy);
-            enemyList.Add(spawnedEnemy);
 
             //Obtiene un Tile donde spawnear el enemigo
             var randomSpawanTile = GridManager.instance.GetEnemySpawnedTile();
@@ -118,6 +117,14 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void cancelBuyUnit(BaseHero Hero)
+    {
+        if(hero == null)
+        {
+            canInstance = false;
+            SelectedHero = null;
+        }
+    }
     public void SetBoughtHero(BaseHero hero)
     {
         SelectedHero = hero;

@@ -131,16 +131,6 @@ public class GrassTile : Tile
 
         }
     }
-
-    //Funcion que instancia unidades si es un tile accesible por una Deploy Tower
-    private void OnMouseOver()
-    {
-        if (isAccesedByDeployTower && Input.GetMouseButtonDown(1) )
-        {
-            UnitManager.instance.SpawnHeroOnDemand(this);
-        }
-    }
-
     //Metodo que establece colores de los highlights y devuelve dicha tile
     public override void UpdateTileHighlight()
     {
