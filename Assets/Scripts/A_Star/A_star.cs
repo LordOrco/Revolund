@@ -66,7 +66,7 @@ public class A_star: MonoBehaviour
         Debug.Log(steps);
         if (meta)
         {
-            Debug.Log(closed_list.Last().g);
+            //Debug.Log(closed_list.Last().g);
             //Si es accesible calculamos el camino.
             //Cogemos última posición
             movement_list.Push(closed_list.Last());
@@ -79,7 +79,11 @@ public class A_star: MonoBehaviour
             for (int i = 0; i < movement_list.Count; i++)
             {
                 if (movement_list.ElementAt(i).g <= maxG)
+                {
                     path.Push(movement_list.ElementAt(i).myTile);
+                    //Debug.Log(movement_list.ElementAt(i).myTile);
+                }
+
             }
         }
         else

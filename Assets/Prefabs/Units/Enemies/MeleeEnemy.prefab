@@ -101,7 +101,7 @@ RectTransform:
   m_GameObject: {fileID: 2511241149211568362}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.007815191, y: 0.007815191, z: 0.007815191}
+  m_LocalScale: {x: 0.0038099056, y: 0.007815191, z: 0.007815191}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9087873802047471438}
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.053
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -189,7 +189,7 @@ RectTransform:
   m_GameObject: {fileID: 2932984137573110276}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1375, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7780170476602063961}
@@ -197,7 +197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: 0.6997528, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3860687519326812380
@@ -474,8 +474,8 @@ MonoBehaviour:
   Faction: 1
   maxG: 3
   HP: 10
-  minAttack: 3
-  maxAttack: 5
+  minAttack: 1
+  maxAttack: 1
   barraVida: {fileID: 5882187012627285258}
 --- !u!4 &9143966427852209482 stripped
 Transform:

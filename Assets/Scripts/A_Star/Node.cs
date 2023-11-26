@@ -27,10 +27,14 @@ public class Node
     //Metodo para encontrar camino A*
     public void Path(Node pParent, Vector2 pMetaPos)
     {
+        
         Vector2 currentPos = myTile.GetPosition();
         if(meta != false){
+            /*
             h_star = math.abs((int)(currentPos.x - pMetaPos.x));
             h_star += math.abs((int)(currentPos.y - pMetaPos.y));
+            */
+            h_star = Manhattan(pMetaPos);
         }
 
         GNode(pParent);
@@ -51,6 +55,17 @@ public class Node
             g = 0;
         }
         return g;
+    }
+
+    public int Manhattan(Vector2 pMetaPos)
+    {
+        Vector2 currentPos = myTile.GetPosition();
+        int manhattan;
+        
+        manhattan = math.abs((int)(currentPos.x - pMetaPos.x));
+        manhattan += math.abs((int)(currentPos.y - pMetaPos.y));
+        
+        return manhattan;
     }
 
     //Setter de adyacentNodes

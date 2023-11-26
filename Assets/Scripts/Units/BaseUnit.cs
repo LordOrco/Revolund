@@ -29,12 +29,12 @@ public class BaseUnit : MonoBehaviour
 
     [SerializeField] private Slider barraVida;
 
-    public List<Tile> GetHighlightedTiles() {  return highlightedTiles; }
+    public List<Tile> GetHighlightedTiles() { return highlightedTiles; }
     public void SetHighlightedTiles(List<Tile> tiles) { this.highlightedTiles = tiles; }
     public bool GetAreAccesibleTilesShown() { return areAccesibleTilesShown; }
     public void SetAreAccesibleTilesShown(bool state) { areAccesibleTilesShown = state; }
     public Tile GetOccupiedTile() { return OccupiedTile; }
-    public void SetOccupiedTile(Tile tile) {  this.OccupiedTile = tile; }
+    public void SetOccupiedTile(Tile tile) { this.OccupiedTile = tile; }
 
     protected virtual void Awake()
     {
@@ -77,7 +77,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     public virtual void ShowPathingTiles() {; }
-    
+
     public virtual void HidePathingTiles() {; }
 
     protected virtual void Kill()
@@ -88,11 +88,16 @@ public class BaseUnit : MonoBehaviour
 
     public virtual void Attack(BaseUnit enemy)
     {
-        Stack<Tile> currentPath;
-        currentPath = CalculatePathToEnemy(enemy);
-        MoveToTile(currentPath.Last());
-        ApplyDmg(enemy);
-        Debug.Log("Enemy: " + enemy.name);
+        Stack<Tile> currentPath = new Stack<Tile>();
+        Tile targetTile;
+        targetTile = EvaluateEnemyAdyacentTiles(enemy);
+        currentPath = CalculatePathToTile(targetTile);
+        if (currentPath != null)
+        {
+            MoveToTile(currentPath.Peek());
+            ApplyDmg(enemy);
+        }
+        //Debug.Log("Enemy: " + enemy.name);
     }
 
     public virtual void ReceiveDmg(int dmg)
@@ -101,7 +106,7 @@ public class BaseUnit : MonoBehaviour
         Debug.Log("HP :" + HP);
 
         barraVida.value = HP;
-        if(HP <= 0)
+        if (HP <= 0)
         {
             Invoke("Kill", 1f);
         }
@@ -124,27 +129,83 @@ public class BaseUnit : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, movementSpeed * Time.deltaTime);
         */
         // Mueve al enemigo a la nueva posición       
-        targetTile.SetUnit(this);
+        if (targetTile != null)
+            targetTile.SetUnit(this);
+        else
+            Debug.Log("MoveToTile no hay camino");
         ///currentPath = null;
-        
-        
+
+
     }
 
     protected virtual Stack<Tile> CalculatePathToEnemy(BaseUnit enemy)
     {
-        Stack<Tile> currentPath = new Stack<Tile>();
         if (enemy != null)
         {
             // Usa A* para obtener la ruta más corta
-            currentPath = GridManager.instance.a_Star.Repath(GetOccupiedTile(), enemy);
+            Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(enemy.GetOccupiedTile(), this);
             Debug.Log("CalculatePathToEnemy " + currentPath.Count);
-            //while (currentPath.Count > 2) currentPath.Pop();
+            return currentPath;
+            //for(int i = 0; i  < maxG; i++) currentPath.Pop();
         }
         else
         {
-            currentPath = null;
+            return null;
         }
-        return currentPath;
+    }
+
+    protected virtual Stack<Tile> CalculatePathToTile(Tile tile)
+    {
+        if (tile != null)
+        {
+            Stack<Tile> currentPath = new Stack<Tile>();
+            // Usa A* para obtener la ruta más corta
+            currentPath = GridManager.instance.a_Star.Repath(tile, this);
+            Debug.Log("CalculatePathToEnemy " + currentPath.Count);
+            //for(int i = 0; i  < maxG; i++) currentPath.Pop();
+            return currentPath;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
+    protected virtual Tile EvaluateEnemyAdyacentTiles(BaseUnit enemy)
+    {
+        if (enemy != null)
+        {
+            Tile enemyTile = enemy.GetOccupiedTile();
+            List<Tile> closestTiles = new List<Tile>();
+            int minDistance = 100;
+            int distance;
+
+            for (int i = 0; i < enemyTile.node.adyacent_Nodes.Count; i++)
+            {
+                distance = enemyTile.node.adyacent_Nodes.ElementAt(i).Manhattan(OccupiedTile.GetPosition());
+                if (distance <= minDistance)
+                {
+                    minDistance = distance;
+                    closestTiles.Add(enemyTile.node.adyacent_Nodes.ElementAt(i).myTile);
+
+                }
+                else Debug.Log("Tile Ocupada: " + enemyTile.node.adyacent_Nodes.ElementAt(i).myTile);
+            }
+
+            for (int i = 0; i < closestTiles.Count; i++)
+            {
+                if (closestTiles.ElementAt(i).OccupiedUnit == null
+                || closestTiles.ElementAt(i).OccupiedUnit == this) { return closestTiles.ElementAt(i); }
+            }
+            return null;
+
+        }
+
+        else
+        {
+            return null;
+        }
     }
 }
 

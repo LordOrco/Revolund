@@ -48,8 +48,7 @@ public class UnitManager : MonoBehaviour
     //Spawnea heroe aleatorio en al tile pasada
     public void SpawnHeroOnDemand(Tile tile)
     {
-        var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
-        var spawnedHero = Instantiate(randomPrefab);
+        var spawnedHero = Instantiate(hero);
         tile.SetUnit(spawnedHero);
     }
 
