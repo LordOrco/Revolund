@@ -178,7 +178,54 @@ public class BaseUnit : MonoBehaviour
 
 
     protected virtual Tile EvaluateEnemyAdyacentTiles(Tile enemyTile)
-    {
+    { 
+        List<Node> nodosVacios = new List<Node>();
+        List<Node> nodosOcupados = new List<Node>();
+        Tile minTile = null;
+        int minDistance = 0;
+
+        minTile = enemyTile.node.adyacent_Nodes[0].myTile;
+        minDistance = enemyTile.node.adyacent_Nodes[0].Manhattan(enemyTile.GetPosition());
+
+        for (int i = 0; i < enemyTile.node.adyacent_Nodes.Count; i++)
+        {
+            if(enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition()) < minDistance)
+            {
+                minDistance = enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition());
+                minTile = enemyTile.node.adyacent_Nodes[i].myTile;
+            }
+
+            if (enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit == null)
+            {
+                nodosVacios.Add(enemyTile.node.adyacent_Nodes[i]);
+            }
+        }
+
+        if(nodosVacios.Count > 0)
+        {
+            minTile = nodosVacios[0].myTile;
+            minDistance = nodosVacios[0].Manhattan(enemyTile.GetPosition());
+
+            for(int i = 0; i < nodosVacios.Count; i++)
+            {
+                if (nodosVacios[i].Manhattan(enemyTile.GetPosition()) < minDistance)
+                {
+                    minDistance = enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition());
+                    minTile = enemyTile.node.adyacent_Nodes[i].myTile;
+                }
+            }
+            return minTile;
+        }
+        else
+        {
+
+        }
+
+        for(int i = 0; i < nodosVacios.Count; i++)
+        {
+
+        }
+        
         Stack<Tile> Path = GridManager.instance.a_Star.Repath(enemyTile, this , false);
         Path.Pop();
         return Path.Peek();
