@@ -12,6 +12,8 @@ public class UnitManager : MonoBehaviour
     //Lista de unidades
     private List<ScriptableUnit> unitList;
 
+    [SerializeField] private BaseHero hero;
+    [SerializeField] private BaseEnemy enemy;
     //Heroe seleccionado
     public BaseHero SelectedHero;
     private void Awake()
@@ -25,11 +27,11 @@ public class UnitManager : MonoBehaviour
     //Genera heroes aleatoriamente
     public void SpawnHeroes()
     {
-        var heroCount = 2;
+        var heroCount = 1;
         //for(int i = 0; i < unitList.Count; i++) { }
         for (int i = 0; i < heroCount; i++) {
-            var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
-            var spawnedHero = Instantiate(randomPrefab);
+            //var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
+            var spawnedHero = Instantiate(hero);
 
             //Obtiene un Tile donde spawnear el heroe
             var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
@@ -58,8 +60,8 @@ public class UnitManager : MonoBehaviour
         //for(int i = 0; i < unitList.Count; i++) { }
         for (int i = 0; i < enemyCount; i++)
         {
-            var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
-            var spawnedEnemy = Instantiate(randomPrefab);
+            //var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
+            var spawnedEnemy = Instantiate(enemy);
 
             //Obtiene un Tile donde spawnear el enemigo
             var randomSpawanTile = GridManager.instance.GetEnemySpawnedTile();
@@ -81,7 +83,7 @@ public class UnitManager : MonoBehaviour
     //Selecciona al heroe pasado como parámetro
     public void SetSelectedHero(BaseHero hero)
     {
-        Debug.Log(hero);
+        //Debug.Log(hero);
         if(SelectedHero != null)
         {
             SelectedHero.HidePathingTiles();

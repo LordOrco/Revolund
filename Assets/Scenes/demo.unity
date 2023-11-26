@@ -969,7 +969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf3e0810cc5147418c747610c2c5c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSteps: 500
+  maxSteps: 3000
 --- !u!1 &463316400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,6 +1133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46fd6e36797d5aa4a8177b7ba853f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hero: {fileID: -5067708462106883929, guid: 473bf1145fdef8c4ba64921f627574f2, type: 3}
+  enemy: {fileID: 282772330377995863, guid: ec2ad600d1f1ad345a996fb6ee7d7fa5, type: 3}
   SelectedHero: {fileID: 0}
 --- !u!4 &583686353
 Transform:
