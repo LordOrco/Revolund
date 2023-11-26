@@ -48,8 +48,9 @@ public class GrassTile : Tile
             {
                 if (isAccesedByDeployTower)
                 {
-                    UnitManager.instance.SpawnHeroOnDemand(this);
+                    UnitManager.instance.SpawnHeroOnDemand(this,UnitManager.instance.SelectedHero);
                     UnitManager.instance.canInstance = false;
+                    UnitManager.instance.SelectedHero = null;
                 }
             }
             else

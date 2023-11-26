@@ -43,6 +43,7 @@ public class BaseUnit : MonoBehaviour
 
     protected virtual void Awake()
     {
+        OccupiedTile = null;
         areAccesibleTilesShown = false;
         highlightedTiles = new List<Tile>();
         attackedEnemy = null;

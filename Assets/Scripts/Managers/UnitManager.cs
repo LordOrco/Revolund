@@ -51,7 +51,7 @@ public class UnitManager : MonoBehaviour
     }
 
     //Spawnea heroe aleatorio en al tile pasada
-    public void SpawnHeroOnDemand(Tile tile)
+    public void SpawnHeroOnDemand(Tile tile, BaseHero hero)
     {
         var spawnedHero = Instantiate(hero);
         tile.SetUnit(spawnedHero);
@@ -88,7 +88,7 @@ public class UnitManager : MonoBehaviour
     //Selecciona al heroe pasado como parámetro
     public void SetSelectedHero(BaseHero hero)
     {
-        if (hero.GetOccupiedTile() == null)
+        if (hero != null && hero.GetOccupiedTile() == null)
         {
             canInstance = true;
             SelectedHero = hero;
