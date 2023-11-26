@@ -47,9 +47,11 @@ public class GameManager : MonoBehaviour
                 UnitManager.instance.NewTurn(Faction.Enemy);
                 break;
             case GameState.Victory:
+                //GameObject.FindGameObjectWithTag("Victory").SetActive(true);
                 Debug.Log("Victory");
                 break;
             case GameState.Lose:
+                //GameObject.FindGameObjectWithTag("Lose").SetActive(true);
                 Debug.Log("Lose");
                 break;
             case GameState.Pause:
