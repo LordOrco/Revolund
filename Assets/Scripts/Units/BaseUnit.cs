@@ -33,6 +33,7 @@ public class BaseUnit : MonoBehaviour
 
     [SerializeField] private Slider barraVida;
 
+    public bool canAttack;
     public List<Tile> GetHighlightedTiles() { return highlightedTiles; }
     public void SetHighlightedTiles(List<Tile> tiles) { this.highlightedTiles = tiles; }
     public bool GetAreAccesibleTilesShown() { return areAccesibleTilesShown; }
@@ -48,6 +49,7 @@ public class BaseUnit : MonoBehaviour
         barraVida.maxValue = HP;
         barraVida.value = HP;
         barraVida.minValue = 0;
+        canAttack = true;
     }
     protected virtual void Update()
     { /*
@@ -97,7 +99,7 @@ public class BaseUnit : MonoBehaviour
             attacking = true;
             Debug.Log("TargetTile pasado");
             Stack<Tile> currentPath = CalculatePathToTile(enemy.OccupiedTile);
-            Debug.Log("Target Tile: " + enemy.OccupiedTile);
+            //Debug.Log("Target Tile: " + enemy.OccupiedTile);
             if (currentPath != null)
             {
                 MoveToTile(currentPath.Peek());

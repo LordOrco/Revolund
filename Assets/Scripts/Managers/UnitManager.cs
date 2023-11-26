@@ -12,10 +12,14 @@ public class UnitManager : MonoBehaviour
     //Lista de unidades
     private List<ScriptableUnit> unitList;
 
+    private List<BaseEnemy> enemyList;
+    private List<BaseHero> heroList;
+
     [SerializeField] private BaseHero hero;
     [SerializeField] private BaseEnemy enemy;
     //Heroe seleccionado
     public BaseHero SelectedHero;
+    public bool canInstance;
     private void Awake()
     {
         instance = this;
@@ -32,6 +36,7 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < heroCount; i++) {
             //var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
             var spawnedHero = Instantiate(hero);
+            heroList.Add(spawnedHero);
 
             //Obtiene un Tile donde spawnear el heroe
             var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
@@ -61,6 +66,7 @@ public class UnitManager : MonoBehaviour
         {
             //var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
             var spawnedEnemy = Instantiate(enemy);
+            enemyList.Add(spawnedEnemy);
 
             //Obtiene un Tile donde spawnear el enemigo
             var randomSpawanTile = GridManager.instance.GetEnemySpawnedTile();
@@ -82,28 +88,67 @@ public class UnitManager : MonoBehaviour
     //Selecciona al heroe pasado como parámetro
     public void SetSelectedHero(BaseHero hero)
     {
-        //Debug.Log(hero);
-        if(SelectedHero != null)
+        if (hero.GetOccupiedTile() == null)
         {
-            SelectedHero.HidePathingTiles();
+            canInstance = true;
+            SelectedHero = hero;
         }
+        else
+        {
 
-        if (hero != null)
-        {
-            hero.ShowPathingTiles();
-        }
-        if (hero == null)
-        {
-            SelectedHero.HidePathingTiles();
-        }
 
+            //Debug.Log(hero);
+            if (SelectedHero != null)
+            {
+                SelectedHero.HidePathingTiles();
+            }
+
+            if (hero != null)
+            {
+                hero.ShowPathingTiles();
+            }
+            if (hero == null)
+            {
+                SelectedHero.HidePathingTiles();
+            }
+
+            SelectedHero = hero;
+            //Enseña al heroe seleccionado
+            MenuManager.Instance.ShowSelectedHero(hero);
+        }
+    }
+
+    public void SetBoughtHero(BaseHero hero)
+    {
         SelectedHero = hero;
-        //Enseña al heroe seleccionado
-        MenuManager.Instance.ShowSelectedHero(hero);
     }
 
     public List<ScriptableUnit> GetUnitList()
     {
         return unitList;
+    }
+
+    public void HasToChangeState(int type)
+    {
+        bool change = true;
+        if (type == 0)
+        {
+            for(int i = 0; i < heroList.Count; i++)
+            {
+                if (heroList[i].canAttack) change = false;
+            }
+            if (change) GameManager.Instance.ChangeState(GameManager.GameState.EnemyTurn);
+            Debug.Log("EnemyTurn");
+        }
+        else
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                if (enemyList[i].canAttack) change = false;
+            }
+            if (change) GameManager.Instance.ChangeState(GameManager.GameState.PlayerTurn);
+            Debug.Log("HeroTurn");
+        }
+
     }
 }

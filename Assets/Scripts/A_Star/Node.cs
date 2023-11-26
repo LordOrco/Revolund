@@ -28,9 +28,7 @@ public class Node
     //Metodo para encontrar camino A*
     public void Path(Node pParent, Node pMetaPos)
     {
-        
-        Vector2 currentPos = myTile.GetPosition();
-        if(meta != false){
+        if(pMetaPos != null){
             /*
             h_star = math.abs((int)(currentPos.x - pMetaPos.x));
             h_star += math.abs((int)(currentPos.y - pMetaPos.y));

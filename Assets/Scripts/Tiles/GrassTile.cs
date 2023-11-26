@@ -44,80 +44,91 @@ public class GrassTile : Tile
 
         else
         {
-            //Booleano para indicar si esta casilla esta dentro de la distancia de la unidad
-            bool isAtDistance;
+            if (UnitManager.instance.canInstance)
             {
-                //Si la casilla está ocupada...
-                if (OccupiedUnit != null)
+                if (isAccesedByDeployTower)
                 {
-                    //...por un heroe...
-                    if (OccupiedUnit.Faction == Faction.Hero)
+                    UnitManager.instance.SpawnHeroOnDemand(this);
+                    UnitManager.instance.canInstance = false;
+                }
+            }
+            else
+            {
+                //Booleano para indicar si esta casilla esta dentro de la distancia de la unidad
+                bool isAtDistance;
+                {
+                    //Si la casilla está ocupada...
+                    if (OccupiedUnit != null)
                     {
-                        //...y es el seleccionado, lo deselecciona
-                        if (UnitManager.instance.SelectedHero != null && OccupiedUnit == UnitManager.instance.SelectedHero)
+                        //...por un heroe...
+                        if (OccupiedUnit.Faction == Faction.Hero)
                         {
-                            UnitManager.instance.SetSelectedHero(null);
-                            
+                            //...y es el seleccionado, lo deselecciona
+                            if (UnitManager.instance.SelectedHero != null && OccupiedUnit == UnitManager.instance.SelectedHero)
+                            {
+                                UnitManager.instance.SetSelectedHero(null);
+
+                            }
+                            //y no es el seleccionado, lo selecciona
+                            else
+                            {
+                                UnitManager.instance.SetSelectedHero((BaseHero)OccupiedUnit);
+
+                            }
                         }
-                        //y no es el seleccionado, lo selecciona
+
+                        //...y es un enemigo y tengo seleccionado un heroe
+                        else if (UnitManager.instance.SelectedHero != null)
+                        {
+                            isAtDistance = GridManager.instance.a_Star.IsAtdistance(this, UnitManager.instance.SelectedHero);
+                            //si hay un heroe seleccionado y a rango, destruye el enemigo
+                            if (isAtDistance)
+                            {
+                                //OccupiedUnit.Kill();
+                                UnitManager.instance.SelectedHero.Attack(OccupiedUnit);
+                                UnitManager.instance.SetSelectedHero(null);
+                            }
+                            else
+                            {
+                                Debug.Log("Enemigo fuera de rango");
+                            }
+                        }
+
+                        //...y es un enemigo y no tengo seleccionado un heroe
                         else
                         {
-                            UnitManager.instance.SetSelectedHero((BaseHero) OccupiedUnit);
-                            
+                            if (OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
+                            else OccupiedUnit.ShowPathingTiles();
+                            if (FindAnyObjectByType<BaseHero>() != null)
+                                OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
                         }
+
                     }
 
-                    //...y es un enemigo y tengo seleccionado un heroe
+                    //Si la casilla no está ocupada y tienes un heroe seleccionado...
                     else if (UnitManager.instance.SelectedHero != null)
                     {
                         isAtDistance = GridManager.instance.a_Star.IsAtdistance(this, UnitManager.instance.SelectedHero);
-                        //si hay un heroe seleccionado y a rango, destruye el enemigo
-                        if (isAtDistance)
+
+                        //..y hay un heroe seleccionado, se puede andar y está a distancia, mueve el personaje
+                        if (UnitManager.instance.SelectedHero != null && Walkable && isAtDistance)
                         {
-                            //OccupiedUnit.Kill();
-                            UnitManager.instance.SelectedHero.Attack(OccupiedUnit);
+                            //Debug.Log("Nodo meta antes: " + node);
+                            //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
+                            SetUnit(UnitManager.instance.SelectedHero);
                             UnitManager.instance.SetSelectedHero(null);
                         }
-                        else
-                        {
-                            Debug.Log("Enemigo fuera de rango");
-                        }
                     }
 
-                    //...y es un enemigo y no tengo seleccionado un heroe
+                    //Si la casilla no está ocupada y no tienes un heroe seleccionado...
                     else
                     {
-                        if(OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
-                        else OccupiedUnit.ShowPathingTiles();
-                        if(FindAnyObjectByType<BaseHero>()!= null)
-                            OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
+                        Debug.Log("Selecciona un heroe");
                     }
-
-                }
-                
-                //Si la casilla no está ocupada y tienes un heroe seleccionado...
-                else if (UnitManager.instance.SelectedHero != null)
-                {
-                    isAtDistance = GridManager.instance.a_Star.IsAtdistance(this, UnitManager.instance.SelectedHero);
-
-                    //..y hay un heroe seleccionado, se puede andar y está a distancia, mueve el personaje
-                    if (UnitManager.instance.SelectedHero != null && Walkable && isAtDistance)
-                    {
-                        //Debug.Log("Nodo meta antes: " + node);
-                        //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
-                        SetUnit(UnitManager.instance.SelectedHero);
-                        UnitManager.instance.SetSelectedHero(null);
-                    }
-                }
-
-                //Si la casilla no está ocupada y no tienes un heroe seleccionado...
-                else
-                {
-                    Debug.Log("Selecciona un heroe");
                 }
             }
+
         }
-    
     }
 
     //Funcion que instancia unidades si es un tile accesible por una Deploy Tower

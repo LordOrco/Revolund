@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using UnityEditor;
 using static UnityEngine.UI.CanvasScaler;
+using static Unity.Burst.Intrinsics.X86;
 
 public class A_star: MonoBehaviour
 {
@@ -19,8 +20,11 @@ public class A_star: MonoBehaviour
         List<Node> metaNodes = new List<Node>();
         bool meta = false;
         Tile actualTile = unit.GetOccupiedTile();
+        metaTile.node.meta = true;
         //Establecer el meta del nodo a true
-        metaNodes.Add(metaTile.node);
+        //metaNodes.Add(metaTile.node);
+        Tile minTile = actualTile;
+        /*
         for(int i = 0; i < metaTile.node.adyacent_Nodes.Count; i++)
         {
             if(metaTile.node.adyacent_Nodes[i].myTile.OccupiedUnit == null)
@@ -28,9 +32,9 @@ public class A_star: MonoBehaviour
                 metaNodes.Add(metaTile.node.adyacent_Nodes[i]);
             }
         }
-
+        
         metaNodes.Sort((x, y) => x.Manhattan(unit.GetOccupiedTile().node).CompareTo(y.Manhattan(unit.GetOccupiedTile().node)));
-        metaNodes[0].meta = true;
+        metaNodes[0].meta = true;*/
 
         //Creacion de listas dinámicamente
         List<Node> opened_list = new List<Node>();
@@ -41,24 +45,37 @@ public class A_star: MonoBehaviour
         //Añadir el nodo de la ficha ocupada
         opened_list.Add(actualTile.node);
         opened_list[0].Path(null, metaTile.node);
+        int minh_star = opened_list[0].h_star;
+        Debug.Log(opened_list[0].h_star);
 
-        while (!meta && steps < maxSteps)
+        int actualNodeh;
+        while (!meta && steps < maxSteps && opened_list.Count > 0)
         {
             Debug.Log("Steps: " + steps);
-
             //Si el nodo es meta, acaba la iteración
-            if (opened_list[0].meta == true)
+            if (opened_list[0].h_star == 1 || opened_list[0].h_star == 0)
             {
+                Debug.Log("MEEEEEEEEEEEEEEEETA");
                 meta = true;
             }
 
             //Función expandir
             for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
             {
-                if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[i]))) 
+                actualNodeh = (opened_list[0].adyacent_Nodes[i].Manhattan(metaTile.node));
+
+                if (!(actualNodeh == 1 && opened_list[0].adyacent_Nodes[i].myTile.OccupiedUnit != null))
                 {
-                    opened_list[0].adyacent_Nodes[i].Path(opened_list[0], metaTile.node);
-                    opened_list.Add(opened_list[0].adyacent_Nodes[i]);
+                    if (!closed_list.Contains(opened_list[0].adyacent_Nodes[i])
+                        && opened_list[0].adyacent_Nodes[i].Manhattan(metaTile.node) < opened_list[0].h_star + 2)
+                    {
+                        if (minh_star > actualNodeh)
+                            minTile = opened_list[0].adyacent_Nodes[i].myTile;
+
+                        opened_list.Add(opened_list[0].adyacent_Nodes[i]);
+                        opened_list[0].adyacent_Nodes[i].Path(opened_list[0], metaTile.node);
+                        Debug.Log(opened_list[0].adyacent_Nodes[i].parent.myTile);
+                    }
                 }
             }
 
@@ -73,50 +90,47 @@ public class A_star: MonoBehaviour
 
         }
         //Debug.Log(steps);
-        Debug.Log(steps);
         if (meta)
         {
-            //Debug.Log(closed_list.Last().g);
-            //Si es accesible calculamos el camino.
-            //Cogemos última posición
+
             movement_list.Push(closed_list.Last());
-            //Añadimos todos los movimientos hasta encontrar la posición inicial mediante el padre de cada nodo
-            while (movement_list.Peek().parent != null)
-            {
-                    Debug.Log(movement_list.Peek().parent.myTile);
-                    movement_list.Push(movement_list.Peek().parent);
-            }
-            if (isG)
-            {
-                int maxG = unit.maxG;
-                for (int i = 0; i < movement_list.Count; i++)
-                {
-                    if ((movement_list.ElementAt(i).g < maxG  && movement_list.ElementAt(i).myTile.OccupiedUnit == null && movement_list.ElementAt(i).meta) ||
-                        movement_list.ElementAt(i).g < maxG && movement_list.ElementAt(i).myTile.OccupiedUnit == null && !movement_list.ElementAt(i).meta)
-                        path.Push(movement_list.ElementAt(i).myTile);
-                    //Debug.Log(movement_list.ElementAt(i).myTile);
-                    if(movement_list.ElementAt(i).g == maxG && movement_list.ElementAt(i).myTile.OccupiedUnit == null)
-                    {
-                        path.Push(movement_list.ElementAt(i).myTile);
-                    }
-
-                }
-            }
-            else
-            {
-                for (int i = 0; i < movement_list.Count; i++)
-                {
-                    path.Push(movement_list.ElementAt(i).myTile);
-                    //Debug.Log(movement_list.ElementAt(i).myTile);
-
-                }
-            }
         }
         else
         {
             Debug.Log("No se puede llegar a la meta");
             //EditorApplication.isPlaying = false;
-            path.Push(unit.GetOccupiedTile());
+            movement_list.Push(minTile.node);
+        }
+
+        int step2 = 0;
+        //Añadimos todos los movimientos hasta encontrar la posición inicial mediante el padre de cada nodo
+        while (movement_list.Peek().parent != null && step2 < 10)
+        {
+            //Debug.Log(closed_list.Last().myTile);
+            movement_list.Push(movement_list.Peek().parent);
+            step2++;
+        }
+        if (isG)
+        {
+            int maxG = unit.maxG;
+            for (int i = 0; i < movement_list.Count; i++)
+            {
+                //Debug.Log(movement_list.ElementAt(i).myTile);
+                if (movement_list.ElementAt(i).g <= maxG)
+                {
+                    path.Push(movement_list.ElementAt(i).myTile);
+                }
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < movement_list.Count; i++)
+            {
+                path.Push(movement_list.ElementAt(i).myTile);
+                //Debug.Log(movement_list.ElementAt(i).myTile);
+
+            }
         }
 
         CleanAStarRepath(metaTile, closed_list);
