@@ -105,11 +105,6 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
   m_PrefabInstance: {fileID: 3636482178377769156}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3504361283431416650 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 204525943433274254, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
-  m_PrefabInstance: {fileID: 3636482178377769156}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6734766886393018174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
@@ -129,13 +124,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Mountain
   renderer: {fileID: 2081645327571561224}
-  accesibleTileshighlight: {fileID: 3504361283431416650}
+  accesibleTilehighlight: {fileID: 0}
   isWalkable: 0
+  needAdyacentNodes: 0
   highlight: {fileID: 8596630843596896068}
   basecolor: {r: 0.37647063, g: 0.29411766, b: 0.29411766, a: 1}
-  enemyInsideColor: {r: 0, g: 0, b: 0, a: 0}
-  noEnemyInsideColor: {r: 0, g: 0, b: 0, a: 0}
   enemiesPathing: 0
+  heroesPathing: 0
   OccupiedUnit: {fileID: 0}
 --- !u!1 &8596630843596896068 stripped
 GameObject:
