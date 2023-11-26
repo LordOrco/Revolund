@@ -46,7 +46,7 @@ public class GrassTile : Tile
         {
             if (UnitManager.instance.canInstance)
             {
-                if (isAccesedByDeployTower && OccupiedUnit == null)
+                if (isAccesedByDeployTower)
                 {
                     UnitManager.instance.SpawnHeroOnDemand(this,UnitManager.instance.SelectedHero);
                     UnitManager.instance.canInstance = false;
@@ -131,7 +131,6 @@ public class GrassTile : Tile
 
         }
     }
-
     //Metodo que establece colores de los highlights y devuelve dicha tile
     public override void UpdateTileHighlight()
     {
