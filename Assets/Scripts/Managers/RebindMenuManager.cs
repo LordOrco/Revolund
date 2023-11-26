@@ -18,7 +18,7 @@ public class RebindMenuManager : MonoBehaviour
         JumpRef.action.Disable();
         FireRef.action.Disable();
     }
-    private void Diseable()
+    private void Disable()
     {
         MoveRef.action.Enable();
         JumpRef.action.Enable();
