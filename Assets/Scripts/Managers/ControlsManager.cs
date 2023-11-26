@@ -6,10 +6,10 @@ using static UnityEditor.PlayerSettings;
 
 public class ControlsManager : MonoBehaviour
 {
-    private KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space, KeyCode.Escape};
     private Camera camara;
     private GridManager grid;   
     private UnitManager unitManager;
+    private SettingsManager settings;
     [SerializeField] private MenuPausa pauseMenu;
 
     private float panSpeed = 10f;
@@ -29,18 +29,19 @@ public class ControlsManager : MonoBehaviour
         camara = GameObject.FindObjectOfType<Camera>();
         grid = GameObject.FindObjectOfType<GridManager>();
         unitManager = GameObject.FindObjectOfType<UnitManager>();
+        settings = GameObject.FindObjectOfType<SettingsManager>();
 
         gridCenter = grid.GetGridCenter();
         panLimit = new Vector2(gridCenter.x + (float) grid.GetWidth()/2, gridCenter.y + (float) grid.GetHeight()/2);
         Debug.Log(gridCenter.y);
 
-        SaveControlsArray("controls", controls);
+        //SaveControlsArray("controls", controls);
 
         // Cargar el array desde PlayerPrefs
-        controls = LoadControlsArray("controls");
+        //controls = LoadControlsArray("controls");
 
         // Imprimir el array cargado
-        foreach (KeyCode keyCode in controls)
+        foreach (KeyCode keyCode in settings.GetControls())
         {
             Debug.Log(keyCode);
         }
@@ -51,52 +52,6 @@ public class ControlsManager : MonoBehaviour
     {
         cameraControls();
         PauseMenu();
-    }
-
-
-    //GUARDADO Y CARGADO DE CONTROLES
-    void SaveControlsArray(string key, KeyCode[] array)
-    {
-        // Convertir el array de KeyCode a una cadena de texto
-        string arrayString = KeyCodeArrayToString(array);
-
-        // Guardar la cadena de texto en PlayerPrefs
-        PlayerPrefs.SetString(key, arrayString);
-        PlayerPrefs.Save();
-    }
-
-    KeyCode[] LoadControlsArray(string key)
-    {
-        // Recuperar la cadena de texto desde PlayerPrefs
-        string loadedArrayString = PlayerPrefs.GetString(key, "");
-
-        // Convertir la cadena de texto a un array de KeyCode
-        return StringToKeyCodeArray(loadedArrayString);
-    }
-
-    string KeyCodeArrayToString(KeyCode[] array)
-    {
-        // Convertir el array de KeyCode a una cadena de texto separada por comas
-        string[] stringValues = new string[array.Length];
-        for (int i = 0; i < array.Length; i++)
-        {
-            stringValues[i] = array[i].ToString();
-        }
-        return string.Join(",", stringValues);
-    }
-
-    KeyCode[] StringToKeyCodeArray(string arrayString)
-    {
-        // Convertir la cadena de texto a un array de KeyCode
-        string[] stringValues = arrayString.Split(',');
-        KeyCode[] array = new KeyCode[stringValues.Length];
-
-        for (int i = 0; i < stringValues.Length; i++)
-        {
-            Enum.TryParse(stringValues[i], out array[i]);
-        }
-
-        return array;
     }
 
     public void cameraControls()
@@ -110,12 +65,12 @@ public class ControlsManager : MonoBehaviour
         if(grid.GetWidth() > 2 * camara.orthographicSize * 16 / 9)
         {
             // Mover la cámara hacia la izquierda
-            if (Input.GetKey(controls[1]) || Input.mousePosition.x <= panBorderThickness)
+            if (Input.GetKey(settings.GetControls()[1]) || Input.mousePosition.x <= panBorderThickness)
             {
                 pos.x -= panSpeed * Time.deltaTime;
             }
             // Mover la cámara hacia la derecha
-            if (Input.GetKey(controls[3]) || Input.mousePosition.x >= Screen.width - panBorderThickness)
+            if (Input.GetKey(settings.GetControls()[3]) || Input.mousePosition.x >= Screen.width - panBorderThickness)
             {
                 pos.x += panSpeed * Time.deltaTime;
             }
@@ -125,12 +80,12 @@ public class ControlsManager : MonoBehaviour
         if (grid.GetHeight() > 2 * camara.orthographicSize)
         {
             // Mover la cámara hacia la arriba
-            if (Input.GetKey(controls[0]) || Input.mousePosition.y >= Screen.height - panBorderThickness)
+            if (Input.GetKey(settings.GetControls()[0]) || Input.mousePosition.y >= Screen.height - panBorderThickness)
             {
                 pos.y += panSpeed * Time.deltaTime;
             }
             // Mover la cámara hacia abajo
-            if (Input.GetKey(controls[2]) || Input.mousePosition.y <= panBorderThickness)
+            if (Input.GetKey(settings.GetControls()[2]) || Input.mousePosition.y <= panBorderThickness)
             {
                 pos.y -= panSpeed * Time.deltaTime;
             }
@@ -154,7 +109,7 @@ public class ControlsManager : MonoBehaviour
         //SELECCIÓN DE TROPAS
         /////////////////////////////////////////////////////////////////////////////
 
-        if (Input.GetKeyDown(controls[4]))
+        if (Input.GetKeyDown(settings.GetControls()[4]))
         {
             //Busca los heroes
             BaseHero[] unidades = GameObject.FindObjectsOfType<BaseHero>();
@@ -187,7 +142,7 @@ public class ControlsManager : MonoBehaviour
 
     public void PauseMenu()
     {
-        if (Input.GetKeyDown(controls[5]))
+        if (Input.GetKeyDown(settings.GetControls()[5]))
         {
             pauseMenu.TogglePause();
         }
