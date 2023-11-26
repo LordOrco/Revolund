@@ -14,7 +14,7 @@ public class ShopManager : MonoBehaviour
     private int dinero = 0;
     private int dineroInicial = 1000;
     [SerializeField] public List<Button> poderComprarGUI = new List<Button>();
-    List<int> precios = new List<int>();
+    public List<int> precios = new List<int>();
     void Start()
     {
         inventoryManager = GameObject.FindObjectOfType<InventoryManager>();
@@ -33,7 +33,7 @@ public class ShopManager : MonoBehaviour
         if(dinero >= precios[indice])
         {
             inventoryManager.inventarioTropas[indice]++;
-            inventoryManager.numTropas[indice].text = inventoryManager.inventarioTropas[indice].ToString();
+            inventoryManager.numTropasGUI[indice].text = inventoryManager.inventarioTropas[indice].ToString();
 
             dinero -= precios[indice];
             dineroGUI.text = dinero.ToString();
