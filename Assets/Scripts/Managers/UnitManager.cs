@@ -36,7 +36,6 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < heroCount; i++) {
             //var randomPrefab = GetRandomUnit<BaseHero>(Faction.Hero);
             var spawnedHero = Instantiate(hero);
-            heroList.Add(spawnedHero);
 
             //Obtiene un Tile donde spawnear el heroe
             var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
@@ -66,7 +65,6 @@ public class UnitManager : MonoBehaviour
         {
             //var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
             var spawnedEnemy = Instantiate(enemy);
-            enemyList.Add(spawnedEnemy);
 
             //Obtiene un Tile donde spawnear el enemigo
             var randomSpawanTile = GridManager.instance.GetEnemySpawnedTile();

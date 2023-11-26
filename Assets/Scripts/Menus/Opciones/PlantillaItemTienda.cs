@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,15 +16,17 @@ public class PlantillaItemTienda : MonoBehaviour
     void Start()
     {
         precio = int.Parse(textoPrecio.text);
+        //monedasTotales = PlayerPrefs.GetInt("monedasTotales");
+        monedasTotales = 1000;
     }
 
     // Update is called once per frame
     void Update()
     {
-        monedasTotales = PlayerPrefs.GetInt("monedasTotales");
         if (precio > monedasTotales)
         {
             botonComprar.interactable = false;
+            botonComprar.image.color = new Color(0, 0, 0, 0.5f);
         }
     }
 

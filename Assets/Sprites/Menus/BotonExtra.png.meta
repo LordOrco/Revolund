@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1df9638a1cb50f142858d848aa56c0b9
+guid: 6ed8ce50c7a8e2143829481d6e64c7fa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8.OcultoTienda_0
+      name: BotonExtra_0
       rect:
         serializedVersion: 2
-        x: 1451
-        y: 189
-        width: 424
-        height: 108
+        x: 970
+        y: 292
+        width: 230
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23958d60543953248aa934a143d2f248
-      internalID: -1939136485
+      spriteID: 547177062d248c64abc7ebfacb95b70f
+      internalID: 210025493
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      8.OcultoTienda_0: -1939136485
+      BotonExtra_0: 210025493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

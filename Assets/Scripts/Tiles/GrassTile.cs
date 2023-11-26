@@ -46,7 +46,7 @@ public class GrassTile : Tile
         {
             if (UnitManager.instance.canInstance)
             {
-                if (isAccesedByDeployTower)
+                if (isAccesedByDeployTower && OccupiedUnit == null)
                 {
                     UnitManager.instance.SpawnHeroOnDemand(this,UnitManager.instance.SelectedHero);
                     UnitManager.instance.canInstance = false;
@@ -129,15 +129,6 @@ public class GrassTile : Tile
                 }
             }
 
-        }
-    }
-
-    //Funcion que instancia unidades si es un tile accesible por una Deploy Tower
-    private void OnMouseOver()
-    {
-        if (isAccesedByDeployTower && Input.GetMouseButtonDown(1) )
-        {
-            UnitManager.instance.SpawnHeroOnDemand(this);
         }
     }
 
