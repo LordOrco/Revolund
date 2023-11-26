@@ -51,6 +51,8 @@ public class BaseUnit : MonoBehaviour
         barraVida.value = HP;
         barraVida.minValue = 0;
         canAttack = true;
+        if (Faction == Faction.Hero) UnitManager.instance.heroList.Add(this);
+        else UnitManager.instance.enemyList.Add((BaseEnemy)this);
     }
     protected virtual void Update()
     { /*
@@ -91,14 +93,16 @@ public class BaseUnit : MonoBehaviour
     {
         HidePathingTiles();
         Destroy(gameObject);
+        if (Faction == Faction.Hero) UnitManager.instance.heroList.Remove(this);
+        else UnitManager.instance.enemyList.Remove(this);
     }
 
     public virtual void Attack(BaseUnit enemy)
     {
-        if (!attacking)
+        if (!attacking && canAttack)
         {
             attacking = true;
-            Debug.Log("TargetTile pasado");
+            //Debug.Log("TargetTile pasado");
             Stack<Tile> currentPath = CalculatePathToTile(enemy.OccupiedTile);
             //Debug.Log("Target Tile: " + enemy.OccupiedTile);
             if (currentPath != null)
@@ -107,8 +111,9 @@ public class BaseUnit : MonoBehaviour
                 ApplyDmg(enemy);
             }
             attacking = false;
+            //canAttack = false;
+            UnitManager.instance.checkState();
         }
-        //Debug.Log("Enemy: " + enemy.name);
     }
 
     public virtual void ReceiveDmg(int dmg)
@@ -118,8 +123,9 @@ public class BaseUnit : MonoBehaviour
         barraVida.value = HP;
         if (HP <= 0)
         {
-            Invoke("Kill", 1f);
+            Kill();
         }
+        UnitManager.instance.checkState();
     }
 
     protected virtual void ApplyDmg(BaseUnit enemy)
@@ -143,14 +149,18 @@ public class BaseUnit : MonoBehaviour
         // Calcula la nueva posición usando Vector3.MoveTowards
         Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, movementSpeed * Time.deltaTime);
         */
-        // Mueve al enemigo a la nueva posición       
-        if (targetTile != null)
-            targetTile.SetUnit(this);
-        else
-            Debug.Log("MoveToTile no hay camino");
-        ///currentPath = null;
+        // Mueve al enemigo a la nueva posición
+        if(canAttack)
+        {
+            if (targetTile != null)
+                targetTile.SetUnit(this);
+            else
+                Debug.Log("MoveToTile no hay camino");
+            ///currentPath = null;
 
-
+            canAttack = false;
+            UnitManager.instance.checkState();
+        }
     }
 
     protected virtual Stack<Tile> CalculatePathToEnemy(BaseUnit enemy)
@@ -175,7 +185,7 @@ public class BaseUnit : MonoBehaviour
         {
             // Usa A* para obtener la ruta más corta
             Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(tile, this, true);
-            Debug.Log("CalculatePathToEnemy " + currentPath.Count);
+            //Debug.Log("CalculatePathToEnemy " + currentPath.Count);
             //for(int i = 0; i  < maxG; i++) currentPath.Pop();
             return currentPath;
         }

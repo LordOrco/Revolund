@@ -51,7 +51,7 @@ public class A_star: MonoBehaviour
         int actualNodeh;
         while (!meta && steps < maxSteps && opened_list.Count > 0)
         {
-            Debug.Log("Steps: " + steps);
+            //Debug.Log("Steps: " + steps);
             //Si el nodo es meta, acaba la iteración
             if (opened_list[0].h_star == 1 || opened_list[0].h_star == 0)
             {
@@ -74,7 +74,7 @@ public class A_star: MonoBehaviour
 
                         opened_list.Add(opened_list[0].adyacent_Nodes[i]);
                         opened_list[0].adyacent_Nodes[i].Path(opened_list[0], metaTile.node);
-                        Debug.Log(opened_list[0].adyacent_Nodes[i].parent.myTile);
+                        //Debug.Log(opened_list[0].adyacent_Nodes[i].parent.myTile);
                     }
                 }
             }

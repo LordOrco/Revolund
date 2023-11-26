@@ -100,7 +100,7 @@ public class GrassTile : Tile
                         {
                             if (OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
                             else OccupiedUnit.ShowPathingTiles();
-                            if (FindAnyObjectByType<BaseHero>() != null)
+                            //if (FindAnyObjectByType<BaseHero>() != null)
                                 OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
                         }
 
@@ -116,7 +116,8 @@ public class GrassTile : Tile
                         {
                             //Debug.Log("Nodo meta antes: " + node);
                             //Debug.Log("Nodo actual antes: " + UnitManager.instance.SelectedHero.OccupiedTile.node);
-                            SetUnit(UnitManager.instance.SelectedHero);
+                            //SetUnit(UnitManager.instance.SelectedHero);
+                            UnitManager.instance.SelectedHero.MoveToTile(this);
                             UnitManager.instance.SetSelectedHero(null);
                         }
                     }

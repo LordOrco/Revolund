@@ -41,12 +41,18 @@ public class GameManager : MonoBehaviour
                 UnitManager.instance.SpawnEnemies();
                 break;
             case GameState.PlayerTurn:
+                UnitManager.instance.NewTurn(Faction.Hero);
                 break;
             case GameState.EnemyTurn:
+                UnitManager.instance.NewTurn(Faction.Enemy);
                 break;
-            case GameState.Victory: 
+            case GameState.Victory:
+                Debug.Log("Victory");
                 break;
             case GameState.Lose:
+                Debug.Log("Lose");
+                break;
+            case GameState.Pause:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState,null);      
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
         PlayerTurn = 3,
         EnemyTurn = 4,
         Victory = 5,
-        Lose = 6
+        Lose = 6,
+        Pause= 7
     }
 }

@@ -12,8 +12,8 @@ public class UnitManager : MonoBehaviour
     //Lista de unidades
     private List<ScriptableUnit> unitList;
 
-    private List<BaseEnemy> enemyList;
-    private List<BaseHero> heroList;
+    public List<BaseUnit> enemyList;
+    public List<BaseUnit> heroList;
 
     [SerializeField] private BaseHero hero;
     [SerializeField] private BaseEnemy enemy;
@@ -22,15 +22,73 @@ public class UnitManager : MonoBehaviour
     public bool canInstance;
     private void Awake()
     {
-        List<BaseHero> heroList = new List<BaseHero>();
-        List<BaseEnemy> enemyList = new List<BaseEnemy>();
         instance = this;
 
         //Obtiene todas las unidades en la carpeta Units que sean ScpritableUnits
         unitList = Resources.LoadAll<ScriptableUnit>("Units").ToList();
     }
-
     //Genera heroes aleatoriamente
+
+    public void checkState()
+    {
+        //Debug.Log(heroList.Count + "AAAAAAAAAHEROES");
+       // Debug.Log(enemyList.Count + "AAAAAAAAAENEMIES");
+        if (heroList.Count <= 0)
+        {
+            GameManager.Instance.ChangeState(GameManager.GameState.Lose);
+            return;
+        }
+        else if (enemyList.Count <= 0)
+        {
+            GameManager.Instance.ChangeState(GameManager.GameState.Victory);
+            return;
+        }
+        bool change = true;
+
+        if(GameManager.Instance.State == GameManager.GameState.PlayerTurn)
+        {
+            for(int i = 0; i < heroList.Count; i++) 
+            {
+                if (heroList[i].canAttack == true) { change = false; }
+            }
+            if (change) GameManager.Instance.ChangeState(GameManager.GameState.EnemyTurn);
+        }
+
+        if (GameManager.Instance.State == GameManager.GameState.EnemyTurn)
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                if (enemyList[i].canAttack == true) { change = false; }
+            }
+            if (change) GameManager.Instance.ChangeState(GameManager.GameState.PlayerTurn);
+        }
+    }
+
+    public void NewTurn(Faction faccion)
+    {
+        if(faccion == Faction.Hero)
+        {
+            for (int i = 0; i < heroList.Count; i++)
+            {
+                heroList[i].canAttack = true;
+            }
+        }
+
+        if (faccion == Faction.Enemy)
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                enemyList[i].canAttack = true;
+                if (FindAnyObjectByType<BaseHero>() != null)
+                {
+                    Debug.Log("Ataque Enemigo");
+                    enemyList[i].Attack(FindAnyObjectByType<BaseHero>());
+                }
+
+
+            }
+        }
+    }
     public void SpawnHeroes()
     {
         var heroCount = 1;
