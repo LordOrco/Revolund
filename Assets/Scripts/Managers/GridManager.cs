@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.WSA;
 
 //Manager del Grid, crea un grid y maneja los tiles del mapa
 public class GridManager : MonoBehaviour
@@ -83,7 +82,6 @@ public class GridManager : MonoBehaviour
     public void GenerateTutorialGrid()
     {
         tiles = new Dictionary<Vector2, Tile>();
-        int random;
         Tile actualTile = null;
         for (int x = 0; x < width; x++)
         {

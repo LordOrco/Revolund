@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -339,7 +339,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2092464015}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -544,7 +544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 170.5, y: -129.1}
+  m_AnchoredPosition: {x: 156.00002, y: -117}
   m_SizeDelta: {x: 252, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427983386
@@ -1399,7 +1399,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36, y: -53}
+  m_AnchoredPosition: {x: 24, y: -50}
   m_SizeDelta: {x: 252, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1424971243
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5983becc95875d459db30f4e13cbc8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: 3
+  targetScene: 2
   sceneIndex: 1
 --- !u!1 &1500552861
 GameObject:
@@ -1819,7 +1819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 302.6, y: -47}
+  m_AnchoredPosition: {x: 290.6, y: -50}
   m_SizeDelta: {x: 252, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1751442555
@@ -1928,7 +1928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: 4
+  targetScene: 3
 --- !u!1 &1996038580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,7 +1966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 170.5, y: -0.5}
+  m_AnchoredPosition: {x: 156, y: -0.0000022352}
   m_SizeDelta: {x: 252, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1996038582
@@ -2075,7 +2075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: 6
+  targetScene: 5
 --- !u!1 &2061578387
 GameObject:
   m_ObjectHideFlags: 0

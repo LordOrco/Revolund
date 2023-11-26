@@ -10,12 +10,16 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ObjetivoGUI;
     private SettingsManager a;
     private ShopManager b;
+    private Tile c;
+    private BaseHero d;
+    private InventoryManager e;
 
     // Start is called before the first frame update
     void Start()
     {
         a = GameObject.FindObjectOfType<SettingsManager>();
         b = GameObject.FindObjectOfType<ShopManager>();
+        e = GameObject.FindObjectOfType<InventoryManager>();
         cargarObjetivos();
         ObjetivoGUI.text = objetivos[0];
     }
@@ -30,10 +34,12 @@ public class TutorialManager : MonoBehaviour
                 {
                     objetivoActual++;
                     ObjetivoGUI.text = objetivos[objetivoActual];
+                    c = GameObject.FindObjectOfType<BaseHero>().GetOccupiedTile();
+                    d = GameObject.FindObjectOfType<BaseHero>();
                 }
                 break;
             case 1:
-                if(GameManager.Instance.State == GameManager.GameState.EnemyTurn)
+                if(d.GetOccupiedTile() != c)
                 {
                     objetivoActual++;
                     ObjetivoGUI.text = objetivos[objetivoActual];
@@ -54,7 +60,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case 4:
-                if(!b.isActiveAndEnabled) 
+                if(GameObject.FindObjectsOfType<BaseHero>().Length > 1) 
                 {
                     objetivoActual++;
                     ObjetivoGUI.text = objetivos[objetivoActual];

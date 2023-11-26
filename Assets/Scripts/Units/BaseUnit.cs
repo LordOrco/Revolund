@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.UI.CanvasScaler;

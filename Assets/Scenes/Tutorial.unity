@@ -170,6 +170,8 @@ MonoBehaviour:
   tropas:
   - {fileID: -5067708462106883929, guid: 473bf1145fdef8c4ba64921f627574f2, type: 3}
   dineroGUI: {fileID: 1106426471}
+  dinero: 0
+  dineroInicial: 1000
   poderComprarGUI:
   - {fileID: 1744114160}
   precios: 
@@ -3832,6 +3834,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyList: []
   heroList: []
+  heroesAttacked: 0
+  heroes: 0
   hero: {fileID: -5067708462106883929, guid: 473bf1145fdef8c4ba64921f627574f2, type: 3}
   enemy: {fileID: 282772330377995863, guid: ec2ad600d1f1ad345a996fb6ee7d7fa5, type: 3}
   SelectedHero: {fileID: 0}
@@ -4321,7 +4325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: 1
+  targetScene: 0
 --- !u!114 &1714549979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5761,6 +5765,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  objetivoActual: 0
   ObjetivoGUI: {fileID: 870976885}
 --- !u!1 &2107095398
 GameObject:
