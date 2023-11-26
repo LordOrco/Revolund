@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -25,7 +26,7 @@ public class Node
     }
 
     //Metodo para encontrar camino A*
-    public void Path(Node pParent, Vector2 pMetaPos)
+    public void Path(Node pParent, Node pMetaPos)
     {
         
         Vector2 currentPos = myTile.GetPosition();
@@ -57,13 +58,13 @@ public class Node
         return g;
     }
 
-    public int Manhattan(Vector2 pMetaPos)
+    public int Manhattan(Node pMetaPos)
     {
         Vector2 currentPos = myTile.GetPosition();
         int manhattan;
         
-        manhattan = math.abs((int)(currentPos.x - pMetaPos.x));
-        manhattan += math.abs((int)(currentPos.y - pMetaPos.y));
+        manhattan = math.abs((int)(currentPos.x - pMetaPos.myTile.GetPosition().x));
+        manhattan += math.abs((int)(currentPos.y - pMetaPos.myTile.GetPosition().y));
         
         return manhattan;
     }
@@ -73,6 +74,11 @@ public class Node
     {
         this.adyacent_Nodes = nodes;
         //Debug.Log(adyacent_Nodes.Count);
+    }
+
+    internal int Manhattan()
+    {
+        throw new NotImplementedException();
     }
 }
 

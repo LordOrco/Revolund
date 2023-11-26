@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,8 @@ public class BaseUnit : MonoBehaviour
     public string unitName;
     public Faction Faction;
     public int maxG;
+
+    protected bool attacking = false;
 
     //Atributos para movimiento
     protected int movementSpeed;
@@ -89,15 +92,18 @@ public class BaseUnit : MonoBehaviour
 
     public virtual void Attack(BaseUnit enemy)
     {
-        Tile targetTile;
-        targetTile = EvaluateEnemyAdyacentTiles(enemy.OccupiedTile);
-        Debug.Log("TargetTile pasado");
-        Stack<Tile> currentPath = CalculatePathToTile(targetTile);
-        Debug.Log("Target Tile: " + targetTile);
-        if (currentPath != null)
+        if (!attacking)
         {
-            MoveToTile(currentPath.Peek());
-            ApplyDmg(enemy);
+            attacking = true;
+            Debug.Log("TargetTile pasado");
+            Stack<Tile> currentPath = CalculatePathToTile(enemy.OccupiedTile);
+            Debug.Log("Target Tile: " + enemy.OccupiedTile);
+            if (currentPath != null)
+            {
+                MoveToTile(currentPath.Peek());
+                ApplyDmg(enemy);
+            }
+            attacking = false;
         }
         //Debug.Log("Enemy: " + enemy.name);
     }
@@ -115,7 +121,7 @@ public class BaseUnit : MonoBehaviour
 
     protected virtual void ApplyDmg(BaseUnit enemy)
     {
-        int dmg = Random.Range(minAttack, maxAttack);
+        int dmg = UnityEngine.Random.Range(minAttack, maxAttack);
         enemy.ReceiveDmg(dmg);
     }
 
@@ -174,128 +180,6 @@ public class BaseUnit : MonoBehaviour
         {
             return null;
         }
-    }
-
-
-    protected virtual Tile EvaluateEnemyAdyacentTiles(Tile enemyTile)
-    { 
-        List<Node> nodosVacios = new List<Node>();
-        List<Node> nodosOcupados = new List<Node>();
-        Tile minTile = null;
-        int minDistance = 0;
-
-        minTile = enemyTile.node.adyacent_Nodes[0].myTile;
-        minDistance = enemyTile.node.adyacent_Nodes[0].Manhattan(enemyTile.GetPosition());
-
-        for (int i = 0; i < enemyTile.node.adyacent_Nodes.Count; i++)
-        {
-            if(enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition()) < minDistance)
-            {
-                minDistance = enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition());
-                minTile = enemyTile.node.adyacent_Nodes[i].myTile;
-            }
-
-            if (enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit == null)
-            {
-                nodosVacios.Add(enemyTile.node.adyacent_Nodes[i]);
-            }
-        }
-
-        if(nodosVacios.Count > 0)
-        {
-            minTile = nodosVacios[0].myTile;
-            minDistance = nodosVacios[0].Manhattan(enemyTile.GetPosition());
-
-            for(int i = 0; i < nodosVacios.Count; i++)
-            {
-                if (nodosVacios[i].Manhattan(enemyTile.GetPosition()) < minDistance)
-                {
-                    minDistance = enemyTile.node.adyacent_Nodes[i].Manhattan(enemyTile.GetPosition());
-                    minTile = enemyTile.node.adyacent_Nodes[i].myTile;
-                }
-            }
-            return minTile;
-        }
-        else
-        {
-
-        }
-
-        for(int i = 0; i < nodosVacios.Count; i++)
-        {
-
-        }
-        
-        Stack<Tile> Path = GridManager.instance.a_Star.Repath(enemyTile, this , false);
-        Path.Pop();
-        return Path.Peek();
-        /*
-        int maxSteps = 300;
-        int steps = 0;
-        if (enemyTile != null)
-        {
-            for (int i = 0; i < enemyTile.node.adyacent_Nodes.Count; i++)
-            {
-                if (enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit != null && enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit == this)
-                    return enemyTile.node.adyacent_Nodes[i].myTile;
-            }
-
-            List<Node> opened_list = enemyTile.node.adyacent_Nodes;
-            List<Node> closed_list = new List<Node>();
-            closed_list.Add(enemyTile.node);
-
-
-            opened_list.Sort((x, y) => x.Manhattan(enemyTile.GetPosition()).CompareTo(y.Manhattan(enemyTile.GetPosition())));
-
-
-            while(opened_list.Count > 0 && steps < maxSteps)
-            {
-                
-                if (opened_list[0].myTile.OccupiedUnit == null)
-                {
-                    Debug.Log("Tile encontrada: " + opened_list[0].myTile);
-                    return opened_list[0].myTile; 
-                }
-
-                else
-                {
-                    Debug.Log("Tile Ocupada: " + opened_list[0].myTile);
-                    for (int j = 0; j < opened_list[0].adyacent_Nodes.Count; j++) {
-                        if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[j]))
-                            && opened_list[0].adyacent_Nodes[j].myTile.OccupiedUnit == null)
-                            opened_list.Add(opened_list[0].adyacent_Nodes[j]);
-                    }
-
-
-                    closed_list.Add(opened_list[0]);
-                    opened_list.Remove(opened_list[0]);
-                    opened_list.Sort((x, y) => x.Manhattan(enemyTile.GetPosition()).CompareTo(y.Manhattan(enemyTile.GetPosition())));
-                    Debug.Log("Tile Ocupada: " + enemyTile.node.adyacent_Nodes[0].myTile);
-                }
-                steps++;
-            }
-            return null;
-            /*
-            openeed_list.Sort((x, y) => x.f_star.CompareTo(y.f_star));
-
-            
-            for (int i = 0; i < openeed_list.Count; i++)
-            {
-                if (openeed_list.ElementAt(i).OccupiedUnit == null
-                || openeed_list.ElementAt(i).OccupiedUnit == this) { return openeed_list.ElementAt(i); }
-            }
-
-            return EvaluateEnemyAdyacentTiles(openeed_list.First());
-
-            //Debug.Log("EvaluateEnemyAdyacentTiles error");
-            //return null;
-            
-        }
-
-        else
-        {
-            return null;
-        }*/
     }
 }
 
