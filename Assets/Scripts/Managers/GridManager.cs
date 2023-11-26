@@ -58,7 +58,7 @@ public class GridManager : MonoBehaviour
 
                 tiles[new Vector2(x, y)] = spawnedTile;
 
-                spawnedTile.Init(new Vector2(x,y));
+                spawnedTile.Init(new Vector2(x,y), Faction.Hero);
             }
         }
 

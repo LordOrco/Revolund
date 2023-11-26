@@ -45,8 +45,7 @@ public class A_star: MonoBehaviour
             //Función expandir
             for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
             {
-                if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[i])) 
-                    && opened_list[0].adyacent_Nodes[i].myTile.OccupiedUnit == null)
+                if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[i]))) 
                 {
                     opened_list[0].adyacent_Nodes[i].Path(opened_list[0], metaTile.GetPosition());
                     opened_list.Add(opened_list[0].adyacent_Nodes[i]);

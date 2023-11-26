@@ -12,6 +12,9 @@ public abstract class Tile : MonoBehaviour
     [SerializeField] protected bool isWalkable;
     [SerializeField] protected bool needAdyacentNodes;
 
+    [SerializeField] protected Sprite CyberpunkTheme;
+    [SerializeField] protected Sprite SteampunkTheme;
+
     //Highligth para activar el color al estar encima
     [SerializeField] protected GameObject highlight;
     [SerializeField] protected Color basecolor;
@@ -22,6 +25,8 @@ public abstract class Tile : MonoBehaviour
     public int heroesPathing;
     protected bool isMouseIn;
 
+    //Facción a la que pertenece
+    public Faction faction;
 
     //Unidad que esta en la tile
     public BaseUnit OccupiedUnit;
@@ -51,11 +56,20 @@ public abstract class Tile : MonoBehaviour
         return position;
     }
 
-    public virtual void Init( Vector2 position)
+    public virtual void Init( Vector2 position, Faction faction)
     {
         this.position = position;
+        this.faction = faction;
         node = new Node(this);
-
+        
+        if(this.faction == Faction.Hero)
+        {
+            this.renderer.sprite = SteampunkTheme;
+        }
+        else
+        {
+            this.renderer.sprite = CyberpunkTheme;
+        }
 
     }
     //Al estar el raton encima brilla e indica la informacion de la tile

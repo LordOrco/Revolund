@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -98,15 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dac0aa1ad24fc2469b5a4182a587a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileName: Deploy Tower
+  TileName: Torre de Despliegue
   renderer: {fileID: 8331673118167884181}
   accesibleTilehighlight: {fileID: 6909243033336646103}
   isWalkable: 0
   needAdyacentNodes: 1
+  CyberpunkTheme: {fileID: 21300000, guid: a4529b8e03438aa4ca2dbfb086051b39, type: 3}
+  SteampunkTheme: {fileID: 21300000, guid: 7bb0c1c9e439ce74cb1c230be26ff539, type: 3}
   highlight: {fileID: 1733375542391094745}
   basecolor: {r: 0, g: 0, b: 0, a: 0}
   enemiesPathing: 0
   heroesPathing: 0
+  faction: 0
   OccupiedUnit: {fileID: 0}
 --- !u!1 &6909243033336646103 stripped
 GameObject:
