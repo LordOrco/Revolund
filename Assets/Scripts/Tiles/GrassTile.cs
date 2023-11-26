@@ -10,17 +10,27 @@ public class GrassTile : Tile
 
     //Bool si esta resaltado por Deploy Tower
     public bool isAccesedByDeployTower;
-    public override void Init(Vector2 position)
+    public override void Init(Vector2 position, Faction pFaction)
     {
         //Cambia de color si es par o impar
         //var isOffset = (position.x + position.y) % 2 == 1;
         //renderer.color = isOffset ? offsetColor : basecolor;
 
         this.position = position;
+        faction = pFaction;
         node = new Node(this);
         enemiesPathing = 0;
         heroesPathing = 0;
         isAccesedByDeployTower = false;
+
+        if (faction == Faction.Hero)
+        {
+            renderer.sprite = SteampunkTheme;
+        }
+        else
+        {
+            renderer.sprite = CyberpunkTheme;
+        }
     }
 
 

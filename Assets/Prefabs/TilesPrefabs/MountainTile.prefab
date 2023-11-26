@@ -122,15 +122,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e22da0d8c3f49459c491a1a425aff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileName: Mountain
+  TileName: Edificios
   renderer: {fileID: 2081645327571561224}
   accesibleTilehighlight: {fileID: 0}
   isWalkable: 0
   needAdyacentNodes: 0
+  CyberpunkTheme: {fileID: 21300000, guid: cc4d619b42b907a418e497b231c7cda4, type: 3}
+  SteampunkTheme: {fileID: 21300000, guid: b6f50623a1818cb46a0a6a27f393a167, type: 3}
   highlight: {fileID: 8596630843596896068}
   basecolor: {r: 0.37647063, g: 0.29411766, b: 0.29411766, a: 1}
   enemiesPathing: 0
   heroesPathing: 0
+  faction: 0
   OccupiedUnit: {fileID: 0}
 --- !u!1 &8596630843596896068 stripped
 GameObject:
