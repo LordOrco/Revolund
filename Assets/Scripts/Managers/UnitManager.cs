@@ -15,6 +15,9 @@ public class UnitManager : MonoBehaviour
     public List<BaseUnit> enemyList;
     public List<BaseUnit> heroList;
 
+    public int heroesAttacked = 0;
+    public int heroes = 0;
+
     [SerializeField] private BaseHero hero;
     [SerializeField] private BaseEnemy enemy;
     //Heroe seleccionado
@@ -31,8 +34,8 @@ public class UnitManager : MonoBehaviour
 
     public void checkState()
     {
-        //Debug.Log(heroList.Count + "AAAAAAAAAHEROES");
-       // Debug.Log(enemyList.Count + "AAAAAAAAAENEMIES");
+        Debug.Log(heroList.Count + " AAAAAAAAAHEROES");
+         Debug.Log(enemyList.Count + " AAAAAAAAAENEMIES");
         if (heroList.Count <= 0)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Lose);
@@ -47,11 +50,15 @@ public class UnitManager : MonoBehaviour
 
         if(GameManager.Instance.State == GameManager.GameState.PlayerTurn)
         {
-            for(int i = 0; i < heroList.Count; i++) 
-            {
-                if (heroList[i].canAttack == true) { change = false; }
-            }
-            if (change) GameManager.Instance.ChangeState(GameManager.GameState.EnemyTurn);
+            //for(int i = 0; i < heroList.Count; i++) 
+            //{
+            //    if (heroList[i].canAttack == true) { change = false; }
+            //}
+            Debug.Log("HereoesAttacked " + heroesAttacked);
+            Debug.Log("Hereoes " + heroes);
+            if (heroes <= heroesAttacked)
+                GameManager.Instance.ChangeState(GameManager.GameState.EnemyTurn);
+            //if (change) GameManager.Instance.ChangeState(GameManager.GameState.EnemyTurn);
         }
 
         if (GameManager.Instance.State == GameManager.GameState.EnemyTurn)
@@ -71,6 +78,8 @@ public class UnitManager : MonoBehaviour
             for (int i = 0; i < heroList.Count; i++)
             {
                 heroList[i].canAttack = true;
+                heroList[i].gameObject.GetComponent<SpriteRenderer>().color = heroList[i].hasDontAttackedColor;
+                heroesAttacked = 0;
             }
         }
 
@@ -78,11 +87,26 @@ public class UnitManager : MonoBehaviour
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
+                BaseUnit enemigo = null;
+                List<Tile> accesibleTile = GridManager.instance.a_Star.ObtainAccesibleTiles(enemyList[i]);
+                for (int  j = 0; j < accesibleTile.Count; j++)
+                {
+                    if (accesibleTile[j].OccupiedUnit != null && accesibleTile[j].OccupiedUnit.Faction == Faction.Hero) 
+                    {
+                        enemigo = accesibleTile[j].OccupiedUnit;
+                    }
+                }
                 enemyList[i].canAttack = true;
-                if (FindAnyObjectByType<BaseHero>() != null)
+                if (enemigo != null)
                 {
                     Debug.Log("Ataque Enemigo");
-                    enemyList[i].Attack(FindAnyObjectByType<BaseHero>());
+                    enemyList[i].Attack(enemigo);
+                }
+                else
+                {
+                    enemyList[i].MoveToTile(enemyList[i].GetOccupiedTile());
+
+
                 }
 
 
@@ -102,6 +126,7 @@ public class UnitManager : MonoBehaviour
 
             //Asocia el heroe a la casilla
             randomSpawnTile.SetUnit(spawnedHero);
+            heroes++;
         }
 
         //Cambia al estado de generar enemigos

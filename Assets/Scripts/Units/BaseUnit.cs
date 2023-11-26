@@ -16,6 +16,7 @@ public class BaseUnit : MonoBehaviour
     public Faction Faction;
     public int maxG;
 
+    [SerializeField] public Color hasAttackedColor, hasDontAttackedColor;
     protected bool attacking = false;
 
     //Atributos para movimiento
@@ -31,7 +32,7 @@ public class BaseUnit : MonoBehaviour
     private bool areAccesibleTilesShown;
     private Tile OccupiedTile;
 
-    [SerializeField] private Slider barraVida;
+    [SerializeField] public Slider barraVida;
 
     public bool canAttack;
     public List<Tile> GetHighlightedTiles() { return highlightedTiles; }
@@ -93,7 +94,11 @@ public class BaseUnit : MonoBehaviour
     {
         HidePathingTiles();
         Destroy(gameObject);
-        if (Faction == Faction.Hero) UnitManager.instance.heroList.Remove(this);
+        if (Faction == Faction.Hero)
+        {
+            UnitManager.instance.heroList.Remove(this);
+            UnitManager.instance.heroes--;
+        }
         else UnitManager.instance.enemyList.Remove(this);
     }
 
@@ -112,6 +117,8 @@ public class BaseUnit : MonoBehaviour
             }
             attacking = false;
             //canAttack = false;
+            this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
+            if (Faction == Faction.Hero) UnitManager.instance.heroesAttacked++;
             UnitManager.instance.checkState();
         }
     }
@@ -159,6 +166,8 @@ public class BaseUnit : MonoBehaviour
             ///currentPath = null;
 
             canAttack = false;
+            if(Faction == Faction.Hero) { UnitManager.instance.heroesAttacked++; }
+            this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
             UnitManager.instance.checkState();
         }
     }

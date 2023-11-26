@@ -445,6 +445,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5c9f72c929c935e48b05849af6356e44, type: 3}
+    - target: {fileID: 7133745605514789052, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133745605514789052, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133745605514789052, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3827168910045692288, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}
@@ -477,6 +489,8 @@ MonoBehaviour:
   unitName: Enemy
   Faction: 1
   maxG: 3
+  hasAttackedColor: {r: 1, g: 1, b: 1, a: 1}
+  hasDontAttackedColor: {r: 1, g: 1, b: 1, a: 0}
   HP: 10
   minAttack: 1
   maxAttack: 1

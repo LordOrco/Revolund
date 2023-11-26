@@ -46,7 +46,7 @@ public class A_star: MonoBehaviour
         opened_list.Add(actualTile.node);
         opened_list[0].Path(null, metaTile.node);
         int minh_star = opened_list[0].h_star;
-        Debug.Log(opened_list[0].h_star);
+        //Debug.Log(opened_list[0].h_star);
 
         int actualNodeh;
         while (!meta && steps < maxSteps && opened_list.Count > 0)
