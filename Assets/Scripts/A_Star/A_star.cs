@@ -14,10 +14,10 @@ public class A_star: MonoBehaviour
     public int maxSteps = 3000;
 
     //Metodo que devuelve el camino a la tile, solo la parte dentro del g de la unidad
-    public Stack<Tile> Repath(Tile metaTile, BaseUnit unit)
+    public Stack<Tile> Repath(Tile metaTile, BaseUnit unit, bool isG)
     {
+
         bool meta = false;
-        int maxG = unit.maxG;
         Tile actualTile = unit.GetOccupiedTile();
         //Establecer el meta del nodo a true
         metaTile.node.meta = true;
@@ -34,7 +34,7 @@ public class A_star: MonoBehaviour
 
         while (!meta && steps < maxSteps)
         {
-            //Debug.Log("Steps: " + steps);
+            Debug.Log("Steps: " + steps);
 
             //Si el nodo es meta, acaba la iteración
             if (opened_list[0].meta == true)
@@ -45,7 +45,8 @@ public class A_star: MonoBehaviour
             //Función expandir
             for (int i = 0; i < opened_list[0].adyacent_Nodes.Count; i++)
             {
-                if (!closed_list.Contains(opened_list[0].adyacent_Nodes[i]))
+                if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[i])) 
+                    && opened_list[0].adyacent_Nodes[i].myTile.OccupiedUnit == null)
                 {
                     opened_list[0].adyacent_Nodes[i].Path(opened_list[0], metaTile.GetPosition());
                     opened_list.Add(opened_list[0].adyacent_Nodes[i]);
@@ -76,14 +77,25 @@ public class A_star: MonoBehaviour
                     //Debug.Log("Parte del camino encontrado");
                     movement_list.Push(movement_list.Peek().parent);
             }
-            for (int i = 0; i < movement_list.Count; i++)
+            if (isG)
             {
-                if (movement_list.ElementAt(i).g <= maxG)
+                int maxG = unit.maxG;
+                for (int i = 0; i < movement_list.Count; i++)
+                {
+                    if (movement_list.ElementAt(i).g <= maxG )
+                        path.Push(movement_list.ElementAt(i).myTile);
+                    //Debug.Log(movement_list.ElementAt(i).myTile);
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < movement_list.Count; i++)
                 {
                     path.Push(movement_list.ElementAt(i).myTile);
                     //Debug.Log(movement_list.ElementAt(i).myTile);
-                }
 
+                }
             }
         }
         else
@@ -94,7 +106,7 @@ public class A_star: MonoBehaviour
         }
 
         CleanAStarRepath(metaTile, closed_list);
-        Debug.Log("Movement List: " + path.Count);
+        //Debug.Log("Movement List: " + path.Count);
         return path;
 
     }
@@ -110,6 +122,12 @@ public class A_star: MonoBehaviour
         steps = 0;
     }
 
+    public bool IsAtdistance(Tile tile,BaseUnit unit)
+    {
+        if (unit.GetOccupiedTile().node.Manhattan(tile.GetPosition()) <= unit.maxG)
+            return true;
+        else return false;
+    }
     //Metodo que devuelve las tiles a las que el heroe seleccionado puede acceder
     public List<Tile> ObtainAccesibleTiles(BaseUnit unit)
     {

@@ -60,9 +60,7 @@ public class GrassTile : Tile
                     //...y es un enemigo y tengo seleccionado un heroe
                     else if (UnitManager.instance.SelectedHero != null)
                     {
-                        if (GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero) != null)
-                            isAtDistance = true;
-                        else isAtDistance = false;
+                        isAtDistance = GridManager.instance.a_Star.IsAtdistance(this, UnitManager.instance.SelectedHero);
                         //si hay un heroe seleccionado y a rango, destruye el enemigo
                         if (isAtDistance)
                         {
@@ -81,8 +79,8 @@ public class GrassTile : Tile
                     {
                         if(OccupiedUnit.GetAreAccesibleTilesShown()) OccupiedUnit.HidePathingTiles();
                         else OccupiedUnit.ShowPathingTiles();
-
-                        OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
+                        if(FindAnyObjectByType<BaseHero>()!= null)
+                            OccupiedUnit.Attack(FindAnyObjectByType<BaseHero>());
                     }
 
                 }
@@ -90,10 +88,8 @@ public class GrassTile : Tile
                 //Si la casilla no está ocupada y tienes un heroe seleccionado...
                 else if (UnitManager.instance.SelectedHero != null)
                 {
-                    if (GridManager.instance.a_Star.Repath(this, UnitManager.instance.SelectedHero) != null)
-                        isAtDistance = true;
-                    else isAtDistance = false;
-                  
+                    isAtDistance = GridManager.instance.a_Star.IsAtdistance(this, UnitManager.instance.SelectedHero);
+
                     //..y hay un heroe seleccionado, se puede andar y está a distancia, mueve el personaje
                     if (UnitManager.instance.SelectedHero != null && Walkable && isAtDistance)
                     {

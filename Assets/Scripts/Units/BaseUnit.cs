@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -88,10 +89,11 @@ public class BaseUnit : MonoBehaviour
 
     public virtual void Attack(BaseUnit enemy)
     {
-        Stack<Tile> currentPath = new Stack<Tile>();
         Tile targetTile;
-        targetTile = EvaluateEnemyAdyacentTiles(enemy);
-        currentPath = CalculatePathToTile(targetTile);
+        targetTile = EvaluateEnemyAdyacentTiles(enemy.OccupiedTile);
+        Debug.Log("TargetTile pasado");
+        Stack<Tile> currentPath = CalculatePathToTile(targetTile);
+        Debug.Log("Target Tile: " + targetTile);
         if (currentPath != null)
         {
             MoveToTile(currentPath.Peek());
@@ -103,7 +105,6 @@ public class BaseUnit : MonoBehaviour
     public virtual void ReceiveDmg(int dmg)
     {
         HP -= dmg;
-        Debug.Log("HP :" + HP);
 
         barraVida.value = HP;
         if (HP <= 0)
@@ -115,8 +116,13 @@ public class BaseUnit : MonoBehaviour
     protected virtual void ApplyDmg(BaseUnit enemy)
     {
         int dmg = Random.Range(minAttack, maxAttack);
-        Debug.Log("Dmg: " + dmg);
         enemy.ReceiveDmg(dmg);
+    }
+
+    public virtual void CalculAndMovement(Tile targetTile)
+    {
+        Stack<Tile> path = CalculatePathToTile(targetTile);
+        MoveToTile(path.Peek());
     }
     public virtual void MoveToTile(Tile targetTile)
     {
@@ -143,7 +149,7 @@ public class BaseUnit : MonoBehaviour
         if (enemy != null)
         {
             // Usa A* para obtener la ruta más corta
-            Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(enemy.GetOccupiedTile(), this);
+            Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(enemy.GetOccupiedTile(), this, true);
             Debug.Log("CalculatePathToEnemy " + currentPath.Count);
             return currentPath;
             //for(int i = 0; i  < maxG; i++) currentPath.Pop();
@@ -158,9 +164,8 @@ public class BaseUnit : MonoBehaviour
     {
         if (tile != null)
         {
-            Stack<Tile> currentPath = new Stack<Tile>();
             // Usa A* para obtener la ruta más corta
-            currentPath = GridManager.instance.a_Star.Repath(tile, this);
+            Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(tile, this, true);
             Debug.Log("CalculatePathToEnemy " + currentPath.Count);
             //for(int i = 0; i  < maxG; i++) currentPath.Pop();
             return currentPath;
@@ -172,40 +177,78 @@ public class BaseUnit : MonoBehaviour
     }
 
 
-    protected virtual Tile EvaluateEnemyAdyacentTiles(BaseUnit enemy)
+    protected virtual Tile EvaluateEnemyAdyacentTiles(Tile enemyTile)
     {
-        if (enemy != null)
+        Stack<Tile> Path = GridManager.instance.a_Star.Repath(enemyTile, this , false);
+        Path.Pop();
+        return Path.Peek();
+        /*
+        int maxSteps = 300;
+        int steps = 0;
+        if (enemyTile != null)
         {
-            Tile enemyTile = enemy.GetOccupiedTile();
-            List<Tile> closestTiles = new List<Tile>();
-            int minDistance = 100;
-            int distance;
-
             for (int i = 0; i < enemyTile.node.adyacent_Nodes.Count; i++)
             {
-                distance = enemyTile.node.adyacent_Nodes.ElementAt(i).Manhattan(OccupiedTile.GetPosition());
-                if (distance <= minDistance)
-                {
-                    minDistance = distance;
-                    closestTiles.Add(enemyTile.node.adyacent_Nodes.ElementAt(i).myTile);
-
-                }
-                else Debug.Log("Tile Ocupada: " + enemyTile.node.adyacent_Nodes.ElementAt(i).myTile);
+                if (enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit != null && enemyTile.node.adyacent_Nodes[i].myTile.OccupiedUnit == this)
+                    return enemyTile.node.adyacent_Nodes[i].myTile;
             }
 
-            for (int i = 0; i < closestTiles.Count; i++)
+            List<Node> opened_list = enemyTile.node.adyacent_Nodes;
+            List<Node> closed_list = new List<Node>();
+            closed_list.Add(enemyTile.node);
+
+
+            opened_list.Sort((x, y) => x.Manhattan(enemyTile.GetPosition()).CompareTo(y.Manhattan(enemyTile.GetPosition())));
+
+
+            while(opened_list.Count > 0 && steps < maxSteps)
             {
-                if (closestTiles.ElementAt(i).OccupiedUnit == null
-                || closestTiles.ElementAt(i).OccupiedUnit == this) { return closestTiles.ElementAt(i); }
+                
+                if (opened_list[0].myTile.OccupiedUnit == null)
+                {
+                    Debug.Log("Tile encontrada: " + opened_list[0].myTile);
+                    return opened_list[0].myTile; 
+                }
+
+                else
+                {
+                    Debug.Log("Tile Ocupada: " + opened_list[0].myTile);
+                    for (int j = 0; j < opened_list[0].adyacent_Nodes.Count; j++) {
+                        if (!(closed_list.Contains(opened_list[0].adyacent_Nodes[j]))
+                            && opened_list[0].adyacent_Nodes[j].myTile.OccupiedUnit == null)
+                            opened_list.Add(opened_list[0].adyacent_Nodes[j]);
+                    }
+
+
+                    closed_list.Add(opened_list[0]);
+                    opened_list.Remove(opened_list[0]);
+                    opened_list.Sort((x, y) => x.Manhattan(enemyTile.GetPosition()).CompareTo(y.Manhattan(enemyTile.GetPosition())));
+                    Debug.Log("Tile Ocupada: " + enemyTile.node.adyacent_Nodes[0].myTile);
+                }
+                steps++;
             }
             return null;
+            /*
+            openeed_list.Sort((x, y) => x.f_star.CompareTo(y.f_star));
 
+            
+            for (int i = 0; i < openeed_list.Count; i++)
+            {
+                if (openeed_list.ElementAt(i).OccupiedUnit == null
+                || openeed_list.ElementAt(i).OccupiedUnit == this) { return openeed_list.ElementAt(i); }
+            }
+
+            return EvaluateEnemyAdyacentTiles(openeed_list.First());
+
+            //Debug.Log("EvaluateEnemyAdyacentTiles error");
+            //return null;
+            
         }
 
         else
         {
             return null;
-        }
+        }*/
     }
 }
 
