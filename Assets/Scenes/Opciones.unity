@@ -841,7 +841,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011893558}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1011893560
 Camera:
   m_ObjectHideFlags: 0
@@ -1323,7 +1323,7 @@ GameObject:
   - component: {fileID: 1292456404}
   - component: {fileID: 1292456403}
   - component: {fileID: 1292456402}
-  - component: {fileID: 1292456401}
+  - component: {fileID: 1292456405}
   m_Layer: 5
   m_Name: Atras
   m_TagString: Untagged
@@ -1351,19 +1351,6 @@ RectTransform:
   m_AnchoredPosition: {x: -344, y: -190}
   m_SizeDelta: {x: 209, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1292456401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292456399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: -2
 --- !u!114 &1292456402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,9 +1395,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292456401}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1292456405}
+        m_TargetAssemblyTypeName: SceneAdder, Assembly-CSharp
+        m_MethodName: UnloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1458,6 +1445,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292456399}
   m_CullTransparentMesh: 1
+--- !u!114 &1292456405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292456399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5983becc95875d459db30f4e13cbc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 0
+  sceneIndex: 3
 --- !u!224 &1310785244 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 81360174595433111, guid: 034ac50654a0b1a408b51f0327ce7f3f, type: 3}
@@ -1486,7 +1487,7 @@ GameObject:
   - component: {fileID: 1362930892}
   - component: {fileID: 1362930891}
   - component: {fileID: 1362930890}
-  - component: {fileID: 1362930889}
+  - component: {fileID: 1362930893}
   m_Layer: 5
   m_Name: Controles
   m_TagString: Untagged
@@ -1514,19 +1515,6 @@ RectTransform:
   m_AnchoredPosition: {x: 344, y: -190}
   m_SizeDelta: {x: 209, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1362930889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1362930887}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: 5
 --- !u!114 &1362930890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1571,9 +1559,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1362930889}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1362930893}
+        m_TargetAssemblyTypeName: SceneAdder, Assembly-CSharp
+        m_MethodName: AddScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1621,6 +1609,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362930887}
   m_CullTransparentMesh: 1
+--- !u!114 &1362930893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362930887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5983becc95875d459db30f4e13cbc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 5
+  sceneIndex: 0
 --- !u!1 &1367919130
 GameObject:
   m_ObjectHideFlags: 0

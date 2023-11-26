@@ -13,10 +13,6 @@ public class SceneChanger : MonoBehaviour
         {
             Application.Quit();
         }
-        else if(targetScene == -2)
-        {
-            SceneManager.LoadScene(PlayerPrefs.GetInt("scene"));
-        }
         else
         {
             SceneManager.LoadScene(targetScene);

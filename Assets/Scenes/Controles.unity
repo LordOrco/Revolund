@@ -1946,7 +1946,7 @@ GameObject:
   - component: {fileID: 1225080738}
   - component: {fileID: 1225080737}
   - component: {fileID: 1225080736}
-  - component: {fileID: 1225080735}
+  - component: {fileID: 1225080739}
   m_Layer: 5
   m_Name: Atras
   m_TagString: Untagged
@@ -1974,19 +1974,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -198}
   m_SizeDelta: {x: 209, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1225080735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225080733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620a9dd9b2bd6b54a9ba12bf58194b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: 3
 --- !u!114 &1225080736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2031,9 +2018,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1225080735}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1225080739}
+        m_TargetAssemblyTypeName: SceneAdder, Assembly-CSharp
+        m_MethodName: UnloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2081,6 +2068,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225080733}
   m_CullTransparentMesh: 1
+--- !u!114 &1225080739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225080733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5983becc95875d459db30f4e13cbc8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 0
+  sceneIndex: 5
 --- !u!1 &1235771579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,7 +2972,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750835743}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1750835745
 Camera:
   m_ObjectHideFlags: 0
