@@ -477,13 +477,14 @@ MonoBehaviour:
   unitName: Hero
   Faction: 0
   maxG: 3
+  range: 0
   hasAttackedColor: {r: 0.16398183, g: 0.35665154, b: 0.5188679, a: 0.65882355}
   hasDontAttackedColor: {r: 1, g: 1, b: 1, a: 1}
   HP: 10
   minAttack: 3
   maxAttack: 5
   barraVida: {fileID: 5882187012627285258}
-  canAttack: 0
+  canAttack: 1
 --- !u!4 &9143966427852209482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 70196229873381587, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}

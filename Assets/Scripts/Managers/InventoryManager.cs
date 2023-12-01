@@ -26,7 +26,7 @@ public class InventoryManager : MonoBehaviour
         if (inventarioTropas[indice] > 0)
         {
             ultimaTropa = indice;
-            UnitManager.instance.SetSelectedHero(Instantiate(shopManager.tropas[indice], new Vector3(0, 0, -20), Quaternion.identity));
+            UnitManager.instance.SetSelectedHero(shopManager.tropas[indice]);       //Instantiate(shopManager.tropas[indice], new Vector3(0, 0, -20), Quaternion.identity));
             inventarioTropas[indice]--;
             numTropasGUI[indice].text = inventarioTropas[indice].ToString();
 

@@ -14,6 +14,7 @@ public class BaseUnit : MonoBehaviour
     public string unitName;
     public Faction Faction;
     public int maxG;
+    public int range;
 
     [SerializeField] public Color hasAttackedColor, hasDontAttackedColor;
     protected bool attacking = false;
