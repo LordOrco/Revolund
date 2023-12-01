@@ -39,11 +39,13 @@ public class UnitManager : MonoBehaviour
         if (heroList.Count <= 0)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Lose);
+            Debug.Log("Lose");
             return;
         }
         else if (enemyList.Count <= 0)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Victory);
+            Debug.Log("Victory");
             return;
         }
         bool change = true;

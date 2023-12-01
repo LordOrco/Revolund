@@ -171,4 +171,38 @@ public class GrassTile : Tile
         }
         //Debug.Log("Enemigos = " + enemiesPathing + " Heroes = " + heroesPathing);
     }
+
+    //Al estar el raton encima brilla e indica la informacion de la tile
+    protected override void OnMouseEnter()
+    {
+        //Debug.Log(position);
+        isMouseIn = true;
+        UpdateTileHighlight();
+        MenuManager.Instance.ShowTileInfo(this);
+        GetPosition();
+        if(UnitManager.instance.SelectedHero != null && (OccupiedUnit != null && OccupiedUnit is BaseEnemy enemy))
+        {
+            if(UnitManager.instance.SelectedHero.GetHighlightedTiles().Contains(this))
+            {
+                Debug.Log("EN rango");
+                enemy.SwordIndicator.SetActive(true);
+                enemy.swordIndActive = true;
+            }
+        }
+    }
+    //Al salir desactiva el highlight y la informacion
+    protected override void OnMouseExit()
+    {
+        isMouseIn = false;
+        UpdateTileHighlight();
+        MenuManager.Instance.ShowTileInfo(null);
+        if(OccupiedUnit != null && OccupiedUnit is BaseEnemy enemy)
+        {
+            if(enemy.swordIndActive == true)
+            {
+                enemy.SwordIndicator.SetActive(false);
+                enemy.swordIndActive = false;
+            }
+        }
+    }
 }

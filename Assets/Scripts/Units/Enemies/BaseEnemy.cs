@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BaseEnemy : BaseUnit
 {
+    public GameObject SwordIndicator;
+    public bool swordIndActive = false;
     //Activa los highlights de las casillas
     public override void ShowPathingTiles()
     {
