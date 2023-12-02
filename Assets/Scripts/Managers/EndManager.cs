@@ -37,7 +37,10 @@ public class EndManager : MonoBehaviour
 
     private void DesactivateGUI()
     {
-        GUIDesactivar.SetActive(false);
+        foreach(Transform child in GUIDesactivar.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
     }
   }
 

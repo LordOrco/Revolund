@@ -8,7 +8,7 @@ TagManager:
   - Hero
   - Enemy
   - Victory
-  - Lose
+  - Defeat
   layers:
   - Default
   - TransparentFX
