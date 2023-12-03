@@ -10,7 +10,9 @@ public class DeployTowerTile : Tile
 
     public override void Init(Vector2 position, Faction faction)
     {
+        //Activa el init de la base
         base.Init(position, faction);
+        //Añade la tile a lista de deployTowers
         GridManager.instance.DeployTowers.Add(this);
     }
 
@@ -71,17 +73,24 @@ public class DeployTowerTile : Tile
         }
     }
 
+    //Metodo que actualiza la faccion de la torre
     public void UpdateTowerFaction()
     {
         Faction Newfaction = Faction.None;
+
+        //Bool que indica si hay varias facciones al rededor
         bool areSeveral = false;
+
+        //Busca en las tiles adyacentes
         for(int i = 0; i < node.adyacent_Nodes.Count; i++)
         {
+            //Si encuentra una faccion y no esta activado areSeveral, obtiene la nueva faccion
             if (areSeveral != true && node.adyacent_Nodes[i].myTile.OccupiedUnit != null)
             {
                 Newfaction = node.adyacent_Nodes[i].myTile.OccupiedUnit.Faction;
                 areSeveral = true;
             }
+            //Si hay varias facciones resetea NewFaction
             else if (node.adyacent_Nodes[i].myTile.OccupiedUnit != null 
                 && node.adyacent_Nodes[i].myTile.OccupiedUnit.Faction != Newfaction)
             {
@@ -93,6 +102,8 @@ public class DeployTowerTile : Tile
             UpdateFaction(Newfaction);
         }
     }
+
+    //Metodo que devuelve los colores de los Hihghlights de las tiles adyacentes
     public Color GetHLcolor()
     {
         if (faction == Faction.Hero)

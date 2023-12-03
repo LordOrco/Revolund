@@ -8,15 +8,17 @@ public class UnitManager : MonoBehaviour
 {
     //Patron singleton, solo hay un UnitManager y se instancia a si mismo en Awake
     public static UnitManager instance;
-    
+
     //Lista de unidades
-    private List<ScriptableUnit> unitList;
+    [HideInInspector] private List<ScriptableUnit> unitList;
 
-    public List<BaseUnit> enemyList;
-    public List<BaseUnit> heroList;
+    [HideInInspector] public List<BaseUnit> enemyList;
+    [HideInInspector] public List<BaseUnit> heroList;
 
-    public int heroesAttacked = 0;
-    public int heroes = 0;
+    public BaseEnemy[] tiposEnemigos;
+
+    [HideInInspector] public int heroesAttacked = 0;
+    [HideInInspector] public int heroes = 0;
 
     [SerializeField] private BaseHero hero;
     [SerializeField] private BaseEnemy enemy;
@@ -73,8 +75,10 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    //Metodo que gestiona los nuevos turnos
     public void NewTurn(Faction faccion)
     {
+        //SI es el turno de los heroes, resetea el ataque
         if(faccion == Faction.Hero)
         {
             for (int i = 0; i < heroList.Count; i++)
@@ -85,12 +89,16 @@ public class UnitManager : MonoBehaviour
             }
         }
 
+        //Si es el turno enemigo, los enemigos buscan un enemigo en rango y atacan
         if (faccion == Faction.Enemy)
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
+                //Tiles de alrededor
                 BaseUnit enemigo = null;
                 List<Tile> accesibleTile = GridManager.instance.a_Star.ObtainAccesibleTiles(enemyList[i]);
+
+                //Busca enemigo
                 for (int  j = 0; j < accesibleTile.Count; j++)
                 {
                     if (accesibleTile[j].OccupiedUnit != null && accesibleTile[j].OccupiedUnit.Faction == Faction.Hero) 
@@ -98,21 +106,24 @@ public class UnitManager : MonoBehaviour
                         enemigo = accesibleTile[j].OccupiedUnit;
                     }
                 }
+
                 enemyList[i].canAttack = true;
+
+                //Si hay ataca
                 if (enemigo != null)
                 {
                     Debug.Log("Ataque Enemigo");
                     enemyList[i].Attack(enemigo);
                 }
+
+                //Si no se queda quieto
                 else
                 {
                     enemyList[i].MoveToTile(enemyList[i].GetOccupiedTile());
-
-
                 }
-
-
             }
+
+            //SpawnEnemiesOnTowers();
         }
     }
     public void SpawnHeroes()
@@ -141,6 +152,44 @@ public class UnitManager : MonoBehaviour
         var spawnedHero = Instantiate(hero);
         tile.SetUnit(spawnedHero);
     }
+
+    //Spawnea enemnigos en una tile aleatoria adyacente a una torre enemiga
+    public void SpawnEnemiesOnSpecificTower(DeployTowerTile tower, BaseEnemy enemigo)
+    {
+        bool desplegado = false;
+        int i = 0;
+        if(tower.faction == Faction.Enemy)
+        {
+            //int tileDespliegue = Random.Range(0, tower.node.adyacent_Nodes.Count);
+            //BaseEnemy enemigo = Random.Range(0, (tiposEnemigos.Count() - 1));
+            var spawnedEnemy = Instantiate(enemigo);
+            while( i < tower.node.adyacent_Nodes.Count && desplegado == false)
+            {
+                if (tower.node.adyacent_Nodes[i].myTile.OccupiedUnit == null)
+                {
+                    desplegado= true;
+                    tower.node.adyacent_Nodes[i].myTile.SetUnit(spawnedEnemy);
+                }
+
+                i++;
+            }
+            if(desplegado == false)
+            {
+                Debug.Log("No se puede desplegar el enemigo");
+            }
+        }
+    }
+
+    public void SpawnEnemiesOnTowers()
+    {
+        int tope = GridManager.instance.DeployTowers.Count;
+        for(int i = 0; i < tope; i++) 
+        {
+            if (GridManager.instance.DeployTowers[i].faction == Faction.Enemy)
+                SpawnEnemiesOnSpecificTower(GridManager.instance.DeployTowers[i], tiposEnemigos[0]);
+        }
+    }
+
 
     //Genera heroes aleatoriamente
     public void SpawnEnemies()

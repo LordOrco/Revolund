@@ -85,11 +85,14 @@ public class Node
                 }
             }
         }*/
+        
+        //Si es una deployTower, se asocia a los grass adyacentes
         if (myTile is DeployTowerTile tile)
         {
             for (int i = 0; i < adyacent_Nodes.Count; i++) 
             {
-                ((GrassTile)adyacent_Nodes[i].myTile).DeployTower = tile;
+                if(adyacent_Nodes[i].myTile is GrassTile gsTile)
+                gsTile.DeployTower = tile;
             }
         }
 
