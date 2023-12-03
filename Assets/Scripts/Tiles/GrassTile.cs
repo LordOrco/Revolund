@@ -6,10 +6,11 @@ using UnityEngine;
 public class GrassTile : Tile
 {
     //Colores de AccesibleHighlight
-    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor, deployUnitColor, attackableEenemyColor;
+    [SerializeField] private Color enemyPathingColor, heroPathingColor, heroAndEnemyPathingColor, attackableEenemyColor;
 
     //Bool si esta resaltado por Deploy Tower
-    public bool isAccesedByDeployTower;
+    //public bool isAccesedByDeployTower;
+    public DeployTowerTile DeployTower;
     public override void Init(Vector2 position, Faction pFaction)
     {
         //Cambia de color si es par o impar
@@ -21,7 +22,6 @@ public class GrassTile : Tile
         node = new Node(this);
         enemiesPathing = 0;
         heroesPathing = 0;
-        isAccesedByDeployTower = false;
 
         if (faction == Faction.Hero)
         {
@@ -47,7 +47,8 @@ public class GrassTile : Tile
             //Si estas desplegando una unidad
             if (UnitManager.instance.canInstance)
             {
-                if (isAccesedByDeployTower)
+                //if (isAccesedByDeployTower && this.faction == Faction.Hero)
+                if (DeployTower!= null && DeployTower.areAccesibleTilesShown && DeployTower.faction == Faction.Hero)
                 {
                     UnitManager.instance.SpawnHeroOnDemand(this,UnitManager.instance.SelectedHero);
                     UnitManager.instance.heroList.Add(UnitManager.instance.SelectedHero);
@@ -144,10 +145,12 @@ public class GrassTile : Tile
         else highlight.SetActive(false);
 
         //Si es accesib
-        if (isAccesedByDeployTower)
+        //if (isAccesedByDeployTower)
+        if(DeployTower != null && DeployTower.areAccesibleTilesShown)
         {
             accesibleTilehighlight.SetActive(true);
-            accesibleTilehighlight.GetComponent<SpriteRenderer>().color = deployUnitColor;
+            accesibleTilehighlight.GetComponent<SpriteRenderer>().color =
+                DeployTower.GetHLcolor();
         }
         else if (heroesPathing > 0 && (OccupiedUnit != null && OccupiedUnit.Faction == Faction.Enemy))
         {

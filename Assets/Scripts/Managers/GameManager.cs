@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.PlayerTurn:
                 UnitManager.instance.NewTurn(Faction.Hero);
+                GridManager.instance.NewTurn();
                 break;
             case GameState.EnemyTurn:
                 UnitManager.instance.NewTurn(Faction.Enemy);

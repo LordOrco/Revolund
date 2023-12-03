@@ -6128,6 +6128,14 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+      propertyPath: heroDPT
+      value: 
+      objectReference: {fileID: 7168764517856093291, guid: 5b805461e26f69846a3e9c8d8bb3d8b4, type: 3}
+    - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
+      propertyPath: enemyDPT
+      value: 
+      objectReference: {fileID: 7168764517856093291, guid: 2c7e625cb2c465f45a97b90e27c539ad, type: 3}
+    - target: {fileID: 7659465821672290954, guid: edebb66a23de5a84789ea4abc127de9e, type: 3}
       propertyPath: grassTile
       value: 
       objectReference: {fileID: -566289401207410205, guid: 8420d6b80592f4a48925a167789bff6f, type: 3}

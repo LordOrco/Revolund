@@ -72,6 +72,27 @@ public class Node
     {
         this.adyacent_Nodes = nodes;
         //Debug.Log(adyacent_Nodes.Count);
+        /*if(myTile is GrassTile myGTyle)
+        {
+            Debug.Log("Paso 1");
+            Debug.Log(adyacent_Nodes.Count);
+            for (int i = 0; i < adyacent_Nodes.Count; i++)
+            {
+                if (adyacent_Nodes[i].myTile is DeployTowerTile DPTile)
+                {
+                    myGTyle.DeployTower = DPTile;
+                    Debug.Log("Deploy");
+                }
+            }
+        }*/
+        if (myTile is DeployTowerTile tile)
+        {
+            for (int i = 0; i < adyacent_Nodes.Count; i++) 
+            {
+                ((GrassTile)adyacent_Nodes[i].myTile).DeployTower = tile;
+            }
+        }
+
     }
 
     internal int Manhattan()

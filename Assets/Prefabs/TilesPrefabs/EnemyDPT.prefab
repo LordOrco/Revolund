@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6716011281971587673
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 204525943433274254, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a4529b8e03438aa4ca2dbfb086051b39, type: 3}
+    - target: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      propertyPath: m_Name
+      value: EnemyDPT
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7168764517856093291}
+  m_SourcePrefab: {fileID: 100100000, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+--- !u!1 &1733375542391094745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4988369299010525056, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 6716011281971587673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3618012446588190115 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 6716011281971587673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7168764517856093291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3618012446588190115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dac0aa1ad24fc2469b5a4182a587a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileName: EnemigoTDP
+  renderer: {fileID: 8331673118167884181}
+  accesibleTilehighlight: {fileID: 6909243033336646103}
+  isWalkable: 0
+  needAdyacentNodes: 1
+  CyberpunkTheme: {fileID: 21300000, guid: a4529b8e03438aa4ca2dbfb086051b39, type: 3}
+  SteampunkTheme: {fileID: 21300000, guid: 7bb0c1c9e439ce74cb1c230be26ff539, type: 3}
+  highlight: {fileID: 1733375542391094745}
+  basecolor: {r: 0, g: 0, b: 0, a: 0}
+  enemiesPathing: 0
+  heroesPathing: 0
+  faction: 1
+  OccupiedUnit: {fileID: 0}
+  enemyColor: {r: 0.83137256, g: 0.043137256, b: 0.043137256, a: 0.5882353}
+  heroColor: {r: 0.87058824, g: 0.5803922, b: 0.039215688, a: 0.5882353}
+  areAccesibleTilesShown: 0
+--- !u!1 &6909243033336646103 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 204525943433274254, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 6716011281971587673}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8331673118167884181 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
+  m_PrefabInstance: {fileID: 6716011281971587673}
+  m_PrefabAsset: {fileID: 0}

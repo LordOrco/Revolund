@@ -132,6 +132,21 @@ public abstract class Tile : MonoBehaviour
         }
         return this.accesibleTileshighlight;
     }*/
-
+    
+    public void UpdateFaction(Faction newFaction)
+    {
+        if (faction != newFaction)
+        {
+            faction = newFaction;
+            if (this.faction == Faction.Hero)
+            {
+                this.renderer.sprite = SteampunkTheme;
+            }
+            else
+            {
+                this.renderer.sprite = CyberpunkTheme;
+            }
+        }
+    }
     
 }

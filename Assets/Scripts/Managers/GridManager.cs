@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     private Vector2 gridCenter;
 
     //Tipos de tiles
-    [SerializeField] private Tile grassTile, mountainTile, deployTowerTile;
+    [SerializeField] private Tile grassTile, mountainTile, heroDPT, enemyDPT;
     //Camara
     [SerializeField] private Transform cam;
 
@@ -51,7 +51,7 @@ public class GridManager : MonoBehaviour
                 //si el random da 3 spawnea una Mountain, si no un Grass
                 random = Random.Range(0, 10);
                 if (random == 0) randomTile = mountainTile;
-                else if (random == 8 && !hasTowerSpawned) { randomTile = deployTowerTile; hasTowerSpawned = true; }
+                else if (random == 8 && !hasTowerSpawned) { randomTile = heroDPT; hasTowerSpawned = true; }
                 else { randomTile = grassTile; }
 
                 //var randomTile = Random.Range(0,6) == 3 ? mountainTile : grassTile;
@@ -106,8 +106,11 @@ public class GridManager : MonoBehaviour
                         actualTile = mountainTile;
                         break;
 
-                    case (3, 2): case (10, 9): case (15, 17):
-                        actualTile = deployTowerTile;
+                    case (10, 9): case (15, 17):
+                        actualTile = heroDPT;
+                        break;
+                    case (3, 2):
+                        actualTile = enemyDPT;
                         break;
                 }
 
@@ -117,7 +120,10 @@ public class GridManager : MonoBehaviour
 
                 tiles[new Vector2(x, y)] = spawnedTile;
 
-                spawnedTile.Init(new Vector2(x, y), Faction.Hero);
+                if(spawnedTile.faction == Faction.Hero)
+                    spawnedTile.Init(new Vector2(x, y), Faction.Hero);
+                else
+                    spawnedTile.Init(new Vector2(x, y), Faction.Enemy);
             }
         }
 
@@ -259,6 +265,7 @@ public class GridManager : MonoBehaviour
     {
         for(int i = 0; i < DeployTowers.Count; i++)
         {
+            if (DeployTowers[i].faction == Faction.Hero)
             DeployTowers[i].ActivateDeployTiles();
         }
     }
@@ -268,6 +275,14 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < DeployTowers.Count; i++)
         {
             DeployTowers[i].DeactivateDeployTiles();
+        }
+    }
+
+    public void NewTurn()
+    {
+        for(int j = 0; j < DeployTowers.Count; j++)
+        {
+            DeployTowers[j].UpdateTowerFaction();
         }
     }
 

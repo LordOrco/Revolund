@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DeployTowerTile : Tile
 {
-
+    [SerializeField] private Color enemyColor, heroColor;
     protected List<Tile> highlightedTiles;
-    private bool areAccesibleTilesShown;
+    [HideInInspector]public bool areAccesibleTilesShown;
 
     public override void Init(Vector2 position, Faction faction)
     {
         base.Init(position, faction);
         GridManager.instance.DeployTowers.Add(this);
     }
+
     public bool GetAreAccesibleTilesShown()
     {
         return areAccesibleTilesShown;
@@ -51,21 +52,52 @@ public class DeployTowerTile : Tile
     {
         for (int i = 0; i < node.adyacent_Nodes.Count; i++)
         {
-            if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
-                accesibleTile.isAccesedByDeployTower = true;
+            // if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
+            //accesibleTile.isAccesedByDeployTower = true;
+            areAccesibleTilesShown = true;
+            //Debug.Log("Deployyy");
             node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
         }
-        areAccesibleTilesShown = true;
     }
 
     public void DeactivateDeployTiles()
     {
         for (int i = 0; i < node.adyacent_Nodes.Count; i++)
         {
-            if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
-                accesibleTile.isAccesedByDeployTower = false;
+            //if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
+            //accesibleTile.isAccesedByDeployTower = false;
+            areAccesibleTilesShown = false;
             node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
         }
-        areAccesibleTilesShown = false;
+    }
+
+    public void UpdateTowerFaction()
+    {
+        Faction Newfaction = Faction.None;
+        bool areSeveral = false;
+        for(int i = 0; i < node.adyacent_Nodes.Count; i++)
+        {
+            if (areSeveral != true && node.adyacent_Nodes[i].myTile.OccupiedUnit != null)
+            {
+                Newfaction = node.adyacent_Nodes[i].myTile.OccupiedUnit.Faction;
+                areSeveral = true;
+            }
+            else if (node.adyacent_Nodes[i].myTile.OccupiedUnit != null 
+                && node.adyacent_Nodes[i].myTile.OccupiedUnit.Faction != Newfaction)
+            {
+                Newfaction = Faction.None;
+            }
+        }
+        if (Newfaction != Faction.None)
+        {
+            UpdateFaction(Newfaction);
+        }
+    }
+    public Color GetHLcolor()
+    {
+        if (faction == Faction.Hero)
+            return heroColor;
+        else
+            return enemyColor;
     }
 }
