@@ -8,6 +8,11 @@ public class DeployTowerTile : Tile
     protected List<Tile> highlightedTiles;
     private bool areAccesibleTilesShown;
 
+    public override void Init(Vector2 position, Faction faction)
+    {
+        base.Init(position, faction);
+        GridManager.instance.DeployTowers.Add(this);
+    }
     public bool GetAreAccesibleTilesShown()
     {
         return areAccesibleTilesShown;
@@ -34,23 +39,33 @@ public class DeployTowerTile : Tile
         //Activa y desactiva los highlights de las casilla de despliegue
         else if(!areAccesibleTilesShown)
         {
-            for(int i = 0; i < node.adyacent_Nodes.Count; i++)
-            {
-                if(node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
-                    accesibleTile.isAccesedByDeployTower = true;
-                node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
-            }
-            areAccesibleTilesShown = true;
+            ActivateDeployTiles();
         }
         else
         {
-            for (int i = 0; i < node.adyacent_Nodes.Count; i++)
-            {
-                if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
-                    accesibleTile.isAccesedByDeployTower = false;
-                node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
-            }
-            areAccesibleTilesShown = false;
+            DeactivateDeployTiles();
         }
+    }
+
+    public void ActivateDeployTiles()
+    {
+        for (int i = 0; i < node.adyacent_Nodes.Count; i++)
+        {
+            if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
+                accesibleTile.isAccesedByDeployTower = true;
+            node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
+        }
+        areAccesibleTilesShown = true;
+    }
+
+    public void DeactivateDeployTiles()
+    {
+        for (int i = 0; i < node.adyacent_Nodes.Count; i++)
+        {
+            if (node.adyacent_Nodes[i].myTile is GrassTile accesibleTile)
+                accesibleTile.isAccesedByDeployTower = false;
+            node.adyacent_Nodes[i].myTile.UpdateTileHighlight();
+        }
+        areAccesibleTilesShown = false;
     }
 }

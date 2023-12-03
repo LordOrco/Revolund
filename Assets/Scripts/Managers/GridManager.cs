@@ -23,8 +23,11 @@ public class GridManager : MonoBehaviour
     //Diccionario de tiles: Llave posicion, devuelve la Tile
     private Dictionary<Vector2 , Tile> tiles;
 
+    //Lista de DeployTowers
+    [HideInInspector]public List<DeployTowerTile> DeployTowers;
+
     //Higlights de tiles del heroe seleccionado
-    public List<Tile> highlightedTiles;
+    //public List<Tile> highlightedTiles;
 
     public A_star a_Star;
 
@@ -250,6 +253,22 @@ public class GridManager : MonoBehaviour
 
         // Verifica si las casillas son adyacentes
         return Mathf.Abs(position1.x - position2.x) + Mathf.Abs(position1.y - position2.y) == 1;
+    }
+
+    public void ShowDeployTowersTiles()
+    {
+        for(int i = 0; i < DeployTowers.Count; i++)
+        {
+            DeployTowers[i].ActivateDeployTiles();
+        }
+    }
+
+    public void HideDeployTowersTiles()
+    {
+        for (int i = 0; i < DeployTowers.Count; i++)
+        {
+            DeployTowers[i].DeactivateDeployTiles();
+        }
     }
 
 }

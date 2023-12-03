@@ -27,6 +27,9 @@ public class InventoryManager : MonoBehaviour
         {
             ultimaTropa = indice;
             UnitManager.instance.SetSelectedHero(shopManager.tropas[indice]);       //Instantiate(shopManager.tropas[indice], new Vector3(0, 0, -20), Quaternion.identity));
+
+            GridManager.instance.ShowDeployTowersTiles();
+
             inventarioTropas[indice]--;
             numTropasGUI[indice].text = inventarioTropas[indice].ToString();
 
@@ -46,6 +49,9 @@ public class InventoryManager : MonoBehaviour
         if (UnitManager.instance.canInstance)
         {
             UnitManager.instance.cancelBuyUnit(null);
+
+            GridManager.instance.HideDeployTowersTiles();
+
             inventarioTropas[ultimaTropa]++;
             numTropasGUI[ultimaTropa].text = inventarioTropas[ultimaTropa].ToString();
 

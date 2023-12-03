@@ -21,8 +21,12 @@ public abstract class Tile : MonoBehaviour
     //[SerializeField] protected Color enemyInsideColor;
     //[SerializeField] protected Color noEnemyInsideColor;
 
+    //Variables que indican cuantos enemigos y heroes estan 
+    //mostrando casillas
     public int enemiesPathing;
     public int heroesPathing;
+
+    //Variable que indican si el raton esta encima
     protected bool isMouseIn;
 
     //Facción a la que pertenece

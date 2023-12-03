@@ -44,6 +44,7 @@ public class GrassTile : Tile
 
         else
         {
+            //Si estas desplegando una unidad
             if (UnitManager.instance.canInstance)
             {
                 if (isAccesedByDeployTower)
@@ -52,6 +53,7 @@ public class GrassTile : Tile
                     UnitManager.instance.heroList.Add(UnitManager.instance.SelectedHero);
                     UnitManager.instance.canInstance = false;
                     UnitManager.instance.SelectedHero = null;
+                    GridManager.instance.HideDeployTowersTiles();
                     UnitManager.instance.heroes++;
                 }
             }
