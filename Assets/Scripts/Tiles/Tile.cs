@@ -38,6 +38,9 @@ public abstract class Tile : MonoBehaviour
     //Nodo para el A*
     public Node node;
 
+    //Variable de GUI, si esta activo no puedes interactuar con las tiles
+    public bool canInteract;
+
     //Indica si se puede colocar una casilla
     public bool Walkable => isWalkable && OccupiedUnit == null;
 

@@ -36,8 +36,8 @@ public class UnitManager : MonoBehaviour
 
     public void checkState()
     {
-        Debug.Log(heroList.Count + " AAAAAAAAAHEROES");
-         Debug.Log(enemyList.Count + " AAAAAAAAAENEMIES");
+        //Debug.Log(heroList.Count + " AAAAAAAAAHEROES");
+         //Debug.Log(enemyList.Count + " AAAAAAAAAENEMIES");
         if (heroList.Count <= 0)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Lose);
@@ -69,7 +69,7 @@ public class UnitManager : MonoBehaviour
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
-                if (enemyList[i].canAttack == true) { change = false; }
+                if (enemyList[i].canMove == true) { change = false; }
             }
             if (change) GameManager.Instance.ChangeState(GameManager.GameState.PlayerTurn);
         }
@@ -84,6 +84,7 @@ public class UnitManager : MonoBehaviour
             for (int i = 0; i < heroList.Count; i++)
             {
                 heroList[i].canAttack = true;
+                heroList[i].canMove = true;
                 heroList[i].gameObject.GetComponent<SpriteRenderer>().color = heroList[i].hasDontAttackedColor;
                 heroesAttacked = 0;
             }
@@ -108,6 +109,7 @@ public class UnitManager : MonoBehaviour
                 }
 
                 enemyList[i].canAttack = true;
+                enemyList[i].canMove = true;
 
                 //Si hay ataca
                 if (enemigo != null)

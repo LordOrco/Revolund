@@ -42,10 +42,12 @@ public class GameManager : MonoBehaviour
                 UnitManager.instance.SpawnEnemies();
                 break;
             case GameState.PlayerTurn:
+                Debug.Log("PlayerTurn");
                 UnitManager.instance.NewTurn(Faction.Hero);
                 GridManager.instance.NewTurn();
                 break;
             case GameState.EnemyTurn:
+                Debug.Log("EnemyTurn");
                 UnitManager.instance.NewTurn(Faction.Enemy);
                 break;
             case GameState.Victory:

@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class BaseHero : BaseUnit
 {
+
+    [SerializeField] public GameObject attackButton, endButton;
+
+    //private bool isShowingButtons;
+
+    protected override void Update()
+    {
+
+
+    }
+
+
     //Activa los highlights de las casillas
     public override void ShowPathingTiles()
     {
@@ -34,5 +46,36 @@ public class BaseHero : BaseUnit
         SetHighlightedTiles(tiles);
 
         SetAreAccesibleTilesShown(false);
+    }
+
+    public override void MoveToTile(Tile targetTile)
+    {
+        if (canMove)
+        {
+            if (targetTile != null)
+                targetTile.SetUnit(this);
+            else
+                Debug.Log("MoveToTile no hay camino");
+            ///currentPath = null;
+
+            canMove = false;
+            if (Faction == Faction.Hero) { UnitManager.instance.heroesAttacked++; }
+            //ShowButtons();
+            this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
+            UnitManager.instance.checkState();
+            if (Faction == Faction.Hero) UnitManager.instance.heroesAttacked++;
+        }
+    }
+
+    private void ShowButtons()
+    {
+        attackButton.SetActive(true);
+        endButton.SetActive(true);
+    }
+
+    private void HideButtons()
+    {
+        attackButton.SetActive(false);
+        endButton.SetActive(false);
     }
 }

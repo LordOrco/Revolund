@@ -34,7 +34,8 @@ public class BaseUnit : MonoBehaviour
 
     [SerializeField] public Slider barraVida;
 
-    public bool canAttack;
+    [HideInInspector]public bool canAttack;
+    [HideInInspector]public bool canMove;
     public List<Tile> GetHighlightedTiles() { return highlightedTiles; }
     public void SetHighlightedTiles(List<Tile> tiles) { this.highlightedTiles = tiles; }
     public bool GetAreAccesibleTilesShown() { return areAccesibleTilesShown; }
@@ -52,6 +53,7 @@ public class BaseUnit : MonoBehaviour
         barraVida.value = HP;
         barraVida.minValue = 0;
         canAttack = true;
+        canMove = true;
         if (Faction == Faction.Hero) UnitManager.instance.heroList.Add(this);
         else UnitManager.instance.enemyList.Add((BaseEnemy)this);
     }
@@ -110,13 +112,13 @@ public class BaseUnit : MonoBehaviour
             //Debug.Log("TargetTile pasado");
             Stack<Tile> currentPath = CalculatePathToTile(enemy.OccupiedTile);
             //Debug.Log("Target Tile: " + enemy.OccupiedTile);
-            if (currentPath != null)
+            if (currentPath != null && canMove)
             {
                 MoveToTile(currentPath.Peek());
                 ApplyDmg(enemy);
             }
             attacking = false;
-            //canAttack = false;
+            canAttack = false;
             this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
             if (Faction == Faction.Hero) UnitManager.instance.heroesAttacked++;
             UnitManager.instance.checkState();
@@ -157,7 +159,7 @@ public class BaseUnit : MonoBehaviour
         Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, movementSpeed * Time.deltaTime);
         */
         // Mueve al enemigo a la nueva posición
-        if(canAttack)
+        if(canMove)
         {
             if (targetTile != null)
                 targetTile.SetUnit(this);
@@ -165,10 +167,11 @@ public class BaseUnit : MonoBehaviour
                 Debug.Log("MoveToTile no hay camino");
             ///currentPath = null;
 
-            canAttack = false;
+            canMove = false;
             if(Faction == Faction.Hero) { UnitManager.instance.heroesAttacked++; }
             this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
             UnitManager.instance.checkState();
+            if (Faction == Faction.Hero) UnitManager.instance.heroesAttacked++;
         }
     }
 
