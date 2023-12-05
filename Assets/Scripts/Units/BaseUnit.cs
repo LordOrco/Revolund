@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.UI.CanvasScaler;
 
 public class BaseUnit : MonoBehaviour
@@ -124,7 +125,6 @@ public class BaseUnit : MonoBehaviour
             UnitManager.instance.checkState();
         }
     }
-
     public virtual void ReceiveDmg(int dmg)
     {
         HP -= dmg;

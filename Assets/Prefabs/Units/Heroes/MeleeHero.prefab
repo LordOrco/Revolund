@@ -563,7 +563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &799381238901706447
 RectTransform:
   m_ObjectHideFlags: 0
@@ -666,13 +666,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3424583898996739345}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: -5067708462106883929}
+        m_TargetAssemblyTypeName: BaseHero, Assembly-CSharp
+        m_MethodName: AttackOnplace
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: BaseUnit, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -800,7 +800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1380449997340431984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -902,7 +902,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7708855536163854781}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -5067708462106883929}
+        m_TargetAssemblyTypeName: BaseHero, Assembly-CSharp
+        m_MethodName: HideButtons
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &9087285609656405401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1012,8 +1024,8 @@ MonoBehaviour:
   barraVida: {fileID: 5882187012627285258}
   canAttack: 1
   canMove: 0
-  attackButton: {fileID: 0}
-  endButton: {fileID: 0}
+  attackButton: {fileID: 5312388319917253520}
+  endButton: {fileID: 7649555671087424591}
 --- !u!4 &9143966427852209482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 70196229873381587, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}
