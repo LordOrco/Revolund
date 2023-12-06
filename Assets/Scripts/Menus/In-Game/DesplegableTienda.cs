@@ -9,6 +9,8 @@ public class DesplegableTienda : MonoBehaviour
     [SerializeField] private GameObject tienda;
     [SerializeField] private Sprite Abrir;
     [SerializeField] private Sprite Cerrar;
+    public delegate void SoundTienda(int sonido);
+    public static event SoundTienda OnSoundTienda;
     void Start()
     {
         desplegado = true;
@@ -23,12 +25,14 @@ public class DesplegableTienda : MonoBehaviour
             Vector3 pos = new Vector3(tienda.transform.position.x, tienda.transform.position .y - 100, tienda.transform.position.z);
             tienda.transform.position = pos;
             gameObject.GetComponent<Image>().sprite = Abrir;
+            OnSoundTienda?.Invoke(0);//Invocacion del sonido tienda 
         }
         else
         {
             Vector3 pos = new Vector3(tienda.transform.position.x, tienda.transform.position.y + 100, tienda.transform.position.z);
             tienda.transform.position = pos;
             gameObject.GetComponent<Image>().sprite = Cerrar;
+            OnSoundTienda?.Invoke(0);
         }
         desplegado = !desplegado;
     }
