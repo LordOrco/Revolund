@@ -17,7 +17,11 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        DoNotDestroy.instance.GetComponent<AudioSource>().Pause();
+        if (SceneManager.GetActiveScene().name == "EscenaPrincipal")
+        {
+            DoNotDestroy.instance.GetComponent<AudioSource>().Pause();
+        }
+        
     }
 
     public void PlaySoundShop()
