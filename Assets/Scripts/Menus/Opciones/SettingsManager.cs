@@ -24,7 +24,7 @@ public class SettingsManager : MonoBehaviour
     static private int fontSize;
 
     private KeyCode[] defaultControls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space, KeyCode.Escape };
-    private KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space, KeyCode.Escape };
+    public KeyCode[] controls = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.Space, KeyCode.Escape };
 
 
     private void Start()
@@ -159,6 +159,7 @@ public class SettingsManager : MonoBehaviour
             }
         }
         controls[index] = control;
+        SaveControlsArray();
     }
 
     public void ResetControls()

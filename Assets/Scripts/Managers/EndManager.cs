@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndManager : MonoBehaviour
 {
@@ -10,10 +11,6 @@ public class EndManager : MonoBehaviour
     [SerializeField] private GameObject GUIDesactivar;
 
     public static EndManager Instance;
-    public delegate void SoundVictory(int sonido);
-    public static event SoundVictory OnSoundVictory;
-    public delegate void Soundefeat(int sonido);
-    public static event Soundefeat OnSounDefeat;
 
     private void Awake()
     {
@@ -27,17 +24,17 @@ public class EndManager : MonoBehaviour
             LoseSign.SetActive(true);
 
         }
+        Invoke("ReturnJaja", 3f);
     }
     public void Victory()
     {
-        DesactivateGUI();
+        DesactivateGUI();       
+        if (VictorySign != null)
         {
-            if (VictorySign != null)
-            {
-                VictorySign.SetActive(true);
-                SoundManager.Instance.PlayYouWinMusic();
-            }
+            VictorySign.SetActive(true);
+            SoundManager.Instance.PlayYouWinMusic();
         }
+        Invoke("ReturnJaja", 3f);
     }
 
     private void DesactivateGUI()
@@ -48,5 +45,10 @@ public class EndManager : MonoBehaviour
             SoundManager.Instance.PlayYouLooseMusic();
         }
     }
-  }
+
+    private void ReturnJaja()
+    {
+        SceneManager.LoadScene(0);
+    }
+}
 

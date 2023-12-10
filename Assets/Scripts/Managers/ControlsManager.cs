@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class ControlsManager : MonoBehaviour
 {
@@ -49,6 +50,11 @@ public class ControlsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (KeyCode keyCode in settings.GetControls())
+        {
+            Debug.Log(keyCode);
+        }
+        settings.controls = settings.LoadControlsArray();
         cameraControls();
         PauseMenu();
     }
