@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
     public int targetScene = 0;
-    public void sound()
-    {
-        SoundManager.Instance.PlayClickInGame();
-        Invoke("ChangeScene",0.5f);
-    }
+    //public void sound()
+    //{
+    //    //SoundManager.Instance.PlayClickInGame();
+    //    Invoke("ChangeScene",0.0f);
+    //}
 
     public void ChangeScene()
     {

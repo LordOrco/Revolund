@@ -8,16 +8,16 @@ public class SceneAdder : MonoBehaviour
     public int targetScene = 0;
     public int sceneIndex = 0;
 
-    public void sound1()
-    {
-        SoundManager.Instance.PlayClickInGame();
-        Invoke("AddScene", 0.5f);
-    }
-    public void sound2()
-    {
-        SoundManager.Instance.PlayClickInGame();
-        Invoke("UnloadScene", 0.5f);
-    }
+   //public void sound1()
+   //{
+   //    //SoundManager.Instance.PlayClickInGame();
+   //    Invoke("AddScene", 0.0f);
+   //}
+   //public void sound2()
+   //{
+   //    //PlayClick.InstanceS.PlayClickInGame();
+   //    Invoke("UnloadScene", 0.0f);
+   //}
 
     public void AddScene()
     {
