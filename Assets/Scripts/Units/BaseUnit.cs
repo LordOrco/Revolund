@@ -125,6 +125,7 @@ public class BaseUnit : MonoBehaviour
             {
                 MoveToTile(currentPath.Peek());
                 ApplyDmg(enemy);
+                enemy.ApplyDmg(this);
             }
             attacking = false;
             canAttack = false;

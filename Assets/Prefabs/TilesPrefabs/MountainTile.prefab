@@ -133,8 +133,9 @@ MonoBehaviour:
   basecolor: {r: 0.37647063, g: 0.29411766, b: 0.29411766, a: 1}
   enemiesPathing: 0
   heroesPathing: 0
-  faction: 0
+  faction: 1
   OccupiedUnit: {fileID: 0}
+  canInteract: 0
 --- !u!1 &8596630843596896068 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4988369299010525056, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}

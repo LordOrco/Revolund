@@ -100,6 +100,15 @@ public class DeployTowerTile : Tile
         if (Newfaction != Faction.None)
         {
             UpdateFaction(Newfaction);
+            SetAdyacentFaction();
+        }
+    }
+
+    public void SetAdyacentFaction()
+    {
+        for (int i = 0; i < node.adyacent_Nodes.Count; i++)
+        {
+            node.adyacent_Nodes[i].myTile.UpdateFaction(faction);
         }
     }
 

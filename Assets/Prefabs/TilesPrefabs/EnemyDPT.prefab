@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2672675044212055069, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3085902094048695246, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: 3356338560029412300, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a4529b8e03438aa4ca2dbfb086051b39, type: 3}
+      objectReference: {fileID: 21300000, guid: 1b3e7a3c4ce219b41b4eae47e2d5f7ea, type: 3}
     - target: {fileID: 7998907008193009658, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}
       propertyPath: m_Name
       value: EnemyDPT
@@ -103,7 +103,7 @@ MonoBehaviour:
   accesibleTilehighlight: {fileID: 6909243033336646103}
   isWalkable: 0
   needAdyacentNodes: 1
-  CyberpunkTheme: {fileID: 21300000, guid: a4529b8e03438aa4ca2dbfb086051b39, type: 3}
+  CyberpunkTheme: {fileID: 21300000, guid: 1b3e7a3c4ce219b41b4eae47e2d5f7ea, type: 3}
   SteampunkTheme: {fileID: 21300000, guid: 7bb0c1c9e439ce74cb1c230be26ff539, type: 3}
   highlight: {fileID: 1733375542391094745}
   basecolor: {r: 0, g: 0, b: 0, a: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   heroesPathing: 0
   faction: 1
   OccupiedUnit: {fileID: 0}
+  canInteract: 0
   enemyColor: {r: 0.83137256, g: 0.043137256, b: 0.043137256, a: 0.5882353}
   heroColor: {r: 0.87058824, g: 0.5803922, b: 0.039215688, a: 0.5882353}
   areAccesibleTilesShown: 0

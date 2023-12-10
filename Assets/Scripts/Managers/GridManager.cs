@@ -21,7 +21,7 @@ public class GridManager : MonoBehaviour
     public static GridManager instance;
 
     //Diccionario de tiles: Llave posicion, devuelve la Tile
-    private Dictionary<Vector2 , Tile> tiles;
+    public Dictionary<Vector2 , Tile> tiles;
 
     //Lista de DeployTowers
     [HideInInspector]public List<DeployTowerTile> DeployTowers;
@@ -106,10 +106,10 @@ public class GridManager : MonoBehaviour
                         actualTile = mountainTile;
                         break;
 
-                    case (10, 9): case (15, 17):
+                    case (3, 2):
                         actualTile = heroDPT;
                         break;
-                    case (3, 2):
+                    case (10, 9): case (15, 17):
                         actualTile = enemyDPT;
                         break;
                 }
@@ -137,6 +137,12 @@ public class GridManager : MonoBehaviour
                 if (tiles[key].GetNeedsAdyacentNodes())
                     tiles[key].node.SetAdyacentNodes(GetNeighboursNodes(tiles[key]));
             }
+        }
+
+        //For para establecer la faccion de las tiles adyacentes a las DeployTowers
+        for(int j = 0; j < DeployTowers.Count; j++)
+        {
+            DeployTowers[j].SetAdyacentFaction();
         }
         //Posiciona la camara en el centro del tablero
         cam.transform.position = new Vector3(gridCenter.x, gridCenter.y, -10);

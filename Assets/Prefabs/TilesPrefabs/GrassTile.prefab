@@ -138,14 +138,14 @@ MonoBehaviour:
   basecolor: {r: 0.128788, g: 1, b: 0, a: 0}
   enemiesPathing: 0
   heroesPathing: 0
-  faction: 0
+  faction: 1
   OccupiedUnit: {fileID: 0}
+  canInteract: 0
   enemyPathingColor: {r: 0.8301887, g: 0.043075833, b: 0.043075833, a: 0.5882353}
   heroPathingColor: {r: 0.10963242, g: 0.83137256, b: 0.04313726, a: 0.5882353}
   heroAndEnemyPathingColor: {r: 0.47251245, g: 0.04313726, b: 0.83137256, a: 0.5882353}
-  deployUnitColor: {r: 1, g: 0.9197526, b: 0, a: 0.5882353}
   attackableEenemyColor: {r: 0.7647059, g: 0.09019607, b: 0.72807336, a: 0.5882353}
-  isAccesedByDeployTower: 0
+  DeployTower: {fileID: 0}
 --- !u!1 &8428986948869297824 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4988369299010525056, guid: 0d05e2304b86eca4d8701b0c0e08e4a7, type: 3}

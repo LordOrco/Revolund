@@ -140,10 +140,10 @@ public class UnitManager : MonoBehaviour
             BaseHero spawnedHero = Instantiate(hero);
 
             //Obtiene un Tile donde spawnear el heroe
-            var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
+            //var randomSpawnTile = GridManager.instance.GetHeroSpawnedTile();
 
             //Asocia el heroe a la casilla
-            randomSpawnTile.SetUnit(spawnedHero);
+            GridManager.instance.tiles[new Vector2(5,4)].SetUnit(spawnedHero);
             heroes++;
         }
 
@@ -202,7 +202,7 @@ public class UnitManager : MonoBehaviour
     {
         var enemyCount = 2;
         //for(int i = 0; i < unitList.Count; i++) { }
-        for (int i = 0; i < enemyCount; i++)
+       /* for (int i = 0; i < enemyCount; i++)
         {
             //var randomPrefab = GetRandomUnit<BaseEnemy>(Faction.Enemy);
             var spawnedEnemy = Instantiate(enemy);
@@ -213,7 +213,16 @@ public class UnitManager : MonoBehaviour
             //Asocia el enemigo a la casilla
             randomSpawanTile.SetUnit(spawnedEnemy);
 
-        }
+        }*/
+        var spawnedEnemy = Instantiate(enemy);
+
+        //Asocia el enemigo a la casilla
+        GridManager.instance.tiles[new Vector2(10, 10)].SetUnit(spawnedEnemy);
+
+        var spawnedEnemy2 = Instantiate(enemy);
+
+        GridManager.instance.tiles[new Vector2(15, 16)].SetUnit(spawnedEnemy2);
+
 
         //Cambia al estado de turno del jugador
         GameManager.Instance.ChangeState(GameManager.GameState.PlayerTurn);

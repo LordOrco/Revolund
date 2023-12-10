@@ -9,6 +9,7 @@ public class DesplegableTienda : MonoBehaviour
     [SerializeField] private GameObject tienda;
     [SerializeField] private Sprite Abrir;
     [SerializeField] private Sprite Cerrar;
+    [SerializeField] private GameObject BtCoord1, BtCoord2;
     public delegate void SoundTienda(int sonido);
     public static event SoundTienda OnSoundTienda;
     void Start()
@@ -22,17 +23,36 @@ public class DesplegableTienda : MonoBehaviour
 
         if (desplegado)
         {
+            /*
             Vector3 pos = new Vector3(tienda.transform.position.x, tienda.transform.position .y - 100, tienda.transform.position.z);
             tienda.transform.position = pos;
+            */
+            //tienda.SetActive(false);
+            foreach (Transform child in tienda.transform)
+            {
+                if(child != gameObject.transform)
+                    child.gameObject.SetActive(false);
+            }
             gameObject.GetComponent<Image>().sprite = Abrir;
             OnSoundTienda?.Invoke(0);//Invocacion del sonido tienda 
+            this.transform.position = BtCoord1.transform.position;
+            
         }
         else
         {
+            /*
             Vector3 pos = new Vector3(tienda.transform.position.x, tienda.transform.position.y + 100, tienda.transform.position.z);
             tienda.transform.position = pos;
+            */
+            //tienda.SetActive(true);
+            foreach (Transform child in tienda.transform)
+            {
+                if (child != gameObject.transform)
+                    child.gameObject.SetActive(true);
+            }
             gameObject.GetComponent<Image>().sprite = Cerrar;
             OnSoundTienda?.Invoke(0);
+            this.transform.position = BtCoord2.transform.position;
         }
         desplegado = !desplegado;
     }
