@@ -76,34 +76,34 @@ public class BaseHero : BaseUnit
     private void EndMovement()
     {
         canMove = false;
-        bool enemyClose = false;
+        //bool enemyClose = false;
 
         UnitManager.instance.heroesAttacked++;
 
         for(int i = 0;i< GetOccupiedTile().node.adyacent_Nodes.Count;i++)
         {
             var enemy = GetOccupiedTile().node.adyacent_Nodes[i].myTile.OccupiedUnit;
-            if (enemy != null && enemy.Faction != Faction.Hero)
-                enemyClose = true;
+           // if (enemy != null && enemy.Faction != Faction.Hero)
+           //     enemyClose = true;
         }
 
-        ShowButtons(enemyClose);
+        //ShowButtons(enemyClose);
 
         this.gameObject.GetComponent<SpriteRenderer>().color = hasAttackedColor;
         UnitManager.instance.checkState();
     }
     //bool en true si hay un enemigo cerca
-    private void ShowButtons(bool isEnemyClose)
+    /*private void ShowButtons(bool isEnemyClose)
     {
         if (isEnemyClose)
         { attackButton.SetActive(true); }
 
         endButton.SetActive(true);
-    }
+    }*/
 
-    public void HideButtons()
+    /*public void HideButtons()
     {
         attackButton.SetActive(false);
         endButton.SetActive(false);
-    }
+    }*/
 }

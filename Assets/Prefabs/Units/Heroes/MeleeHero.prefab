@@ -1023,7 +1023,7 @@ MonoBehaviour:
   maxAttack: 5
   barraVida: {fileID: 5882187012627285258}
   canAttack: 1
-  canMove: 0
+  canMove: 1
   attackButton: {fileID: 5312388319917253520}
   endButton: {fileID: 7649555671087424591}
 --- !u!4 &9143966427852209482 stripped
