@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource>fuentes;
     private void Awake()
     {
+        DoNotDestroy.instance.GetComponent<AudioSource>().Pause();
+
         //Los distintos eventos que estan subcritos al Soundmanager 
         DesplegableTienda.OnSoundTienda += PlaySound;//Posicion 0
         ShopManager.OnSoundcomprar += PlaySound;//Posicion 1

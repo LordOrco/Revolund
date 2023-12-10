@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoNotDestroy : MonoBehaviour
 {
-    private void Awake()
-    {
-        GameObject[] BGMusic = GameObject.FindGameObjectsWithTag("audio");
+    public static DoNotDestroy instance;
 
-        if(BGMusic.Length > 1)
+    void Awake()
+    {
+        if (instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
-        DontDestroyOnLoad(this.gameObject);
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
+    //private void Update()
+    //{
+    //    if (SceneManager.GetActiveScene().name == "EscenaPrincipal")
+    //        instance.GetComponent<AudioSource>().Pause();
+    //}
 }
