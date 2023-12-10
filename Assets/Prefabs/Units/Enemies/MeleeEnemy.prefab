@@ -580,11 +580,13 @@ MonoBehaviour:
   hasAttackedColor: {r: 1, g: 1, b: 1, a: 1}
   hasDontAttackedColor: {r: 1, g: 1, b: 1, a: 0}
   HP: 10
-  minAttack: 1
-  maxAttack: 1
+  minAttack: 3
+  maxAttack: 5
   barraVida: {fileID: 5882187012627285258}
   canAttack: 0
+  canMove: 0
   SwordIndicator: {fileID: 2720782988072042696}
+  swordIndActive: 0
 --- !u!4 &9143966427852209482 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 70196229873381587, guid: 792e355fbadb31845bb2bf9b9c70378e, type: 3}

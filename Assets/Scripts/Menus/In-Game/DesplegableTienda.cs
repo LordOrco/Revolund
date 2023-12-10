@@ -34,7 +34,7 @@ public class DesplegableTienda : MonoBehaviour
                     child.gameObject.SetActive(false);
             }
             gameObject.GetComponent<Image>().sprite = Abrir;
-            OnSoundTienda?.Invoke(0);//Invocacion del sonido tienda 
+            SoundManager.Instance.PlaySoundShop();//Invocacion del sonido tienda 
             this.transform.position = BtCoord1.transform.position;
             
         }
@@ -51,7 +51,7 @@ public class DesplegableTienda : MonoBehaviour
                     child.gameObject.SetActive(true);
             }
             gameObject.GetComponent<Image>().sprite = Cerrar;
-            OnSoundTienda?.Invoke(0);
+            SoundManager.Instance.PlaySoundShop();
             this.transform.position = BtCoord2.transform.position;
         }
         desplegado = !desplegado;

@@ -156,7 +156,7 @@ public class UnitManager : MonoBehaviour
     {
         var spawnedHero = Instantiate(hero);
         tile.SetUnit(spawnedHero);
-        OnSoundcolocarTropa?.Invoke(4);
+        SoundManager.Instance.PlayInvocartropa();
     }
 
     //Spawnea enemnigos en una tile aleatoria adyacente a una torre enemiga

@@ -3195,7 +3195,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ffccd8f064181ec4e9efbdbd8ed49861, type: 3}
   - {fileID: 8300000, guid: a72926687f5f7c84995d0c06e8cdb8ea, type: 3}
   - {fileID: 8300000, guid: 01ec74873dcbbc0469b21f9bfa6698ea, type: 3}
-  fuentes: []
+  fuentes:
+  - {fileID: 1032955511}
 --- !u!1 &1106426469
 GameObject:
   m_ObjectHideFlags: 0

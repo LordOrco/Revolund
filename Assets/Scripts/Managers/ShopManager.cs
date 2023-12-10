@@ -15,8 +15,6 @@ public class ShopManager : MonoBehaviour
     public int dineroInicial = 1000;
     [SerializeField] public List<Button> poderComprarGUI = new List<Button>();
     public List<int> precios = new List<int>();
-    public delegate void Soundcomprar(int sonido);
-    public static event Soundcomprar OnSoundcomprar;
     void Start()
     {
         inventoryManager = GameObject.FindObjectOfType<InventoryManager>();
@@ -40,7 +38,7 @@ public class ShopManager : MonoBehaviour
             dinero -= precios[indice];
             dineroGUI.text = dinero.ToString();
             actualizarPoderComprar();
-            OnSoundcomprar?.Invoke(1);
+            SoundManager.Instance.PlayComprarMp3();
         }
     }
 

@@ -107,10 +107,10 @@ public class BaseUnit : MonoBehaviour
         {
             UnitManager.instance.heroList.Remove(this);
             UnitManager.instance.heroes--;
-            OnSounKill?.Invoke(5);
+            SoundManager.Instance.PlayDeadunits();
         }
         else UnitManager.instance.enemyList.Remove(this);
-        OnSounKill?.Invoke(5);
+        SoundManager.Instance.PlayDeadunits();
     }
 
     public virtual void Attack(BaseUnit enemy)
@@ -160,7 +160,14 @@ public class BaseUnit : MonoBehaviour
         
         var vivo = enemy.ReceiveDmg(dmg);
         //Debug.Log(Faction);
-        //OnSoundAttackHero.Invoke(7);
+        if(Faction  == Faction.Hero)
+        {
+            SoundManager.Instance.PlaySteampunkShot();
+        }
+        else
+        {
+            SoundManager.Instance.PlayCyberShot();
+        }
 
         return vivo;
         
@@ -187,7 +194,7 @@ public class BaseUnit : MonoBehaviour
             if (targetTile != null)
             {
                 targetTile.SetUnit(this);
-                OnSoundWalk?.Invoke(6);
+                SoundManager.Instance.PlayWalkunits();
             }
             else
                 Debug.Log("MoveToTile no hay camino");

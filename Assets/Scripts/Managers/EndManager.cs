@@ -35,7 +35,7 @@ public class EndManager : MonoBehaviour
             if (VictorySign != null)
             {
                 VictorySign.SetActive(true);
-                OnSoundVictory?.Invoke(2);
+                SoundManager.Instance.PlayYouWinMusic();
             }
         }
     }
@@ -45,7 +45,7 @@ public class EndManager : MonoBehaviour
         foreach(Transform child in GUIDesactivar.transform)
         {
             child.gameObject.SetActive(false);
-            OnSounDefeat?.Invoke(3);
+            SoundManager.Instance.PlayYouLooseMusic();
         }
     }
   }

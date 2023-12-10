@@ -8,8 +8,6 @@ public class BaseHero : BaseUnit
     [SerializeField] public GameObject attackButton, endButton;
 
     //private bool isShowingButtons;
-    public delegate void SoundAttackEnemy(int sonido);
-    public static event SoundAttackEnemy OnSoundAttackEnemy;
     protected override void Update()
     {
 
@@ -53,7 +51,11 @@ public class BaseHero : BaseUnit
         if (canMove)
         {
             if (targetTile != null)
+            {
+                SoundManager.Instance.PlayWalkunits();
                 targetTile.SetUnit(this);
+            }
+                //targetTile.SetUnit(this);
             else
                 Debug.Log("MoveToTile no hay camino");
             ///currentPath = null;
@@ -65,7 +67,7 @@ public class BaseHero : BaseUnit
         if (enemy != null && canAttack)
         {
             ApplyDmg(enemy);
-            OnSoundAttackEnemy?.Invoke(7);
+            SoundManager.Instance.PlaySteampunkShot();
         }
         attacking = false;
         canAttack = false;
