@@ -124,8 +124,10 @@ public class BaseUnit : MonoBehaviour
             if (currentPath != null && canMove)
             {
                 MoveToTile(currentPath.Peek());
-                ApplyDmg(enemy);
-                enemy.ApplyDmg(this);
+                if (ApplyDmg(enemy))
+                {
+                    enemy.ApplyDmg(this);
+                }
             }
             attacking = false;
             canAttack = false;
@@ -134,7 +136,7 @@ public class BaseUnit : MonoBehaviour
             UnitManager.instance.checkState();
         }
     }
-    public virtual void ReceiveDmg(int dmg)
+    public virtual bool ReceiveDmg(int dmg)
     {
         HP -= dmg;
         
@@ -142,16 +144,25 @@ public class BaseUnit : MonoBehaviour
         if (HP <= 0)
         {
             Kill();
+            UnitManager.instance.checkState();
+            return false;
         }
-        UnitManager.instance.checkState();
+        else
+        {
+            UnitManager.instance.checkState();
+            return true;
+        }
     }
 
-    protected virtual void ApplyDmg(BaseUnit enemy)
+    protected virtual bool ApplyDmg(BaseUnit enemy)
     {
         int dmg = UnityEngine.Random.Range(minAttack, maxAttack);
         
-        enemy.ReceiveDmg(dmg);
-        OnSoundAttackHero.Invoke(7);
+        var vivo = enemy.ReceiveDmg(dmg);
+        //Debug.Log(Faction);
+        //OnSoundAttackHero.Invoke(7);
+
+        return vivo;
         
     }
 
