@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Victory
   - Defeat
+  - InGameMusic
   layers:
   - Default
   - TransparentFX

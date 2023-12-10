@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
         BaseUnit.OnSoundAttackHero += PlaySound;
         BaseHero.OnSoundAttackEnemy += PlaySound;
         AudioSource fuente1 =gameObject.GetComponent<AudioSource>();
+
         
     
         fuentes.Add(fuente1);
