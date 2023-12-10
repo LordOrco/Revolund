@@ -25,6 +25,9 @@ public class UnitManager : MonoBehaviour
     //Heroe seleccionado
     public BaseHero SelectedHero;
     public bool canInstance;
+    
+    public delegate void SoundcolocarTropa(int sonido);
+    public static event SoundcolocarTropa OnSoundcolocarTropa;
     private void Awake()
     {
         instance = this;
@@ -153,6 +156,7 @@ public class UnitManager : MonoBehaviour
     {
         var spawnedHero = Instantiate(hero);
         tile.SetUnit(spawnedHero);
+        OnSoundcolocarTropa?.Invoke(4);
     }
 
     //Spawnea enemnigos en una tile aleatoria adyacente a una torre enemiga
@@ -220,7 +224,7 @@ public class UnitManager : MonoBehaviour
     {
         return (T) unitList.Where(u => u.Faction == faction).OrderBy(o => Random.value).First().UnitPrefab;
     }
-    //Selecciona al heroe pasado como parámetro
+    //Selecciona al heroe pasado como parï¿½metro
     public void SetSelectedHero(BaseHero hero)
     {
         if (hero != null && hero.GetOccupiedTile() == null)
@@ -248,7 +252,7 @@ public class UnitManager : MonoBehaviour
             }
 
             SelectedHero = hero;
-            //Enseña al heroe seleccionado
+            //Enseï¿½a al heroe seleccionado
             MenuManager.Instance.ShowSelectedHero(hero);
         }
     }

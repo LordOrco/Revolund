@@ -15,18 +15,19 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         //Los distintos eventos que estan subcritos al Soundmanager 
-        //OpenShop.OnSoundVolar += PlaySound;
-       // Goal.onSoundspoints+= PlaySound;
-       // GameManager.onSoundChoque+= PlaySound;
-       // GameManager.onSounMenu += PlaySound;
-       DesplegableTienda.OnSoundTienda += PlaySound;
+        DesplegableTienda.OnSoundTienda += PlaySound;//Posicion 0
+        ShopManager.OnSoundcomprar += PlaySound;//Posicion 1
+        EndManager.OnSoundVictory += PlaySound;//Posicion2
+        EndManager.OnSoundVictory += PlaySound;//Posicion 3
+        UnitManager.OnSoundcolocarTropa += PlaySound;
+        BaseUnit.OnSounKill += PlaySound;
+        BaseUnit.OnSoundWalk += PlaySound;
+        BaseUnit.OnSoundAttackHero += PlaySound;
+        BaseHero.OnSoundAttackEnemy += PlaySound;
         AudioSource fuente1 =gameObject.GetComponent<AudioSource>();
+        
     
         fuentes.Add(fuente1);
-       
-        //Nota para añadir un sonido puedo ir añadiendo poco a poco 
-        //Pero si tengo varios sonido hare un bucle for para ahorrar tiempo
-        //Tambien para tener menos linea de codigo 
     }
 
     void Start()

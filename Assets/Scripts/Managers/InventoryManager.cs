@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI[] numTropasGUI;
     [SerializeField] public List<Button> tropaSeleccionadaGUI = new List<Button>();
     [SerializeField] public List<Button> CancelarVenderGUI = new List<Button>();
+
     void Start()
     {
         shopManager = GameObject.FindObjectOfType<ShopManager>();
@@ -36,6 +37,7 @@ public class InventoryManager : MonoBehaviour
             Color temp = tropaSeleccionadaGUI[ultimaTropa].image.color;
             temp.a = 0.5f;
             tropaSeleccionadaGUI[ultimaTropa].image.color = temp;
+            
 
             foreach (Button b in CancelarVenderGUI)
             {
@@ -70,7 +72,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (UnitManager.instance.canInstance)
         {
-            shopManager.añadirDinero(shopManager.precios[ultimaTropa]);
+            shopManager.aÃ±adirDinero(shopManager.precios[ultimaTropa]);
             UnitManager.instance.cancelBuyUnit(null);
 
             Color temp = tropaSeleccionadaGUI[ultimaTropa].image.color;

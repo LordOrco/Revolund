@@ -3023,6 +3023,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sonidos:
   - {fileID: 8300000, guid: 0591b8182e4ddd34ab16159ee31713eb, type: 3}
+  - {fileID: 8300000, guid: a9e6b745c374bcf4ea6f474f3bc3c540, type: 3}
+  - {fileID: 8300000, guid: f935e464e88ad4445892952c90b40dc4, type: 3}
+  - {fileID: 8300000, guid: a0949cdbc135ee24891cb99dc6f20b38, type: 3}
+  - {fileID: 8300000, guid: e19efec87aafe1c4881541902a519328, type: 3}
+  - {fileID: 8300000, guid: 6f746770b16e06a4b9b6d562ff73e48e, type: 3}
+  - {fileID: 8300000, guid: 941d8d4949e42cc42b0b1530f9ba2b6f, type: 3}
+  - {fileID: 8300000, guid: ffccd8f064181ec4e9efbdbd8ed49861, type: 3}
+  - {fileID: 8300000, guid: a72926687f5f7c84995d0c06e8cdb8ea, type: 3}
+  - {fileID: 8300000, guid: 01ec74873dcbbc0469b21f9bfa6698ea, type: 3}
   fuentes: []
 --- !u!1 &1106426469
 GameObject:

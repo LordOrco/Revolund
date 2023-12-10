@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     //Llama a las acciones al cambiar estado
     public static event Action<GameState> OnGameStateChanged;
+    public delegate void SoundButons(int sonido);
     private void Awake()
     {
         Instance = this;

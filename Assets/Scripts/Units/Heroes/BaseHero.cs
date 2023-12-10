@@ -8,7 +8,8 @@ public class BaseHero : BaseUnit
     [SerializeField] public GameObject attackButton, endButton;
 
     //private bool isShowingButtons;
-
+    public delegate void SoundAttackEnemy(int sonido);
+    public static event SoundAttackEnemy OnSoundAttackEnemy;
     protected override void Update()
     {
 
@@ -64,6 +65,7 @@ public class BaseHero : BaseUnit
         if (enemy != null && canAttack)
         {
             ApplyDmg(enemy);
+            OnSoundAttackEnemy?.Invoke(7);
         }
         attacking = false;
         canAttack = false;

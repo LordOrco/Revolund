@@ -44,6 +44,12 @@ public class BaseUnit : MonoBehaviour
     public Tile GetOccupiedTile() { return OccupiedTile; }
     public void SetOccupiedTile(Tile tile) { this.OccupiedTile = tile; }
 
+    public delegate void SounKill(int sonido);
+    public static event SounKill OnSounKill;
+    public delegate void SoundWalk(int sonido);
+    public static event SoundWalk OnSoundWalk;
+    public delegate void SoundAttackHero(int sonido);
+    public static event SoundAttackHero OnSoundAttackHero;
     protected virtual void Awake()
     {
         OccupiedTile = null;
@@ -73,7 +79,7 @@ public class BaseUnit : MonoBehaviour
                 {
                     currentPath.Pop();
                     
-                    // Si ha llegado al final de la ruta, recalcula la ruta hacia el h閞oe
+                    // Si ha llegado al final de la ruta, recalcula la ruta hacia el h茅roe
                     if (currentPathIndex >= currentPath.Count)
                     {
                         CalculatePathToHero();
@@ -101,8 +107,10 @@ public class BaseUnit : MonoBehaviour
         {
             UnitManager.instance.heroList.Remove(this);
             UnitManager.instance.heroes--;
+            OnSounKill?.Invoke(5);
         }
         else UnitManager.instance.enemyList.Remove(this);
+        OnSounKill?.Invoke(5);
     }
 
     public virtual void Attack(BaseUnit enemy)
@@ -128,7 +136,7 @@ public class BaseUnit : MonoBehaviour
     public virtual void ReceiveDmg(int dmg)
     {
         HP -= dmg;
-
+        
         barraVida.value = HP;
         if (HP <= 0)
         {
@@ -140,7 +148,10 @@ public class BaseUnit : MonoBehaviour
     protected virtual void ApplyDmg(BaseUnit enemy)
     {
         int dmg = UnityEngine.Random.Range(minAttack, maxAttack);
+        
         enemy.ReceiveDmg(dmg);
+        OnSoundAttackHero.Invoke(7);
+        
     }
 
     public virtual void CalculAndMovement(Tile targetTile)
@@ -151,18 +162,21 @@ public class BaseUnit : MonoBehaviour
     public virtual void MoveToTile(Tile targetTile)
     {
         /*
-        // Obtiene la posici髇 actual del enemigo y la posici髇 objetivo
+        // Obtiene la posici贸n actual del enemigo y la posici贸n objetivo
         Vector3 currentPosition = transform.position;
         Vector3 targetPosition = targetTile.transform.position;
 
-        // Calcula la nueva posici髇 usando Vector3.MoveTowards
+        // Calcula la nueva posici贸n usando Vector3.MoveTowards
         Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, movementSpeed * Time.deltaTime);
         */
-        // Mueve al enemigo a la nueva posici髇
+        // Mueve al enemigo a la nueva posici贸n
         if(canMove)
         {
             if (targetTile != null)
+            {
                 targetTile.SetUnit(this);
+                OnSoundWalk?.Invoke(6);
+            }
             else
                 Debug.Log("MoveToTile no hay camino");
             ///currentPath = null;
@@ -179,7 +193,7 @@ public class BaseUnit : MonoBehaviour
     {
         if (enemy != null)
         {
-            // Usa A* para obtener la ruta m醩 corta
+            // Usa A* para obtener la ruta m谩s corta
             Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(enemy.GetOccupiedTile(), this, true);
             Debug.Log("CalculatePathToEnemy " + currentPath.Count);
             return currentPath;
@@ -195,7 +209,7 @@ public class BaseUnit : MonoBehaviour
     {
         if (tile != null)
         {
-            // Usa A* para obtener la ruta m醩 corta
+            // Usa A* para obtener la ruta m谩s corta
             Stack<Tile> currentPath = GridManager.instance.a_Star.Repath(tile, this, true);
             //Debug.Log("CalculatePathToEnemy " + currentPath.Count);
             //for(int i = 0; i  < maxG; i++) currentPath.Pop();

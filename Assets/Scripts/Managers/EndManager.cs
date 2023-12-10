@@ -10,6 +10,10 @@ public class EndManager : MonoBehaviour
     [SerializeField] private GameObject GUIDesactivar;
 
     public static EndManager Instance;
+    public delegate void SoundVictory(int sonido);
+    public static event SoundVictory OnSoundVictory;
+    public delegate void Soundefeat(int sonido);
+    public static event Soundefeat OnSounDefeat;
 
     private void Awake()
     {
@@ -31,6 +35,7 @@ public class EndManager : MonoBehaviour
             if (VictorySign != null)
             {
                 VictorySign.SetActive(true);
+                OnSoundVictory?.Invoke(2);
             }
         }
     }
@@ -40,6 +45,7 @@ public class EndManager : MonoBehaviour
         foreach(Transform child in GUIDesactivar.transform)
         {
             child.gameObject.SetActive(false);
+            OnSounDefeat?.Invoke(3);
         }
     }
   }
