@@ -19,7 +19,6 @@ public class CambiarControl : MonoBehaviour
         settings = GameObject.FindGameObjectWithTag("OpcionesManager").GetComponent<SettingsManager>();
         demasBotones = GameObject.FindObjectsOfType<Button>();
         boton = GetComponent<TextMeshProUGUI>();
-        boton.text = settings.GetControls()[index].ToString();
     }
 
     public void clicked()
@@ -58,6 +57,10 @@ public class CambiarControl : MonoBehaviour
                     }
                 }
             }
+        }
+        else
+        {
+            boton.text = settings.GetControls()[index].ToString();
         }
     }
 
