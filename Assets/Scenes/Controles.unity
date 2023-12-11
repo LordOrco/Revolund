@@ -504,6 +504,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpcionesManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4462954540300088419, guid: 034ac50654a0b1a408b51f0327ce7f3f, type: 3}
+      propertyPath: m_TagString
+      value: OpcionesManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -610,7 +614,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1161984085}
         m_TargetAssemblyTypeName: CambiarControl, Assembly-CSharp
-        m_MethodName: updateAllTexts
+        m_MethodName: defaultControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

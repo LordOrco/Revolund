@@ -109,7 +109,7 @@ public class SettingsManager : MonoBehaviour
     {
         // Convertir el array de KeyCode a una cadena de texto
         string arrayString = KeyCodeArrayToString(controls);
-        Debug.Log(arrayString);
+        Debug.Log(arrayString + "1");
         // Guardar la cadena de texto en PlayerPrefs
         PlayerPrefs.SetString("controls", arrayString);
         PlayerPrefs.Save();
@@ -132,6 +132,7 @@ public class SettingsManager : MonoBehaviour
         {
             stringValues[i] = array[i].ToString();
         }
+        Debug.Log(stringValues);
         return string.Join(",", stringValues);
     }
 
@@ -159,12 +160,14 @@ public class SettingsManager : MonoBehaviour
             }
         }
         controls[index] = control;
-        SaveControlsArray();
     }
 
     public void ResetControls()
     {
-        controls = defaultControls;
+        for(int i = 0; i<controls.Length; i++)
+        {
+            controls[i] = defaultControls[i];
+        }
     }
 
     public KeyCode[] GetControls()

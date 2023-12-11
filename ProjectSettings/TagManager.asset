@@ -10,6 +10,7 @@ TagManager:
   - Victory
   - Defeat
   - InGameMusic
+  - OpcionesManager
   layers:
   - Default
   - TransparentFX
